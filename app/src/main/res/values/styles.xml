@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="App.Custom.Indicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="android:color">@android:color/transparent</item>
+    </style>
+
+    <style name="App.Custom.FloatingActionButton" parent="ShapeAppearanceOverlay.Material3.FloatingActionButton">
+        <item name="fabCustomSize">80dp</item>
+        <item name="maxImageSize">30dp</item>
+        <item name="backgroundTint">?attr/colorPrimary</item>
+        <item name="tint">?attr/colorOnPrimary</item>
+    </style>
+
+    <style name="App.Custom.BottomAppBar" parent="ThemeOverlay.Material3.BottomAppBar">
+        <item name="fabCradleMargin">20dp</item>
+    </style>
+
+    <style name="App.Custom.BottomNavigationView" parent="Widget.Material3.BottomNavigationView">
+        <item name="backgroundTint">@android:color/transparent</item>
+        <item name="elevation">0dp</item>
+        <item name="itemIconTint">@drawable/bottom_navigation_selector</item>
+        <item name="itemTextColor">@drawable/bottom_navigation_selector</item>
+        <item name="itemIconSize">@dimen/bottom_appbar_icon_size</item>
+        <item name="itemActiveIndicatorStyle">@style/App.Custom.Indicator</item>
+        <item name="itemBackground">@drawable/bottom_navigation_ripple</item>
+    </style>
+</resources>
