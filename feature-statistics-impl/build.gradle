@@ -1,21 +1,21 @@
 plugins {
-    id 'com.android.application'
+    id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
 }
 
 android {
-    namespace 'com.example.wallette'
+    namespace 'com.example.feature_statistics_impl'
     compileSdk rootProject.compileSdkVersion
 
     defaultConfig {
-        applicationId "com.example.wallette"
         minSdk rootProject.minSdkVersion
         targetSdk rootProject.targetSdkVersion
         versionCode rootProject.versionCode
         versionName rootProject.versionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
     }
 
     buildTypes {
@@ -23,6 +23,10 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
     kotlinOptions {
         jvmTarget = '1.8'
@@ -34,16 +38,14 @@ android {
 
 dependencies {
 
-    implementation project(path: ':feature-statistics-impl')
     implementation project(path: ':common')
 
     implementation coreKtxDep
     implementation androidDep
     implementation materialDep
-    implementation constraintDep
+    implementation viewBindingDelegateDep
     implementation navigationFragmentDep
-    implementation navigationUiDep
-    implementation lifecycleViewModelDep
+    implementation androidChartDep
     implementation daggerDep
     implementation daggerAndroidDep
     kapt daggerKaptDep

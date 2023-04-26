@@ -3,12 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/BlankFragment">
+    app:startDestination="@id/StatisticsFragment">
 
     <fragment
         android:id="@+id/BlankFragment"
         android:name="com.example.wallette.BlankFragment"
-        android:label="@string/second_fragment_label"
+        android:label="@string/blank_fragment_label"
         tools:layout="@layout/fragment_blank">
+    </fragment>
+
+    <fragment
+        android:id="@+id/StatisticsFragment"
+        android:name="com.example.feature_statistics_impl.presentation.StatisticsFragment"
+        android:label="@string/statistics_fragment_name"
+        tools:layout="@layout/fragment_statistics">
     </fragment>
 </navigation>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/ic_balance_button_background"
+    android:gravity="center"
+    android:orientation="horizontal">
+
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:clickable="true"
+        android:focusable="true"
+        android:paddingHorizontal="15dp"
+        android:src="@drawable/ic_arrow_up"
+        app:tint="?attr/colorOnPrimary" />
+
+    <Button
+        android:id="@+id/balance_button"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="10"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:drawableStart="@drawable/ic_arrow_up"
+        android:text="Баланс: 10010" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:src="@drawable/ic_line" />
+
+    <ImageButton
+        android:id="@+id/change_view_button"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:paddingHorizontal="15dp"
+        android:src="@drawable/ic_pie_chart"
+        app:tint="?attr/colorOnPrimary" />
+
+</androidx.appcompat.widget.LinearLayoutCompat>
