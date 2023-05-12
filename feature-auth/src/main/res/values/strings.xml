@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="e_mail">E-mail</string>
+    <string name="password">Пароль</string>
+    <string name="forget_password">Забыли пароль?</string>
+    <string name="entry">Вход</string>
+    <string name="registration">Регистрация</string>
+    <string name="confirm_password">Подтвердите пароль</string>
+    <string name="sign_in">Войти</string>
+    <string name="register">Зарегистрироваться</string>
+    <string name="password_rules">пароль должен сожержать не менее 8 символов, хотя бы одну цифру и одну заглавную букву</string>
+</resources>
