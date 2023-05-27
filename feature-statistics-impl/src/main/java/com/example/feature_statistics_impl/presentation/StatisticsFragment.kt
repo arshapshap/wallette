@@ -18,10 +18,6 @@ class StatisticsFragment : BaseFragment<StatisticsViewModel>(R.layout.fragment_s
     }
 
     override fun inject() {
-//        FeatureUtils.getFeature<StatisticsComponent>(this, StatisticsFeatureApi::class.java)
-//            //.usersComponentFactory()
-//            //.create(this)
-//            .inject(this)
         statisticsComponent.inject(this)
     }
 
@@ -38,5 +34,9 @@ class StatisticsFragment : BaseFragment<StatisticsViewModel>(R.layout.fragment_s
                 Toast.makeText(context, "Change view button clicked", Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    override fun subscribe() {
+        //TODO("Not yet implemented")
     }
 }

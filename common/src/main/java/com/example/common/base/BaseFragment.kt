@@ -5,8 +5,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
 import lazyViewModel
 
 abstract class BaseFragment<T: BaseViewModel>(@LayoutRes contentLayoutId: Int) : Fragment(contentLayoutId) {
@@ -27,6 +25,7 @@ abstract class BaseFragment<T: BaseViewModel>(@LayoutRes contentLayoutId: Int) :
         super.onViewCreated(view, savedInstanceState)
 
         initViews()
+        subscribe()
     }
 
     protected abstract fun inject()
@@ -34,4 +33,6 @@ abstract class BaseFragment<T: BaseViewModel>(@LayoutRes contentLayoutId: Int) :
     protected abstract fun createViewModel() : BaseViewModel
 
     protected abstract fun initViews()
+
+    protected abstract fun subscribe()
 }

@@ -3,19 +3,33 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/StatisticsFragment">
+    app:startDestination="@id/statisticsFragment">
 
     <fragment
-        android:id="@+id/BlankFragment"
+        android:id="@+id/blankFragment"
         android:name="com.example.wallette.BlankFragment"
         android:label="@string/blank_fragment_label"
         tools:layout="@layout/fragment_blank">
     </fragment>
 
     <fragment
-        android:id="@+id/StatisticsFragment"
+        android:id="@+id/statisticsFragment"
         android:name="com.example.feature_statistics_impl.presentation.StatisticsFragment"
         android:label="@string/statistics_fragment_name"
         tools:layout="@layout/fragment_statistics">
+    </fragment>
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.feature_auth.presentation.screen.login.LoginFragment"
+        android:label="@string/login_fragment_name"
+        tools:layout="@layout/fragment_login">
+    </fragment>
+
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="com.example.feature_auth.presentation.screen.register.RegisterFragment"
+        android:label="@string/register_fragment_name"
+        tools:layout="@layout/fragment_register">
     </fragment>
 </navigation>

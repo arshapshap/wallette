@@ -35,6 +35,7 @@ android {
 dependencies {
 
     implementation project(path: ':feature-statistics-impl')
+    implementation project(path: ':feature-auth')
     implementation project(path: ':common')
 
     implementation coreKtxDep

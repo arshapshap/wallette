@@ -3,18 +3,19 @@ package com.example.feature_statistics_impl.di
 import com.example.common.di.FeatureApiHolder
 import com.example.common.di.FeatureContainer
 import com.example.common.di.scopes.ApplicationScope
-import com.example.feature_statistics_impl.StatisticsRouter
+import com.example.feature_auth.di.DaggerAuthorizationComponent
+import com.example.feature_auth.presentation.screen.AuthorizationRouter
 import javax.inject.Inject
 
 @ApplicationScope
-class StatisticsFeatureHolder @Inject constructor(
+class AuthorizationFeatureHolder @Inject constructor(
     featureContainer: FeatureContainer,
-    private val statisticsRouter: StatisticsRouter
+    private val authorizationRouter: AuthorizationRouter
 ) : FeatureApiHolder(featureContainer) {
 
     override fun initializeDependencies(): Any {
-        return DaggerStatisticsComponent.builder()
-            .router(statisticsRouter)
+        return DaggerAuthorizationComponent.builder()
+            .router(authorizationRouter)
             .build()
     }
 }

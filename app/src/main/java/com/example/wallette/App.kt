@@ -10,18 +10,6 @@ import javax.inject.Inject
 
 class App : Application(), FeatureContainer, HasComponentDependencies {
 
-//    private val appComponent: AppComponent by lazy {
-//        DaggerAppComponent
-//            .builder()
-//            .application(this)
-//            .build()
-//    }
-//
-//    override fun onCreate() {
-//        super.onCreate()
-//        appComponent.inject(this)
-//    }
-
     @Inject
     lateinit var featureHolderManager: FeatureHolderManager
 
