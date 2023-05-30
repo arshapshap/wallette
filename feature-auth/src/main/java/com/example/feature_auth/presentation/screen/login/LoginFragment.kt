@@ -1,17 +1,12 @@
 package com.example.feature_auth.presentation.screen.login
 
-import android.content.res.ColorStateList
-import android.os.Build
-import android.os.Build.VERSION_CODES
-import android.widget.EditText
-import androidx.annotation.ColorInt
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.example.common.di.FeatureUtils
 import com.example.common.presentation.base.BaseFragment
 import com.example.common.presentation.base.BaseViewModel
-import com.example.common.di.FeatureUtils
 import com.example.feature_auth.R
 import com.example.feature_auth.databinding.FragmentLoginBinding
 import com.example.feature_auth.di.AuthorizationComponent

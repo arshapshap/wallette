@@ -5,10 +5,9 @@ import com.example.common.di.scopes.AuthorizationScope
 import com.example.feature_auth.data.di.DataModule
 import com.example.feature_auth.presentation.screen.AuthorizationRouter
 import com.example.feature_auth.presentation.screen.login.LoginFragment
-import com.example.feature_auth.presentation.screen.register.RegisterFragment
 import com.example.feature_auth.presentation.screen.login.LoginViewModel
+import com.example.feature_auth.presentation.screen.register.RegisterFragment
 import com.example.feature_auth.presentation.screen.register.RegisterViewModel
-import dagger.Binds
 import dagger.BindsInstance
 import dagger.Component
 import retrofit2.Retrofit
