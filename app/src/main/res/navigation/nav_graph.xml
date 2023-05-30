@@ -16,7 +16,7 @@
         android:id="@+id/statisticsFragment"
         android:name="com.example.feature_statistics_impl.presentation.StatisticsFragment"
         android:label="@string/statistics_fragment_name"
-        tools:layout="@layout/fragment_transactions_list">
+        tools:layout="@layout/fragment_statistics">
     </fragment>
 
     <fragment
