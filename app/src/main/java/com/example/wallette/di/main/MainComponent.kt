@@ -1,7 +1,7 @@
 package com.example.wallette.di.main
 
 import androidx.appcompat.app.AppCompatActivity
-import com.example.wallette.MainActivity
+import com.example.wallette.presentation.MainActivity
 import dagger.BindsInstance
 import dagger.Component
 

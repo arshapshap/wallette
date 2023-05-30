@@ -13,10 +13,7 @@ class StatisticsFeatureHolder @Inject constructor(
 ) : FeatureApiHolder(featureContainer) {
 
     override fun initializeDependencies(): Any {
-//        val userFeatureDependencies = DaggerStatisticsFeatureComponent_StatisticsFeatureDependenciesComponent.builder()
-//            .build()
         return DaggerStatisticsComponent.builder()
-            //.withDependencies(userFeatureDependencies)
             .router(statisticsRouter)
             .build()
     }

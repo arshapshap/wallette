@@ -2,6 +2,7 @@ package com.example.wallette.di.app
 
 import com.example.common.di.scopes.ApplicationScope
 import com.example.wallette.App
+import com.example.wallette.data.di.DataModule
 import com.example.wallette.di.main.MainDependencies
 import dagger.BindsInstance
 import dagger.Component
@@ -10,7 +11,9 @@ import dagger.Component
 @Component(
     modules = [
         AppModule::class,
+        AppBindsModule::class,
         NavigationModule::class,
+        DataModule::class,
         FeaturesModule::class,
         FeatureManagerModule::class,
         ComponentDependenciesModule::class
