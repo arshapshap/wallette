@@ -4,21 +4,24 @@ import android.widget.Toast
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.common.base.BaseFragment
 import com.example.common.base.BaseViewModel
+import com.example.common.di.FeatureUtils
 import com.example.feature_statistics_impl.R
 import com.example.feature_statistics_impl.databinding.FragmentStatisticsBinding
-import com.example.feature_statistics_impl.di.DaggerStatisticsComponent
 import com.example.feature_statistics_impl.di.StatisticsComponent
+import com.example.feature_statistics_impl.di.StatisticsFeatureApi
 
 class StatisticsFragment : BaseFragment<StatisticsViewModel>(R.layout.fragment_statistics) {
 
     private val binding by viewBinding(FragmentStatisticsBinding::bind)
     private val statisticsComponent: StatisticsComponent by lazy {
-        DaggerStatisticsComponent
-            .builder()
-            .build()
+        FeatureUtils.getFeature(this, StatisticsFeatureApi::class.java)
     }
 
     override fun inject() {
+//        FeatureUtils.getFeature<StatisticsComponent>(this, StatisticsFeatureApi::class.java)
+//            //.usersComponentFactory()
+//            //.create(this)
+//            .inject(this)
         statisticsComponent.inject(this)
     }
 

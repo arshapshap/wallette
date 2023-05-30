@@ -60,7 +60,7 @@
             layout="@layout/item_balance_button"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center|bottom" />
+            android:layout_gravity="center|bottom"/>
 
 
     </androidx.appcompat.widget.LinearLayoutCompat>
