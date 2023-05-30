@@ -2,13 +2,17 @@
 <resources>
     <string name="e_mail">E-mail</string>
     <string name="password">Пароль</string>
-    <string name="forget_password">Забыли пароль?</string>
     <string name="login_fragment_name">Вход</string>
     <string name="register_fragment_name">Регистрация</string>
     <string name="confirm_password">Подтвердите пароль</string>
     <string name="login">Войти</string>
     <string name="register">Зарегистрироваться</string>
-    <string name="password_rules">Пароль должен сожержать не менее 8 символов, хотя бы одну цифру и одну заглавную букву</string>
     <string name="incorrect_login_or_password">Неверный логин или пароль</string>
     <string name="account_exists">Есть аккаунт? Войти</string>
+    <string name="email_is_taken">Такая почта уже используется</string>
+    <string name="too_short_password">Пароль должен сожержать не менее 8 символов</string>
+    <string name="passwords_must_match">Пароли должны совпадать</string>
+    <string name="empty_fields">Все поля должны быть заполнены</string>
+    <string name="network_unavailable">Сеть недоступна. Проверьте подключение</string>
+    <string name="error">Произошла ошибка</string>
 </resources>

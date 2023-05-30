@@ -67,11 +67,18 @@
             android:layout_height="wrap_content"
             android:textColor="?attr/colorError"
             android:textFontWeight="400"
-            android:paddingTop="13dp"
+            android:layout_marginTop="13dp"
             android:gravity="center"
-            android:visibility="invisible"
-            android:text="@string/password_rules"
+            android:visibility="gone"
+            android:text="@string/too_short_password"
             tools:visibility="visible"/>
+
+        <ProgressBar
+            android:id="@+id/loadingProgressBar"
+            android:layout_width="match_parent"
+            android:layout_marginTop="13dp"
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.constraintlayout.widget.Guideline

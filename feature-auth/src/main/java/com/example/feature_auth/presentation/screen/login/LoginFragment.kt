@@ -5,11 +5,12 @@ import android.os.Build
 import android.os.Build.VERSION_CODES
 import android.widget.EditText
 import androidx.annotation.ColorInt
+import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import by.kirich1409.viewbindingdelegate.viewBinding
-import com.example.common.base.BaseFragment
-import com.example.common.base.BaseViewModel
+import com.example.common.presentation.base.BaseFragment
+import com.example.common.presentation.base.BaseViewModel
 import com.example.common.di.FeatureUtils
 import com.example.feature_auth.R
 import com.example.feature_auth.databinding.FragmentLoginBinding
@@ -35,6 +36,7 @@ class LoginFragment : BaseFragment<LoginViewModel>(R.layout.fragment_login) {
             openRegisterPageButton.setOnClickListener {
                 viewModel.openRegisterPage()
             }
+
             loginButton.setOnClickListener {
                 val email = emailEditText.text.toString().trim()
                 val password = passwordEditText.text.toString().trim()
@@ -43,9 +45,11 @@ class LoginFragment : BaseFragment<LoginViewModel>(R.layout.fragment_login) {
                     email = email,
                     password = password)
             }
+
             emailEditText.addTextChangedListener {
                 binding.errorTextView.isVisible = false
             }
+
             passwordEditText.addTextChangedListener {
                 binding.errorTextView.isVisible = false
             }
@@ -54,17 +58,19 @@ class LoginFragment : BaseFragment<LoginViewModel>(R.layout.fragment_login) {
 
     override fun subscribe() {
         with (viewModel) {
-            errorMessageLiveData.observe(viewLifecycleOwner) {
-                binding.errorTextView.isVisible = it != null
+            errorLiveData.observe(viewLifecycleOwner) {
+                binding.errorTextView.isGone = it.isNullOrEmpty()
                 binding.errorTextView.text = it
             }
-        }
-    }
 
-    private fun setInputColor(editText: EditText, @ColorInt color: Int) {
-        editText.setHintTextColor(color)
-        editText.backgroundTintList = ColorStateList.valueOf(color)
-        if (Build.VERSION.SDK_INT >= VERSION_CODES.M)
-            editText.compoundDrawableTintList = ColorStateList.valueOf(color)
+            errorFromResourceLiveData.observe(viewLifecycleOwner) {
+                binding.errorTextView.isGone = it == 0
+                binding.errorTextView.text = getString(it)
+            }
+
+            loadingLiveData.observe(viewLifecycleOwner) {
+                binding.loadingProgressBar.isGone = !it
+            }
+        }
     }
 }

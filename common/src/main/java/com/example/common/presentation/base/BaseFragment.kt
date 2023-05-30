@@ -1,4 +1,4 @@
-package com.example.common.base
+package com.example.common.presentation.base
 
 import android.content.Context
 import android.os.Bundle

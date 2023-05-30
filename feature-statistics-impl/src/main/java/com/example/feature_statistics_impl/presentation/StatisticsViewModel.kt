@@ -1,6 +1,6 @@
 package com.example.feature_statistics_impl.presentation
 
-import com.example.common.base.BaseViewModel
+import com.example.common.presentation.base.BaseViewModel
 import com.example.feature_statistics_impl.StatisticsRouter
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject

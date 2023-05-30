@@ -2,8 +2,8 @@ package com.example.feature_statistics_impl.presentation
 
 import android.widget.Toast
 import by.kirich1409.viewbindingdelegate.viewBinding
-import com.example.common.base.BaseFragment
-import com.example.common.base.BaseViewModel
+import com.example.common.presentation.base.BaseFragment
+import com.example.common.presentation.base.BaseViewModel
 import com.example.common.di.FeatureUtils
 import com.example.feature_statistics_impl.R
 import com.example.feature_statistics_impl.databinding.FragmentStatisticsBinding
