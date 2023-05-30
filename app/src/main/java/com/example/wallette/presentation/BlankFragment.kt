@@ -1,4 +1,4 @@
-package com.example.wallette
+package com.example.wallette.presentation
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
