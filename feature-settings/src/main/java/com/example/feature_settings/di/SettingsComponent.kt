@@ -2,8 +2,8 @@ package com.example.feature_settings.di
 
 import com.example.common.di.scopes.SettingsScope
 import com.example.feature_settings.presentation.SettingsRouter
-import com.example.feature_settings.presentation.screen.SettingsFragment
-import com.example.feature_settings.presentation.screen.SettingsViewModel
+import com.example.feature_settings.presentation.screen.settings.SettingsFragment
+import com.example.feature_settings.presentation.screen.settings.SettingsViewModel
 import dagger.BindsInstance
 import dagger.Component
 

@@ -2,7 +2,6 @@ package com.example.wallette.navigation
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
-import androidx.navigation.NavOptions
 import com.example.feature_auth.presentation.screen.AuthorizationRouter
 import com.example.feature_settings.presentation.SettingsRouter
 import com.example.feature_statistics_impl.presentation.StatisticsRouter
@@ -19,11 +18,7 @@ class Navigator() : StatisticsRouter, AuthorizationRouter, SettingsRouter {
     }
 
     override fun openTransactions() {
-        navController?.navigate(
-            resId = R.id.transactionsFragment,
-            args = null,
-            navOptions = getNavOptions()
-        )
+        navController?.navigate(R.id.transactionsFragment)
     }
 
     override fun openTransaction(id: String) {
@@ -31,28 +26,26 @@ class Navigator() : StatisticsRouter, AuthorizationRouter, SettingsRouter {
     }
 
     override fun openLoginPage() {
-        navController?.navigate(
-            resId = R.id.loginFragment,
-            args = null,
-            navOptions = getNavOptions())
+        navController?.navigate(R.id.loginFragment)
     }
 
     override fun openRegisterPage() {
-        navController?.navigate(
-            resId = R.id.registerFragment,
-            args = null,
-            navOptions = getNavOptions())
+        navController?.navigate(R.id.registerFragment)
     }
 
     override fun openStatistics() {
-        navController?.navigate(
-            resId = R.id.statisticsFragment,
-            args = null,
-            navOptions = getNavOptions())
+        navController?.navigate(R.id.statisticsFragment)
     }
 
-    private fun getNavOptions()
-        = NavOptions.Builder()
-        //.setEnterAnim(androidx.navigation.ui.R.animator.nav_default_enter_anim)
-        .build()
+    override fun openAccounts() {
+        //navController?.navigate(R.id.)
+    }
+
+    override fun openCategories() {
+        TODO("Not yet implemented")
+    }
+
+    override fun openTags() {
+        TODO("Not yet implemented")
+    }
 }

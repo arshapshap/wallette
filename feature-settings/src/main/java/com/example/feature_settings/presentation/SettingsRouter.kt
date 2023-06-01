@@ -1,3 +1,10 @@
 package com.example.feature_settings.presentation
 
-interface SettingsRouter {}
+interface SettingsRouter {
+
+    fun openAccounts()
+
+    fun openCategories()
+
+    fun openTags()
+}

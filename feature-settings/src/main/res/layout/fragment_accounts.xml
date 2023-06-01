@@ -16,7 +16,7 @@
         android:id="@+id/allAccountsRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:listitem="@layout/item_black_button"/>
+        tools:listitem="@layout/item_button"/>
 
     <include
         android:id="@+id/money_transfer_layout"

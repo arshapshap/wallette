@@ -15,8 +15,8 @@ class TransactionsViewModel @AssistedInject constructor(
     private val router: StatisticsRouter
 ) : BaseViewModel() {
 
-    private val _stateLiveData = MutableLiveData<DataState>()
-    val stateLiveData : LiveData<DataState>
+    private val _stateLiveData = MutableLiveData<TransactionsData>()
+    val stateLiveData : LiveData<TransactionsData>
         get() = _stateLiveData
 
     init {
@@ -39,7 +39,7 @@ class TransactionsViewModel @AssistedInject constructor(
     private fun loadData(sortingType: SortingType) {
         viewModelScope.launch {
             val transactionGroups = interactor.getTransactionGroups(sortingType = sortingType)
-            val state = DataState(
+            val state = TransactionsData(
                 balance = transactionGroups
                     .flatMap { it.list }
                     .distinctBy { it.id }

@@ -11,7 +11,7 @@
     <string name="first_day_of_month">Начало месяца</string>
     <string name="all_categories">Категории</string>
     <string name="all_tags">Метки</string>
-    <string name="period_selection">Выбор периода</string>
+    <string name="time_period">Выбор периода</string>
 
     <!-- Languages -->
     <string name="language_ru">Русский</string>
