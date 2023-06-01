@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="GroupName" parent="android:Widget.TextView">
+        <item name="android:textSize">17sp</item>
+        <item name="android:fontFamily">@font/urbanist_semibold</item>
+    </style>
+</resources>

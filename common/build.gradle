@@ -43,6 +43,7 @@ dependencies {
     implementation materialDep
     implementation fragmentKtxDep
     implementation viewBindingDelegateDep
+    implementation gsonConverterDep
     implementation daggerDep
     implementation daggerAndroidDep
     kapt daggerKaptDep

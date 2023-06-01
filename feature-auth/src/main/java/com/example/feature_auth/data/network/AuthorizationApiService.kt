@@ -8,7 +8,7 @@ import retrofit2.http.Body
 import retrofit2.http.Headers
 import retrofit2.http.POST
 
-interface AuthorizationService {
+interface AuthorizationApiService {
 
     @Headers(NetworkConstants.NO_TOKEN_HEADER)
     @POST("user/authorize")

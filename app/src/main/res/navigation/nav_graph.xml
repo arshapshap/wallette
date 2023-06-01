@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/loginFragment">
+    app:startDestination="@id/statisticsFragment">
 
     <fragment
         android:id="@+id/blankFragment"
@@ -14,7 +14,7 @@
 
     <fragment
         android:id="@+id/statisticsFragment"
-        android:name="com.example.feature_statistics_impl.presentation.StatisticsFragment"
+        android:name="com.example.feature_statistics_impl.presentation.screen.statistics.StatisticsFragment"
         android:label="@string/statistics_fragment_name"
         tools:layout="@layout/fragment_statistics">
     </fragment>
@@ -31,5 +31,12 @@
         android:name="com.example.feature_auth.presentation.screen.register.RegisterFragment"
         android:label="@string/register_fragment_name"
         tools:layout="@layout/fragment_register">
+    </fragment>
+
+    <fragment
+        android:id="@+id/transactionsFragment"
+        android:name="com.example.feature_statistics_impl.presentation.screen.transactionsList.TransactionsFragment"
+        android:label="@string/statistics_fragment_name"
+        tools:layout="@layout/fragment_transactions_list">
     </fragment>
 </navigation>

@@ -1,4 +1,4 @@
-package com.example.feature_statistics_impl.presentation.viewPager2
+package com.example.feature_statistics_impl.presentation.screen.statistics.viewPager2
 
 import androidx.fragment.app.Fragment
 

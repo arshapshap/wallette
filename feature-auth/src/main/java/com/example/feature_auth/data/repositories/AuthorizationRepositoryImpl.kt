@@ -1,7 +1,7 @@
 package com.example.feature_auth.data.repositories
 
 import com.example.feature_auth.data.mappers.AuthorizationResponseMapper
-import com.example.feature_auth.data.network.AuthorizationService
+import com.example.feature_auth.data.network.AuthorizationApiService
 import com.example.feature_auth.data.network.request.LoginRequestModel
 import com.example.feature_auth.data.network.request.RegisterRequestModel
 import com.example.feature_auth.domain.models.AuthorizationResult
@@ -9,7 +9,7 @@ import com.example.feature_auth.domain.repositories.AuthorizationRepository
 import javax.inject.Inject
 
 class AuthorizationRepositoryImpl @Inject constructor(
-    private val service: AuthorizationService,
+    private val service: AuthorizationApiService,
     private val mapper: AuthorizationResponseMapper
 ) : AuthorizationRepository {
 

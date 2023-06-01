@@ -3,7 +3,7 @@ package com.example.feature_auth.presentation.screen.register
 import com.example.feature_auth.R
 import com.example.feature_auth.domain.AuthorizationInteractor
 import com.example.feature_auth.presentation.screen.AuthorizationRouter
-import com.example.feature_auth.presentation.screen.base.AuthorizationViewModel
+import com.example.feature_auth.presentation.base.AuthorizationViewModel
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 

@@ -1,7 +1,5 @@
-package com.example.feature_auth.presentation.screen.base
+package com.example.feature_auth.presentation.base
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.common.presentation.base.BaseViewModel
 import com.example.feature_auth.R
@@ -15,18 +13,6 @@ abstract class AuthorizationViewModel(
     private val interactor: AuthorizationInteractor,
     private val router: AuthorizationRouter
 ) : BaseViewModel() {
-
-    protected val _errorLiveData = MutableLiveData<String>()
-    val errorLiveData: LiveData<String>
-        get() = _errorLiveData
-
-    protected val _errorFromResourceLiveData = MutableLiveData<Int>()
-    val errorFromResourceLiveData: LiveData<Int>
-        get() = _errorFromResourceLiveData
-
-    private val _loadingLiveData = MutableLiveData<Boolean>()
-    val loadingLiveData: LiveData<Boolean>
-        get() = _loadingLiveData
 
     protected fun handleServerResult(result: AuthorizationResult, exceptionHandler: (String) -> Unit) {
         if (result.isSuccessful) {

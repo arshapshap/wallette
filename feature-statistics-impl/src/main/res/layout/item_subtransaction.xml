@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:padding="5dp">
+    android:paddingVertical="5dp">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/line_1"
@@ -16,14 +16,7 @@
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/line_2"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/line_3"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.9"
+        app:layout_constraintGuide_percent="0.7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
@@ -32,9 +25,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/black"
-        android:textFontWeight="400"
         android:textSize="12sp"
-
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="@id/line_2"
         app:layout_constraintStart_toStartOf="@+id/line_1"
@@ -46,11 +38,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/grey"
-        android:textFontWeight="400"
         android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/line_2"
         app:layout_constraintLeft_toLeftOf="@+id/line_1"
-        app:layout_constraintRight_toRightOf="@id/line_3"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Молоко" />
 
@@ -58,9 +49,9 @@
         android:id="@+id/sumTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textFontWeight="400"
         android:textSize="15sp"
-        app:layout_constraintEnd_toStartOf="@+id/line_3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="-6000 ₽"
         tools:textColor="@color/red" />
