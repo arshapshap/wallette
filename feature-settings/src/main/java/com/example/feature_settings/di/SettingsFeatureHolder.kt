@@ -1,20 +1,20 @@
-package com.example.feature_statistics_impl.di
+package com.example.feature_settings.di
 
 import com.example.common.di.FeatureApiHolder
 import com.example.common.di.FeatureContainer
 import com.example.common.di.scopes.ApplicationScope
-import com.example.feature_statistics_impl.presentation.StatisticsRouter
+import com.example.feature_settings.presentation.SettingsRouter
 import javax.inject.Inject
 
 @ApplicationScope
-class StatisticsFeatureHolder @Inject constructor(
+class SettingsFeatureHolder @Inject constructor(
     featureContainer: FeatureContainer,
-    private val statisticsRouter: StatisticsRouter
+    private val router: SettingsRouter
 ) : FeatureApiHolder(featureContainer) {
 
     override fun initializeDependencies(): Any {
-        return DaggerStatisticsComponent.builder()
-            .router(statisticsRouter)
+        return DaggerSettingsComponent.builder()
+            .router(router)
             .build()
     }
 }

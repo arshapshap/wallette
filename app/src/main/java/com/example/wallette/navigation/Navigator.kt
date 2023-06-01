@@ -4,10 +4,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.NavOptions
 import com.example.feature_auth.presentation.screen.AuthorizationRouter
-import com.example.feature_statistics_impl.StatisticsRouter
+import com.example.feature_settings.presentation.SettingsRouter
+import com.example.feature_statistics_impl.presentation.StatisticsRouter
 import com.example.wallette.R
 
-class Navigator() : StatisticsRouter, AuthorizationRouter {
+class Navigator() : StatisticsRouter, AuthorizationRouter, SettingsRouter {
 
     private var navController: NavController? = null
     private var activity: AppCompatActivity? = null

@@ -4,6 +4,8 @@ import com.example.common.di.FeatureApiHolder
 import com.example.common.di.FeatureContainer
 import com.example.common.di.scopes.ApplicationScope
 import com.example.feature_auth.di.AuthorizationFeatureApi
+import com.example.feature_settings.di.SettingsFeatureApi
+import com.example.feature_settings.di.SettingsFeatureHolder
 import com.example.feature_statistics_impl.di.AuthorizationFeatureHolder
 import com.example.feature_statistics_impl.di.StatisticsFeatureApi
 import com.example.feature_statistics_impl.di.StatisticsFeatureHolder
@@ -37,4 +39,10 @@ interface FeaturesModule {
     @ClassKey(AuthorizationFeatureApi::class)
     @IntoMap
     fun provideAuthorizationFeatureHolder(authorizationFeatureHolder: AuthorizationFeatureHolder): FeatureApiHolder
+
+    @ApplicationScope
+    @Binds
+    @ClassKey(SettingsFeatureApi::class)
+    @IntoMap
+    fun provideSettingsFeatureHolder(settingsFeatureHolder: SettingsFeatureHolder): FeatureApiHolder
 }

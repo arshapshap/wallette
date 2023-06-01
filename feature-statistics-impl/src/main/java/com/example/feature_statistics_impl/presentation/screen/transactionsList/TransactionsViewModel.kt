@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.common.presentation.base.BaseViewModel
-import com.example.feature_statistics_impl.StatisticsRouter
+import com.example.feature_statistics_impl.presentation.StatisticsRouter
 import com.example.feature_statistics_impl.domain.StatisticsInteractor
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject

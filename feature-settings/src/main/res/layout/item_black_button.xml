@@ -1,44 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
     android:background="@drawable/stroke"
-    android:backgroundTint="@color/primary"
-    android:orientation="horizontal"
-    android:padding="10dp">
+    android:clickable="true"
+    android:focusable="true">
 
-    <ImageView
-        android:id="@+id/iconImageView"
-        android:layout_width="wrap_content"
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        tools:src="@drawable/ic_currency"/>
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="10dp">
 
-    <TextView
-        android:id="@+id/leftTitleTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/black"
-        android:layout_marginLeft="10dp"
-        android:textFontWeight="400"
-        android:textSize="16sp"
-        android:layout_weight="10"
-        tools:text="Валюта"/>
+        <ImageView
+            android:id="@+id/iconImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            tools:src="@drawable/ic_currency" />
 
-    <TextView
-        android:id="@+id/rightTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/black"
-        tools:text="RUB"/>
+        <TextView
+            android:id="@+id/titleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="10"
+            android:textColor="@color/black"
+            android:textFontWeight="400"
+            android:textSize="16sp"
+            tools:text="Валюта" />
 
-    <ImageView
-        android:id="@+id/arrowImageView"
-        android:layout_width="wrap_content"
-        android:layout_height="22dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="11dp"
-        tools:src="@drawable/ic_arrow"/>
+        <TextView
+            android:id="@+id/valueTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            tools:text="RUB" />
 
-</androidx.appcompat.widget.LinearLayoutCompat>
+        <ImageView
+            android:id="@+id/rightArrowImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:src="@drawable/ic_arrow" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</FrameLayout>

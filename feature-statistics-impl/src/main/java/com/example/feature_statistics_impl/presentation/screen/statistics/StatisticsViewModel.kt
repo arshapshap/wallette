@@ -1,7 +1,7 @@
 package com.example.feature_statistics_impl.presentation.screen.statistics
 
 import com.example.common.presentation.base.BaseViewModel
-import com.example.feature_statistics_impl.StatisticsRouter
+import com.example.feature_statistics_impl.presentation.StatisticsRouter
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 

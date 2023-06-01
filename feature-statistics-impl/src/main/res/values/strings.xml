@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="statistics_fragment_name">Статистика</string>
+    <string name="statistics_fragment_name">Отчёт</string>
     <string name="no_category">Без категории</string>
     <string name="no_tags">Без меток</string>
 </resources>

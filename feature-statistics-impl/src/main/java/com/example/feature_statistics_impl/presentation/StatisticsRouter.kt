@@ -1,4 +1,4 @@
-package com.example.feature_statistics_impl
+package com.example.feature_statistics_impl.presentation
 
 interface StatisticsRouter {
     fun openTransactions()
