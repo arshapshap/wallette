@@ -9,33 +9,34 @@
         android:id="@+id/balanceTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingLeft="16dp"
-        android:textColor="@color/black"
         android:textFontWeight="800"
-        android:textSize="24sp"
+        android:textSize="28sp"
+        app:layout_constraintBottom_toBottomOf="@+id/sortingImageButton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="+ 7,450 ₽" />
 
     <ImageButton
         android:id="@+id/sortingImageButton"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:contentDescription="sort"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginRight="28dp"
+        android:padding="15dp"
         android:background="?android:selectableItemBackground"
-        tools:src="@drawable/sort_by_date"/>
+        android:src="@drawable/sort_by_date"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/listRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/sortingImageButton"
-        tools:listitem="@layout/item_date_group">
-
-    </androidx.recyclerview.widget.RecyclerView>
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:paddingBottom="@dimen/bottom_margin"
+        android:clipToPadding="false"
+        tools:listitem="@layout/item_group"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

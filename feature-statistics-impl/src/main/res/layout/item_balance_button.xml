@@ -9,6 +9,7 @@
 
 
     <ImageView
+        android:id="@+id/arrow_up_button"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:background="?attr/selectableItemBackgroundBorderless"
@@ -30,7 +31,8 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:src="@drawable/ic_line" />
+        android:src="@drawable/ic_line"
+        app:tint="?attr/colorOnPrimary" />
 
     <ImageButton
         android:id="@+id/change_view_button"

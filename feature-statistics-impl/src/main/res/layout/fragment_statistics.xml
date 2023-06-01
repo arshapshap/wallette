@@ -5,13 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    tools:context="com.example.feature_statistics_impl.presentation.StatisticsFragment">
+    tools:context="com.example.feature_statistics_impl.presentation.screen.statistics.StatisticsFragment">
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:orientation="vertical">
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/periods_tab_layout"
@@ -60,7 +59,7 @@
             layout="@layout/item_balance_button"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center|bottom" />
+            android:layout_gravity="center|bottom"/>
 
 
     </androidx.appcompat.widget.LinearLayoutCompat>
