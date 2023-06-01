@@ -1,10 +1,9 @@
-package com.example.feature_statistics_impl.presentation
+package com.example.feature_statistics_impl.presentation.screen.statistics
 
-import android.widget.Toast
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.example.common.di.FeatureUtils
 import com.example.common.presentation.base.BaseFragment
 import com.example.common.presentation.base.BaseViewModel
-import com.example.common.di.FeatureUtils
 import com.example.feature_statistics_impl.R
 import com.example.feature_statistics_impl.databinding.FragmentStatisticsBinding
 import com.example.feature_statistics_impl.di.StatisticsComponent
@@ -28,10 +27,13 @@ class StatisticsFragment : BaseFragment<StatisticsViewModel>(R.layout.fragment_s
         with(binding) {
             balanceButtonLayout.balanceButton.setOnClickListener {
                 viewModel.openTransactions()
-                Toast.makeText(context, "Balance button clicked", Toast.LENGTH_SHORT).show()
             }
+
+            balanceButtonLayout.arrowUpButton.setOnClickListener {
+                viewModel.openTransactions()
+            }
+
             balanceButtonLayout.changeViewButton.setOnClickListener {
-                Toast.makeText(context, "Change view button clicked", Toast.LENGTH_SHORT).show()
             }
         }
     }

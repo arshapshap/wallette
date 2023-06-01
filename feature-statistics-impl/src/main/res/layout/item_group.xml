@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/groupHeaderLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/line_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.1" />
+
+        <ImageView
+            android:id="@+id/arrowImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/header_height"
+            android:src="@drawable/purple_arrow_up"
+            app:layout_constraintEnd_toStartOf="@+id/line_1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:rotation="90"/>
+
+        <TextView
+            android:id="@+id/dateTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/GroupName"
+            app:layout_constraintBottom_toBottomOf="@+id/arrowImageView"
+            app:layout_constraintStart_toStartOf="@+id/line_1"
+            app:layout_constraintTop_toTopOf="@+id/arrowImageView"
+            tools:text="3 марта"
+            tools:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/tagTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_tag"
+            android:paddingHorizontal="15dp"
+            android:paddingVertical="10dp"
+            android:visibility="gone"
+            style="@style/GroupName"
+            app:layout_constraintBottom_toBottomOf="@+id/arrowImageView"
+            app:layout_constraintStart_toStartOf="@+id/line_1"
+            app:layout_constraintTop_toTopOf="@+id/arrowImageView"
+            tools:backgroundTint="#00FF00"
+            tools:text="Работа"/>
+
+        <ImageView
+            android:id="@+id/categoryIconImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:background="@drawable/bg_category"
+            android:padding="10dp"
+            android:src="@drawable/ic_category_cash"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/arrowImageView"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintStart_toEndOf="@id/line_1"
+            app:layout_constraintTop_toTopOf="@id/arrowImageView"
+            tools:visibility="visible" />
+
+        <TextView
+            android:id="@+id/categoryTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:visibility="gone"
+            style="@style/GroupName"
+            app:layout_constraintBottom_toBottomOf="@id/arrowImageView"
+            app:layout_constraintStart_toEndOf="@id/categoryIconImageView"
+            app:layout_constraintTop_toTopOf="@id/arrowImageView"
+            tools:text="Зарплата"/>
+
+        <TextView
+            android:id="@+id/groupAmountTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/GroupName"
+            app:layout_constraintBottom_toBottomOf="@id/arrowImageView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/arrowImageView"
+            tools:text="-6 000 $" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/transactionsRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:paddingTop="6dp"
+        android:visibility="gone"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/groupHeaderLayout"
+        tools:listitem="@layout/item_expandable_transaction"
+        tools:visibility="visible" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

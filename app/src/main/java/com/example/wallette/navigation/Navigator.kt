@@ -18,7 +18,15 @@ class Navigator() : StatisticsRouter, AuthorizationRouter {
     }
 
     override fun openTransactions() {
-        navController?.navigate(R.id.loginFragment)
+        navController?.navigate(
+            resId = R.id.transactionsFragment,
+            args = null,
+            navOptions = getNavOptions()
+        )
+    }
+
+    override fun openTransaction(id: String) {
+        //TODO("Not yet implemented")
     }
 
     override fun openLoginPage() {

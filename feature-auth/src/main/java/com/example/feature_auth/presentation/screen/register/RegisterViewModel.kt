@@ -3,7 +3,7 @@ package com.example.feature_auth.presentation.screen.register
 import com.example.feature_auth.R
 import com.example.feature_auth.domain.AuthorizationInteractor
 import com.example.feature_auth.presentation.screen.AuthorizationRouter
-import com.example.feature_auth.presentation.screen.base.AuthorizationViewModel
+import com.example.feature_auth.presentation.base.AuthorizationViewModel
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 
@@ -29,11 +29,11 @@ class RegisterViewModel @AssistedInject constructor(
             return
         }
         tryAuthorize {
-            val result = interactor.login(
+            val result = interactor.register(
                 email = email,
                 password = password
             )
-            handleServerResult(result) {errorMessage ->
+            handleServerResult(result) { errorMessage ->
                 when (errorMessage) {
                     "Login is taken" -> _errorFromResourceLiveData.postValue(R.string.email_is_taken)
                     "Password is too short" -> _errorFromResourceLiveData.postValue(R.string.too_short_password)

@@ -1,6 +1,6 @@
 package com.example.feature_auth.data.di
 
-import com.example.feature_auth.data.network.AuthorizationService
+import com.example.feature_auth.data.network.AuthorizationApiService
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
@@ -9,9 +9,9 @@ import retrofit2.Retrofit
 class DataModule {
 
     @Provides
-    fun provideAuthorizationService(retrofit: Retrofit): AuthorizationService {
+    fun provideAuthorizationApiService(retrofit: Retrofit): AuthorizationApiService {
         return retrofit.create(
-            AuthorizationService::class.java
+            AuthorizationApiService::class.java
         )
     }
 }

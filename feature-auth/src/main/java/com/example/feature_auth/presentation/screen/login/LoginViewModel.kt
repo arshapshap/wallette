@@ -3,7 +3,7 @@ package com.example.feature_auth.presentation.screen.login
 import com.example.feature_auth.R
 import com.example.feature_auth.domain.AuthorizationInteractor
 import com.example.feature_auth.presentation.screen.AuthorizationRouter
-import com.example.feature_auth.presentation.screen.base.AuthorizationViewModel
+import com.example.feature_auth.presentation.base.AuthorizationViewModel
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 
@@ -29,7 +29,7 @@ class LoginViewModel @AssistedInject constructor(
                 email = email,
                 password = password
             )
-            handleServerResult(result) {errorMessage ->
+            handleServerResult(result) { errorMessage ->
                 when (errorMessage) {
                     "Incorrect login or password" -> _errorFromResourceLiveData.postValue(R.string.incorrect_login_or_password)
                     else -> _errorLiveData.postValue(result.errorMessage)

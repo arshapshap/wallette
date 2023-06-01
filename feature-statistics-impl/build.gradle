@@ -45,6 +45,8 @@ dependencies {
     implementation materialDep
     implementation viewBindingDelegateDep
     implementation navigationFragmentDep
+    implementation retrofitDep
+    implementation gsonConverterDep
     implementation androidChartDep
     implementation daggerDep
     implementation daggerAndroidDep
