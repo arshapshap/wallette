@@ -1,18 +1,18 @@
 package com.example.feature_settings.presentation.screen.settings
 
 import android.os.Bundle
-import android.util.TypedValue
-import androidx.annotation.ColorInt
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.common.di.FeatureUtils
 import com.example.common.presentation.base.BaseFragment
 import com.example.common.presentation.base.BaseViewModel
 import com.example.feature_settings.R
-import com.example.feature_settings.di.SettingsComponent
 import com.example.feature_settings.databinding.FragmentSettingsBinding
+import com.example.feature_settings.di.SettingsComponent
 import com.example.feature_settings.di.SettingsFeatureApi
 import com.example.feature_settings.presentation.screen.settings.dialogs.PickerDialogFragment
 import com.example.feature_settings.presentation.screen.settings.dialogs.PickerType
+import com.example.feature_settings.presentation.utils.getColorPrimary
+import com.example.feature_settings.presentation.utils.getTextColor
 import com.example.feature_settings.presentation.utils.setContent
 
 
@@ -36,34 +36,35 @@ class SettingsFragment : BaseFragment<SettingsViewModel>(R.layout.fragment_setti
         binding.enableSyncLayout.setContent(
             iconRes = R.drawable.ic_sync,
             titleRes = R.string.enable_synchronization,
-            colorInt = getColorPrimary(),
+            colorInt = getTextColor(),
+            backgroundColorInt = getColorPrimary(),
             isRightArrowVisible = false
         ) {
-
+            viewModel.enableSynchronization()
         }
 
         binding.accountsLayout.setContent(
             iconRes = R.drawable.ic_account,
-            titleRes = R.string.all_accounts,
+            titleRes = R.string.accounts_fragment_name,
             isRightArrowVisible = true
         ) {
-
+            viewModel.openAccounts()
         }
 
         binding.categoriesLayout.setContent(
             iconRes = R.drawable.ic_category,
-            titleRes = R.string.all_categories,
+            titleRes = R.string.categories_fragment_name,
             isRightArrowVisible = true
         ) {
-
+            viewModel.openCategories()
         }
 
         binding.tagsLayout.setContent(
             iconRes = R.drawable.ic_tag,
-            titleRes = R.string.all_tags,
+            titleRes = R.string.tags_fragment_name,
             isRightArrowVisible = true
         ) {
-
+            viewModel.openTags()
         }
 
         binding.currencyLayout.setContent(
@@ -100,6 +101,29 @@ class SettingsFragment : BaseFragment<SettingsViewModel>(R.layout.fragment_setti
 
     override fun subscribe() {
         with (viewModel) {
+            isSynchronized.observe(viewLifecycleOwner) {
+                binding.enableSyncLayout.root.invalidate()
+                if (it)
+                    binding.enableSyncLayout.setContent(
+                        iconRes = R.drawable.ic_sync,
+                        titleRes = R.string.disable_synchronization,
+                        colorInt = getColorPrimary(),
+                        isRightArrowVisible = false
+                    ) {
+                        viewModel.enableSynchronization()
+                    }
+                else
+                    binding.enableSyncLayout.setContent(
+                        iconRes = R.drawable.ic_sync,
+                        titleRes = R.string.enable_synchronization,
+                        colorInt = getTextColor(),
+                        backgroundColorInt = getColorPrimary(),
+                        isRightArrowVisible = false
+                    ) {
+                        viewModel.enableSynchronization()
+                    }
+            }
+
             dataLiveData.observe(viewLifecycleOwner) {
                 binding.currencyLayout.setContent(
                     value = it.currency.name
@@ -152,13 +176,6 @@ class SettingsFragment : BaseFragment<SettingsViewModel>(R.layout.fragment_setti
                 }
             }
         }
-    }
-
-    @ColorInt
-    private fun getColorPrimary(): Int {
-        val typedValue = TypedValue()
-        activity?.theme?.resolveAttribute(androidx.appcompat.R.attr.colorPrimary, typedValue, true)
-        return typedValue.data
     }
 
     private fun showPickerDialog(

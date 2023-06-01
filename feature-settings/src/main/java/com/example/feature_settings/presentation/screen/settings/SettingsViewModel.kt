@@ -20,6 +20,10 @@ class SettingsViewModel @AssistedInject constructor(
     val dataLiveData : LiveData<SettingsData>
         get() = _dataLiveData
 
+    private val _isSynchronized = MutableLiveData(false)
+    val isSynchronized : LiveData<Boolean>
+        get() = _isSynchronized
+
     init {
         val data = SettingsData(
             currency = Currency.RUB,
@@ -37,19 +41,19 @@ class SettingsViewModel @AssistedInject constructor(
     }
 
     fun enableSynchronization() {
-
+        _isSynchronized.postValue(!(isSynchronized.value ?: false))
     }
 
     fun openCategories() {
-
+        router.openCategories()
     }
 
     fun openTags() {
-
+        router.openTags()
     }
 
     fun openAccounts() {
-
+        router.openAccounts()
     }
 
     fun selectCurrency(currency: Currency) {

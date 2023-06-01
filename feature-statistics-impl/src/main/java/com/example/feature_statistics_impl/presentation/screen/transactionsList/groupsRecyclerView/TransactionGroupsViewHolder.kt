@@ -11,7 +11,8 @@ import com.example.feature_statistics_impl.R
 import com.example.feature_statistics_impl.databinding.ItemGroupBinding
 import com.example.feature_statistics_impl.presentation.screen.transactionsList.SortingType
 import com.example.feature_statistics_impl.presentation.screen.transactionsList.extensions.getString
-import com.example.feature_statistics_impl.presentation.screen.transactionsList.extensions.getTextColor
+import com.example.feature_statistics_impl.presentation.screen.transactionsList.extensions.formatAsBalance
+import com.example.feature_statistics_impl.presentation.screen.transactionsList.extensions.getColorBySign
 import com.example.feature_statistics_impl.presentation.screen.transactionsList.groupsRecyclerView.transactionGroups.TransactionGroup
 import com.example.feature_statistics_impl.presentation.screen.transactionsList.groupsRecyclerView.transactionGroups.TransactionGroupByCategory
 import com.example.feature_statistics_impl.presentation.screen.transactionsList.groupsRecyclerView.transactionGroups.TransactionGroupByDate
@@ -34,11 +35,11 @@ class TransactionGroupsViewHolder(
             arrowImageView.rotateArrowWithAnimation(group.isExpanded)
 
             val groupAmount = group.list.sumOf { it.amount }
-            groupAmountTextView.text = groupAmount.getString(Currency.RUB) // TODO: откуда брать валюту??
+            groupAmountTextView.text = groupAmount.formatAsBalance(Currency.RUB) // TODO: откуда брать валюту??
             groupAmountTextView.setTextColor(
                 ContextCompat.getColor(
                     binding.root.context,
-                    groupAmount.getTextColor()
+                    groupAmount.getColorBySign()
                 )
             )
 

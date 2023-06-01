@@ -8,7 +8,8 @@ import com.example.feature_statistics_impl.R
 import com.example.feature_statistics_impl.databinding.ItemExpandableTransactionBinding
 import com.example.feature_statistics_impl.presentation.screen.transactionsList.SortingType
 import com.example.feature_statistics_impl.presentation.screen.transactionsList.extensions.getString
-import com.example.feature_statistics_impl.presentation.screen.transactionsList.extensions.getTextColor
+import com.example.feature_statistics_impl.presentation.screen.transactionsList.extensions.formatAsBalance
+import com.example.feature_statistics_impl.presentation.screen.transactionsList.extensions.getColorBySign
 
 class TransactionsViewHolder(
     private val binding: ItemExpandableTransactionBinding,
@@ -26,11 +27,11 @@ class TransactionsViewHolder(
                 nameTextView.text = transaction.category?.name ?: binding.root.context.getString(R.string.no_category)
             groupCommentTextView.text = transaction.description
 
-            groupPriceTextView.text = transaction.amount.getString(transaction.account.currency)
+            groupPriceTextView.text = transaction.amount.formatAsBalance(transaction.account.currency)
             groupPriceTextView.setTextColor(
                 ContextCompat.getColor(
                     binding.root.context,
-                    transaction.amount.getTextColor()
+                    transaction.amount.getColorBySign()
                 )
             )
 

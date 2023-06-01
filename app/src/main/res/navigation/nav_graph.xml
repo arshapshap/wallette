@@ -6,17 +6,17 @@
     app:startDestination="@id/statisticsFragment">
 
     <fragment
-        android:id="@+id/settingsFragment"
-        android:name="com.example.feature_settings.presentation.screen.settings.SettingsFragment"
-        android:label="@string/settings_fragment_name"
-        tools:layout="@layout/fragment_settings">
-    </fragment>
-
-    <fragment
         android:id="@+id/statisticsFragment"
         android:name="com.example.feature_statistics_impl.presentation.screen.statistics.StatisticsFragment"
         android:label="@string/statistics_fragment_name"
         tools:layout="@layout/fragment_statistics">
+    </fragment>
+
+    <fragment
+        android:id="@+id/transactionsFragment"
+        android:name="com.example.feature_statistics_impl.presentation.screen.transactionsList.TransactionsFragment"
+        android:label="@string/statistics_fragment_name"
+        tools:layout="@layout/fragment_transactions_list">
     </fragment>
 
     <fragment
@@ -34,9 +34,30 @@
     </fragment>
 
     <fragment
-        android:id="@+id/transactionsFragment"
-        android:name="com.example.feature_statistics_impl.presentation.screen.transactionsList.TransactionsFragment"
-        android:label="@string/statistics_fragment_name"
-        tools:layout="@layout/fragment_transactions_list">
+        android:id="@+id/settingsFragment"
+        android:name="com.example.feature_settings.presentation.screen.settings.SettingsFragment"
+        android:label="@string/settings_fragment_name"
+        tools:layout="@layout/fragment_settings">
+    </fragment>
+
+    <fragment
+        android:id="@+id/accountsFragment"
+        android:name="com.example.feature_settings.presentation.screen.accounts.AccountsFragment"
+        android:label="@string/accounts_fragment_name"
+        tools:layout="@layout/fragment_accounts">
+    </fragment>
+
+    <fragment
+        android:id="@+id/categoriesFragment"
+        android:name="com.example.feature_settings.presentation.screen.categories.CategoriesFragment"
+        android:label="@string/categories_fragment_name"
+        tools:layout="@layout/fragment_categories">
+    </fragment>
+
+    <fragment
+        android:id="@+id/tagsFragment"
+        android:name="com.example.feature_settings.presentation.screen.tags.TagsFragment"
+        android:label="@string/tags_fragment_name"
+        tools:layout="@layout/fragment_tags">
     </fragment>
 </navigation>

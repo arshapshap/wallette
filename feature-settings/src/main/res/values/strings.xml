@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="settings_fragment_name">Настройки</string>
+    <string name="accounts_fragment_name">Счета</string>
+    <string name="categories_fragment_name">Категории</string>
+    <string name="tags_fragment_name">Метки</string>
     <string name="category_name">Название категории</string>
     <string name="account_name">Название счета</string>
     <string name="enable_synchronization">Включить синхронизацию</string>
-    <string name="all_accounts">Счета</string>
     <string name="currency">Основная валюта</string>
     <string name="language">Язык</string>
     <string name="first_day_of_week">Начало недели</string>
     <string name="first_day_of_month">Начало месяца</string>
-    <string name="all_categories">Категории</string>
-    <string name="all_tags">Метки</string>
     <string name="time_period">Выбор периода</string>
 
     <!-- Languages -->
     <string name="language_ru">Русский</string>
-    <string name="language_en">Английский</string>
+    <string name="language_en">English</string>
 
-    <!-- Day of week -->
+    <!-- Days of week -->
     <string name="monday">Понедельник</string>
     <string name="tuesday">Вторник</string>
     <string name="wednesday">Среда</string>
@@ -26,10 +26,17 @@
     <string name="saturday">Суббота</string>
     <string name="sunday">Воскресенье</string>
 
-    <!-- Period selection -->
+    <!-- Time periods -->
     <string name="day">День</string>
     <string name="week">Неделя</string>
     <string name="month">Месяц</string>
     <string name="year">Год</string>
     <string name="all">Все</string>
+    <string name="add_account">Добавить счёт</string>
+    <string name="transfer_money">Добавить перевод</string>
+    <string name="add_category">Добавить категорию</string>
+    <string name="incomes">Доходы</string>
+    <string name="expenses">Расходы</string>
+    <string name="add_tag">Добавить метку</string>
+    <string name="disable_synchronization">Выключить синхронизацию</string>
 </resources>

@@ -12,16 +12,10 @@
         android:orientation="vertical">
 
         <include
-            android:id="@+id/add_account_layout"
+            android:id="@+id/add_tag_layout"
             layout="@layout/item_settings_element"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-
-        <include
-            android:id="@+id/add_money_transfer_layout"
-            layout="@layout/item_settings_element"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
 
         <Space
             android:layout_width="match_parent"
@@ -36,7 +30,7 @@
             android:paddingBottom="@dimen/bottom_margin"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:itemCount="15"
-            tools:listitem="@layout/item_settings_element" />
+            tools:listitem="@layout/item_tag" />
 
 
     </androidx.appcompat.widget.LinearLayoutCompat>

@@ -12,8 +12,8 @@ import com.example.feature_statistics_impl.R
 import com.example.feature_statistics_impl.databinding.FragmentTransactionsListBinding
 import com.example.feature_statistics_impl.di.StatisticsComponent
 import com.example.feature_statistics_impl.di.StatisticsFeatureApi
-import com.example.feature_statistics_impl.presentation.screen.transactionsList.extensions.getString
-import com.example.feature_statistics_impl.presentation.screen.transactionsList.extensions.getTextColor
+import com.example.feature_statistics_impl.presentation.screen.transactionsList.extensions.formatAsBalance
+import com.example.feature_statistics_impl.presentation.screen.transactionsList.extensions.getColorBySign
 import com.example.feature_statistics_impl.presentation.screen.transactionsList.groupsRecyclerView.TransactionGroupsAdapter
 
 class TransactionsFragment : BaseFragment<TransactionsViewModel>(R.layout.fragment_transactions_list) {
@@ -58,12 +58,12 @@ class TransactionsFragment : BaseFragment<TransactionsViewModel>(R.layout.fragme
                 }
                 binding.sortingImageButton.setImageDrawable(AppCompatResources.getDrawable(requireContext(), resId))
 
-                binding.balanceTextView.text = it.balance.getString(Currency.RUB)
+                binding.balanceTextView.text = it.balance.formatAsBalance(Currency.RUB)
                 // TODO: сохранять основную валюту в sharedPrefs и подставлять её здесь
                 binding.balanceTextView.setTextColor(
                     ContextCompat.getColor(
                         binding.root.context,
-                        it.balance.getTextColor()
+                        it.balance.getColorBySign()
                     )
                 )
             }
