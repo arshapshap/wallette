@@ -5,9 +5,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.common.domain.models.Account
-import com.example.feature_settings.databinding.ItemSettingsElementBinding
-import com.example.feature_settings.presentation.utils.setContent
 import com.example.common.presentation.extensions.formatAsBalance
+import com.example.feature_settings.databinding.ItemSettingsElementBinding
+import com.example.feature_settings.presentation.utils.*
 
 class AccountsAdapter(
     private val onItemClick: (Account) -> Unit
@@ -43,17 +43,19 @@ class AccountsAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun onBind(account: Account) {
-            binding.setContent(
-                iconRes = account.icon.drawableRes,
-                title = account.name,
-                isStrokeVisible = true,
-                value = account.currentBalance.formatAsBalance(
-                    currency = account.currency,
-                    withPlus = false
-                ),
-                isRightArrowVisible = false
-            ) {
-                onClick.invoke(account)
+            with (binding) {
+                setStrokeVisibility(true)
+                setImage(account.icon.drawableRes)
+                setTitle(account.name)
+                setValue(
+                    account.currentBalance.formatAsBalance(
+                        currency = account.currency,
+                        withPlus = false
+                    )
+                )
+                setOnClickListener {
+                    onClick.invoke(account)
+                }
             }
         }
     }

@@ -1,4 +1,4 @@
-package com.example.feature_settings.presentation.screen.accounts.single
+package com.example.feature_settings.presentation.screen.singleAccount
 
 import com.example.common.domain.models.AccountIcon
 import com.example.common.domain.models.Currency

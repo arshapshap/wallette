@@ -1,4 +1,4 @@
-package com.example.feature_settings.presentation.screen.accounts.single
+package com.example.feature_settings.presentation.screen.singleAccount
 
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.common.di.FeatureUtils
@@ -14,8 +14,7 @@ import com.example.feature_settings.presentation.screen.common.IconsAdapter
 import com.example.feature_settings.presentation.screen.settings.dialogs.PickerDialogFragment
 import com.example.feature_settings.presentation.screen.settings.dialogs.PickerDialogFragment.Companion.PickerType
 import com.example.feature_settings.presentation.screen.settings.dialogs.PickerDialogFragment.Companion.showPickerDialog
-import com.example.feature_settings.presentation.utils.getColorPrimary
-import com.example.feature_settings.presentation.utils.setContent
+import com.example.feature_settings.presentation.utils.*
 import com.google.android.flexbox.*
 
 class SingleAccountFragment :
@@ -42,45 +41,57 @@ class SingleAccountFragment :
     }
 
     override fun initViews() {
-        with(binding) {
-            binding.currencyLayout.setContent(
-                iconRes = R.drawable.ic_currency,
-                titleRes = R.string.currency,
-                isRightArrowVisible = true,
-                isStrokeVisible = true
-            )
+        with(binding.saveLayout) {
+            setStrokeVisibility(true)
+            setColor(getColorPrimary())
+            setImage(R.drawable.ic_done)
+            setTitle(R.string.save)
+            setOnClickListener {
+                viewModel.save()
+            }
+        }
 
-            accountIconsRecyclerView.adapter = IconsAdapter(
-                colorSelected = getColorPrimary()
-            ) {
+        with (binding.currencyLayout) {
+            setStrokeVisibility(true)
+            setRightArrowVisible(true)
+            setImage(R.drawable.ic_currency)
+            setTitle(R.string.currency)
+        }
+
+        with (binding.accountIconsRecyclerView) {
+            adapter = IconsAdapter(colorSelected = getColorPrimary()) {
                 viewModel.selectIcon(it as AccountIcon)
             }
-            accountIconsRecyclerView.layoutManager = getFlexboxLayoutManager()
+            layoutManager = getFlexboxLayoutManager()
         }
     }
 
     override fun subscribe() {
         viewModel.stateLiveData.observe(viewLifecycleOwner) {
-            binding.accountNameEditText.setText(it?.account?.name)
-            binding.startBalanceEditText.setText(it?.account?.startBalance?.toString() ?: "")
-            with ((binding.accountIconsRecyclerView.adapter as IconsAdapter)) {
-                setList(it?.icons ?: listOf())
+            with (binding) {
+                accountNameEditText.setText(it?.account?.name)
+                startBalanceEditText.setText(it?.account?.startBalance?.toString() ?: "")
+
+                getIconsAdapter()?.setList(it?.icons ?: listOf())
 
                 val iconIndex = it?.icons?.indexOf(it.account.icon)
-                if (iconIndex != null) setSelected(iconIndex)
-            }
-
-            if (it != null)
-                binding.currencyLayout.setContent(
-                    value = it.account.currency.name
-                ) {
-                    showPickerDialog(
-                        fragmentManager = childFragmentManager,
-                        title = getString(R.string.currency),
-                        items = it.availableCurrencies.map { it.name }.toTypedArray(),
-                        pickerType = PickerType.Currency
-                    )
+                if (iconIndex != null) {
+                    getIconsAdapter()?.setSelected(iconIndex)
+                    accountIconsRecyclerView.scrollToPosition(iconIndex)
                 }
+
+                if (it != null) {
+                    currencyLayout.setValue(it.account.currency.name)
+                    currencyLayout.setOnClickListener {
+                        showPickerDialog(
+                            fragmentManager = childFragmentManager,
+                            title = getString(R.string.currency),
+                            items = it.availableCurrencies.map { it.name }.toTypedArray(),
+                            pickerType = PickerType.Currency
+                        )
+                    }
+                }
+            }
         }
     }
 
@@ -90,6 +101,9 @@ class SingleAccountFragment :
             viewModel.selectCurrency(currency)
         }
     }
+
+    private fun getIconsAdapter()
+            = (binding.accountIconsRecyclerView.adapter as? IconsAdapter)
 
     private fun getFlexboxLayoutManager(): FlexboxLayoutManager {
         return FlexboxLayoutManager(context).apply {

@@ -8,7 +8,8 @@ import com.example.common.domain.models.Category
 import com.example.common.domain.models.Tag
 import com.example.feature_auth.presentation.screen.AuthorizationRouter
 import com.example.feature_settings.presentation.SettingsRouter
-import com.example.feature_settings.presentation.screen.accounts.single.SingleAccountFragment
+import com.example.feature_settings.presentation.screen.singleAccount.SingleAccountFragment
+import com.example.feature_settings.presentation.screen.singleCategory.SingleCategoryFragment
 import com.example.feature_statistics_impl.presentation.StatisticsRouter
 import com.example.wallette.R
 
@@ -63,11 +64,16 @@ class Navigator : StatisticsRouter, AuthorizationRouter, SettingsRouter {
         )
     }
 
-    override fun openCategory(category: Category) {
-        //TODO("Not yet implemented")
+    override fun openSingleCategory(category: Category) {
+        navController?.navigate(
+            resId = R.id.singleCategoryFragment,
+            args = Bundle().apply {
+                putSerializable(SingleCategoryFragment.CATEGORY_KEY, category)
+            }
+        )
     }
 
-    override fun openTag(tag: Tag) {
+    override fun openSingleTag(tag: Tag) {
         //TODO("Not yet implemented")
     }
 
@@ -76,7 +82,7 @@ class Navigator : StatisticsRouter, AuthorizationRouter, SettingsRouter {
     }
 
     override fun openCategoryCreating() {
-        //TODO("Not yet implemented")
+        navController?.navigate(R.id.singleCategoryFragment)
     }
 
     override fun openTagCreating() {

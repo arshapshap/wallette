@@ -32,7 +32,7 @@ class TagsViewModel @AssistedInject constructor(
     }
 
     fun openTag(tag: Tag) {
-        router.openTag(tag)
+        router.openSingleTag(tag)
     }
 
     @AssistedFactory

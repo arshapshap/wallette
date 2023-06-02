@@ -6,7 +6,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.common.domain.models.Category
 import com.example.feature_settings.databinding.ItemSettingsElementBinding
-import com.example.feature_settings.presentation.utils.setContent
+import com.example.feature_settings.presentation.utils.setStrokeVisibility
+import com.example.feature_settings.presentation.utils.setImage
+import com.example.feature_settings.presentation.utils.setOnClickListener
+import com.example.feature_settings.presentation.utils.setTitle
 
 class CategoriesAdapter(
     private val onItemClick: (Category) -> Unit
@@ -42,13 +45,13 @@ class CategoriesAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun onBind(category: Category) {
-            binding.setContent(
-                iconRes = category.icon.drawableRes,
-                title = category.name,
-                isStrokeVisible = true,
-                isRightArrowVisible = false
-            ) {
-                onClick.invoke(category)
+            with (binding) {
+                setStrokeVisibility(true)
+                setImage(category.icon.drawableRes)
+                setTitle(category.name)
+                setOnClickListener {
+                    onClick.invoke(category)
+                }
             }
         }
     }

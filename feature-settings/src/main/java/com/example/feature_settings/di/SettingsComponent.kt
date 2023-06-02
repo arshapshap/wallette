@@ -4,12 +4,14 @@ import com.example.common.di.scopes.SettingsScope
 import com.example.feature_settings.presentation.SettingsRouter
 import com.example.feature_settings.presentation.screen.accounts.AccountsFragment
 import com.example.feature_settings.presentation.screen.accounts.AccountsViewModel
-import com.example.feature_settings.presentation.screen.accounts.single.SingleAccountFragment
-import com.example.feature_settings.presentation.screen.accounts.single.SingleAccountViewModel
+import com.example.feature_settings.presentation.screen.singleAccount.SingleAccountFragment
+import com.example.feature_settings.presentation.screen.singleAccount.SingleAccountViewModel
 import com.example.feature_settings.presentation.screen.categories.CategoriesFragment
 import com.example.feature_settings.presentation.screen.categories.CategoriesViewModel
 import com.example.feature_settings.presentation.screen.settings.SettingsFragment
 import com.example.feature_settings.presentation.screen.settings.SettingsViewModel
+import com.example.feature_settings.presentation.screen.singleCategory.SingleCategoryFragment
+import com.example.feature_settings.presentation.screen.singleCategory.SingleCategoryViewModel
 import com.example.feature_settings.presentation.screen.tags.TagsFragment
 import com.example.feature_settings.presentation.screen.tags.TagsViewModel
 import dagger.BindsInstance
@@ -48,4 +50,8 @@ interface SettingsComponent : SettingsFeatureApi {
     fun inject(fragment: SingleAccountFragment)
 
     fun singleAccountViewModel(): SingleAccountViewModel.Factory
+
+    fun inject(fragment: SingleCategoryFragment)
+
+    fun singleCategoryViewModel(): SingleCategoryViewModel.Factory
 }

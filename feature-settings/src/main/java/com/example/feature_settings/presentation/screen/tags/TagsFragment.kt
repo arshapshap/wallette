@@ -9,8 +9,7 @@ import com.example.feature_settings.databinding.FragmentTagsBinding
 import com.example.feature_settings.di.SettingsComponent
 import com.example.feature_settings.di.SettingsFeatureApi
 import com.example.feature_settings.presentation.screen.tags.recyclerView.TagsAdapter
-import com.example.feature_settings.presentation.utils.getColorPrimary
-import com.example.feature_settings.presentation.utils.setContent
+import com.example.feature_settings.presentation.utils.*
 
 class TagsFragment : BaseFragment<TagsViewModel>(R.layout.fragment_tags) {
 
@@ -28,25 +27,28 @@ class TagsFragment : BaseFragment<TagsViewModel>(R.layout.fragment_tags) {
     }
 
     override fun initViews() {
-        with(binding) {
-            addTagLayout.setContent(
-                iconRes = R.drawable.ic_plus_circle,
-                titleRes = R.string.add_tag,
-                colorInt = getColorPrimary(),
-                isStrokeVisible = true,
-            ) {
+        with(binding.addTagLayout) {
+            setStrokeVisibility(true)
+            setRightArrowVisible(true)
+            setColor(getColorPrimary())
+            setImage(R.drawable.ic_plus_circle)
+            setTitle(R.string.add_tag)
+            setOnClickListener {
                 viewModel.openTagCreating()
             }
+        }
 
-            listRecyclerView.adapter = TagsAdapter {
-                viewModel.openTag(it)
-            }
+        binding.listRecyclerView.adapter = TagsAdapter {
+            viewModel.openTag(it)
         }
     }
 
     override fun subscribe() {
         viewModel.listLiveData.observe(viewLifecycleOwner) {
-            (binding.listRecyclerView.adapter as TagsAdapter).setList(it)
+            getTagsAdapter()?.setList(it)
         }
     }
+
+    private fun getTagsAdapter()
+        = (binding.listRecyclerView.adapter as? TagsAdapter)
 }

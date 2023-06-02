@@ -11,9 +11,7 @@ import com.example.feature_settings.di.SettingsFeatureApi
 import com.example.feature_settings.presentation.screen.settings.dialogs.PickerDialogFragment
 import com.example.feature_settings.presentation.screen.settings.dialogs.PickerDialogFragment.Companion.PickerType
 import com.example.feature_settings.presentation.screen.settings.dialogs.PickerDialogFragment.Companion.showPickerDialog
-import com.example.feature_settings.presentation.utils.getColorPrimary
-import com.example.feature_settings.presentation.utils.getColorOnPrimary
-import com.example.feature_settings.presentation.utils.setContent
+import com.example.feature_settings.presentation.utils.*
 
 
 class SettingsFragment : BaseFragment<SettingsViewModel>(R.layout.fragment_settings),
@@ -33,152 +31,158 @@ class SettingsFragment : BaseFragment<SettingsViewModel>(R.layout.fragment_setti
     }
 
     override fun initViews() {
-        binding.enableSyncLayout.setContent(
-            iconRes = R.drawable.ic_sync,
-            titleRes = R.string.enable_synchronization,
-            colorInt = getColorOnPrimary(),
-            fillColorInt = getColorPrimary(),
-            isRightArrowVisible = false
-        ) {
-            viewModel.enableSynchronization()
+        with (binding.enableSyncLayout) {
+            setColor(getColorOnPrimary())
+            setFillColor(getColorPrimary())
+            setImage(R.drawable.ic_sync)
+            setTitle(R.string.enable_synchronization)
+            setOnClickListener {
+                viewModel.enableSynchronization()
+            }
         }
 
-        binding.accountsLayout.setContent(
-            iconRes = R.drawable.ic_account,
-            titleRes = R.string.accounts_fragment_name,
-            isRightArrowVisible = true
-        ) {
-            viewModel.openAccounts()
+        with (binding.accountsLayout) {
+            setRightArrowVisible(true)
+            setImage(R.drawable.ic_account)
+            setTitle(R.string.accounts_fragment_name)
+            setOnClickListener {
+                viewModel.openAccounts()
+            }
         }
 
-        binding.categoriesLayout.setContent(
-            iconRes = R.drawable.ic_category,
-            titleRes = R.string.categories_fragment_name,
-            isRightArrowVisible = true
-        ) {
-            viewModel.openCategories()
+        with (binding.categoriesLayout) {
+            setRightArrowVisible(true)
+            setImage(R.drawable.ic_category)
+            setTitle(R.string.categories_fragment_name)
+            setOnClickListener {
+                viewModel.openCategories()
+            }
         }
 
-        binding.tagsLayout.setContent(
-            iconRes = R.drawable.ic_tag,
-            titleRes = R.string.tags_fragment_name,
-            isRightArrowVisible = true
-        ) {
-            viewModel.openTags()
+        with (binding.tagsLayout) {
+            setRightArrowVisible(true)
+            setImage(R.drawable.ic_tag)
+            setTitle(R.string.tags_fragment_name)
+            setOnClickListener {
+                viewModel.openTags()
+            }
         }
 
-        binding.currencyLayout.setContent(
-            iconRes = R.drawable.ic_currency,
-            titleRes = R.string.main_currency,
-            isRightArrowVisible = true
-        )
+        with (binding.currencyLayout) {
+            setRightArrowVisible(true)
+            setImage(R.drawable.ic_currency)
+            setTitle(R.string.main_currency)
+        }
 
-        binding.languageLayout.setContent(
-            iconRes = R.drawable.ic_language,
-            titleRes = R.string.language,
-            isRightArrowVisible = true
-        )
+        with (binding.languageLayout) {
+            setRightArrowVisible(true)
+            setImage(R.drawable.ic_language)
+            setTitle(R.string.language)
+        }
 
-        binding.firstDayOfWeekLayout.setContent(
-            iconRes = R.drawable.ic_calendar_today,
-            titleRes = R.string.first_day_of_week,
-            isRightArrowVisible = true
-        )
+        with (binding.firstDayOfWeekLayout) {
+            setRightArrowVisible(true)
+            setImage(R.drawable.ic_calendar_today)
+            setTitle(R.string.first_day_of_week)
+        }
 
-        binding.firstDayOfMonthLayout.setContent(
-            iconRes = R.drawable.ic_calendar_month,
-            titleRes = R.string.first_day_of_month,
-            isRightArrowVisible = true
-        )
+        with (binding.firstDayOfMonthLayout) {
+            setRightArrowVisible(true)
+            setImage(R.drawable.ic_calendar_month)
+            setTitle(R.string.first_day_of_month)
+        }
 
-        binding.timePeriodLayout.setContent(
-            iconRes = R.drawable.ic_calendar_note,
-            titleRes = R.string.time_period,
-            isRightArrowVisible = true
-        )
-
+        with (binding.timePeriodLayout) {
+            setRightArrowVisible(true)
+            setImage(R.drawable.ic_calendar_note)
+            setTitle(R.string.time_period)
+        }
     }
 
     override fun subscribe() {
         with (viewModel) {
             isSynchronized.observe(viewLifecycleOwner) {
-                binding.enableSyncLayout.root.invalidate()
-                if (it)
-                    binding.enableSyncLayout.setContent(
-                        iconRes = R.drawable.ic_sync,
-                        titleRes = R.string.disable_synchronization,
-                        colorInt = getColorPrimary(),
-                        isStrokeVisible = true,
-                        isRightArrowVisible = false
-                    ) {
+                with (binding.enableSyncLayout) {
+                    invalidate()
+                    setImage(R.drawable.ic_sync)
+                    setOnClickListener {
                         viewModel.enableSynchronization()
                     }
+                }
+
+                if (it)
+                    with (binding.enableSyncLayout) {
+                        setColor(getColorPrimary())
+                        setStrokeVisibility(true)
+                        setTitle(R.string.disable_synchronization)
+                    }
                 else
-                    binding.enableSyncLayout.setContent(
-                        iconRes = R.drawable.ic_sync,
-                        titleRes = R.string.enable_synchronization,
-                        colorInt = getColorOnPrimary(),
-                        fillColorInt = getColorPrimary(),
-                        isRightArrowVisible = false
-                    ) {
-                        viewModel.enableSynchronization()
+                    with (binding.enableSyncLayout) {
+                        setColor(getColorOnPrimary())
+                        setFillColor(getColorPrimary())
+                        setTitle(R.string.enable_synchronization)
                     }
             }
 
             dataLiveData.observe(viewLifecycleOwner) {
-                binding.currencyLayout.setContent(
-                    value = it.currency.name
-                ) {
-                    showPickerDialog(
-                        fragmentManager = childFragmentManager,
-                        title = getString(R.string.main_currency),
-                        items = it.availableCurrencies.map { it.name }.toTypedArray(),
-                        pickerType = PickerType.Currency
-                    )
+                with (binding.currencyLayout) {
+                    setValue(it.currency.name)
+                    setOnClickListener {
+                        showPickerDialog(
+                            fragmentManager = childFragmentManager,
+                            title = getString(R.string.main_currency),
+                            items = it.availableCurrencies.map { it.name }.toTypedArray(),
+                            pickerType = PickerType.Currency
+                        )
+                    }
                 }
 
-                binding.languageLayout.setContent(
-                    valueRes = it.language.stringRes
-                ) {
-                    showPickerDialog(
-                        fragmentManager = childFragmentManager,
-                        title = getString(R.string.language),
-                        items = it.availableLanguages.map { getString(it.stringRes) }.toTypedArray(),
-                        pickerType = PickerType.Language
-                    )
+                with (binding.languageLayout) {
+                    setValue(it.language.stringRes)
+                    setOnClickListener {
+                        showPickerDialog(
+                            fragmentManager = childFragmentManager,
+                            title = getString(R.string.language),
+                            items = it.availableLanguages.map { getString(it.stringRes) }.toTypedArray(),
+                            pickerType = PickerType.Language
+                        )
+                    }
                 }
 
-                binding.firstDayOfWeekLayout.setContent(
-                    valueRes = it.firstDayOfWeek.stringRes
-                ) {
-                    showPickerDialog(
-                        fragmentManager = childFragmentManager,
-                        title = getString(R.string.first_day_of_week),
-                        items = it.daysOfWeek.map { getString(it.stringRes) }.toTypedArray(),
-                        pickerType = PickerType.FirstDayOfWeek
-                    )
+                with (binding.firstDayOfWeekLayout) {
+                    setValue(it.firstDayOfWeek.stringRes)
+                    setOnClickListener {
+                        showPickerDialog(
+                            fragmentManager = childFragmentManager,
+                            title = getString(R.string.first_day_of_week),
+                            items = it.daysOfWeek.map { getString(it.stringRes) }.toTypedArray(),
+                            pickerType = PickerType.FirstDayOfWeek
+                        )
+                    }
                 }
 
-                binding.firstDayOfMonthLayout.setContent(
-                    value = it.firstDayOfMonth.toString()
-                ) {
-                    showPickerDialog(
-                        fragmentManager = childFragmentManager,
-                        title = getString(R.string.first_day_of_month),
-                        items = it.daysOfMonth.map { it.toString() }.toTypedArray(),
-                        pickerType = PickerType.FirstDayOfMonth
-                    )
+                with (binding.firstDayOfMonthLayout) {
+                    setValue(it.firstDayOfMonth.toString())
+                    setOnClickListener {
+                        showPickerDialog(
+                            fragmentManager = childFragmentManager,
+                            title = getString(R.string.first_day_of_month),
+                            items = it.daysOfMonth.map { it.toString() }.toTypedArray(),
+                            pickerType = PickerType.FirstDayOfMonth
+                        )
+                    }
                 }
 
-                binding.timePeriodLayout.setContent(
-                    valueRes = it.timePeriod.stringRes
-                ) {
-                    showPickerDialog(
-                        fragmentManager = childFragmentManager,
-                        title = getString(R.string.time_period),
-                        items = it.availableTimePeriods.map { getString(it.stringRes) }.toTypedArray(),
-                        pickerType = PickerType.TimePeriod
-                    )
+                with (binding.timePeriodLayout) {
+                    setValue(it.timePeriod.stringRes)
+                    setOnClickListener {
+                        showPickerDialog(
+                            fragmentManager = childFragmentManager,
+                            title = getString(R.string.time_period),
+                            items = it.availableTimePeriods.map { getString(it.stringRes) }.toTypedArray(),
+                            pickerType = PickerType.TimePeriod
+                        )
+                    }
                 }
             }
         }

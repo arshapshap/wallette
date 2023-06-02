@@ -1,7 +1,6 @@
 package com.example.feature_settings.presentation.screen.tags.recyclerView
 
 import android.annotation.SuppressLint
-import android.content.res.ColorStateList
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -9,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.common.domain.models.Tag
 import com.example.feature_settings.R
 import com.example.feature_settings.databinding.ItemSettingsElementBinding
-import com.example.feature_settings.presentation.utils.setContent
+import com.example.feature_settings.presentation.utils.*
 
 class TagsAdapter(
     private val onItemClick: (Tag) -> Unit
@@ -45,17 +44,15 @@ class TagsAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun onBind(tag: Tag) {
-            binding.setContent(
-                iconRes = R.drawable.ic_circle,
-                title = tag.name,
-                isStrokeVisible = true,
-                isRightArrowVisible = false
-            ) {
-                onClick.invoke(tag)
+            with (binding) {
+                setStrokeVisibility(true)
+                setImage(R.drawable.ic_circle)
+                setTitle(tag.name)
+                setOnClickListener {
+                    onClick.invoke(tag)
+                }
+                setImageTint(Color.parseColor(tag.color))
             }
-            binding.iconImageView.imageTintList = ColorStateList.valueOf(
-                Color.parseColor(tag.color)
-            )
         }
     }
 }

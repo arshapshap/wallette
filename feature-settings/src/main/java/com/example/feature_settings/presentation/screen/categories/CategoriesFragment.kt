@@ -10,8 +10,7 @@ import com.example.feature_settings.databinding.FragmentCategoriesBinding
 import com.example.feature_settings.di.SettingsComponent
 import com.example.feature_settings.di.SettingsFeatureApi
 import com.example.feature_settings.presentation.screen.categories.recyclerView.CategoriesAdapter
-import com.example.feature_settings.presentation.utils.getColorPrimary
-import com.example.feature_settings.presentation.utils.setContent
+import com.example.feature_settings.presentation.utils.*
 
 class CategoriesFragment : BaseFragment<CategoriesViewModel>(R.layout.fragment_categories) {
 
@@ -29,38 +28,46 @@ class CategoriesFragment : BaseFragment<CategoriesViewModel>(R.layout.fragment_c
     }
 
     override fun initViews() {
-        with (binding) {
-            addCategoryLayout.setContent(
-                iconRes = R.drawable.ic_plus_box,
-                titleRes = R.string.add_category,
-                colorInt = getColorPrimary(),
-                isStrokeVisible = true,
-            ) {
+        with (binding.addCategoryLayout) {
+            setStrokeVisibility(true)
+            setRightArrowVisible(true)
+            setColor(getColorPrimary())
+            setImage(R.drawable.ic_plus_box)
+            setTitle(R.string.add_category)
+            setOnClickListener {
                 viewModel.openCategoryCreating()
             }
+        }
 
+        with (binding) {
             listIncomesRecyclerView.adapter = CategoriesAdapter {
                 viewModel.openCategory(it)
             }
             listExpensesRecyclerView.adapter = CategoriesAdapter {
                 viewModel.openCategory(it)
             }
-
-            expensesTextView.isGone = true
-            incomesTextView.isGone = true
         }
+
+        binding.expensesTextView.isGone = true
+        binding.incomesTextView.isGone = true
     }
 
     override fun subscribe() {
         viewModel.listIncomesLiveData.observe(viewLifecycleOwner) {
-            (binding.listIncomesRecyclerView.adapter as CategoriesAdapter).setList(it)
+            getIncomesCategoriesAdapter()?.setList(it)
             if (it.isNotEmpty())
                 binding.incomesTextView.isGone = false
         }
         viewModel.listExpensesLiveData.observe(viewLifecycleOwner) {
-            (binding.listExpensesRecyclerView.adapter as CategoriesAdapter).setList(it)
+            getExpensesCategoriesAdapter()?.setList(it)
             if (it.isNotEmpty())
                 binding.expensesTextView.isGone = false
         }
     }
+
+    private fun getIncomesCategoriesAdapter()
+        = (binding.listIncomesRecyclerView.adapter as? CategoriesAdapter)
+
+    private fun getExpensesCategoriesAdapter()
+        = (binding.listExpensesRecyclerView.adapter as? CategoriesAdapter)
 }

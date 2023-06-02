@@ -2,27 +2,28 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_button_stroke">
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/settings_element_height"
         android:background="?attr/selectableItemBackgroundBorderless"
+        android:clickable="true"
+        android:focusable="true"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingVertical="10dp"
         android:paddingHorizontal="20dp"
-        android:clickable="true"
-        android:focusable="true">
+        android:paddingVertical="10dp">
 
         <ImageView
             android:id="@+id/iconImageView"
             android:layout_width="@dimen/settings_element_icon_size"
             android:layout_height="@dimen/settings_element_icon_size"
-            tools:src="@drawable/ic_currency"
             android:layout_marginRight="10dp"
-            tools:ignore="ContentDescription" />
+            tools:ignore="ContentDescription"
+            tools:src="@drawable/ic_currency" />
 
         <TextView
             android:id="@+id/titleTextView"
@@ -45,6 +46,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:src="@drawable/ic_arrow"
+            android:visibility="gone"
             tools:ignore="ContentDescription" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>

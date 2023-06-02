@@ -20,29 +20,35 @@
         android:layout_height="@dimen/settings_element_height" />
 
     <EditText
-        android:id="@+id/accountNameEditText"
+        android:id="@+id/categoryNameEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/account_name"
         android:importantForAutofill="no"
         tools:ignore="TextFields" />
 
-    <EditText
-        android:id="@+id/start_balance_edit_text"
+    <RadioGroup
+        android:id="@+id/categoryTypeRadio"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/start_balance"
-        android:importantForAutofill="no"
-        android:inputType="numberDecimal" />
+        android:gravity="center"
+        android:orientation="horizontal">
 
-    <include
-        android:id="@+id/currency_layout"
-        layout="@layout/item_settings_element"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/expenses"
+            android:textSize="17sp" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/incomes"
+            android:textSize="17sp" />
+    </RadioGroup>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/accountIconsRecyclerView"
+        android:id="@+id/categoryIconsRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clipToPadding="false"

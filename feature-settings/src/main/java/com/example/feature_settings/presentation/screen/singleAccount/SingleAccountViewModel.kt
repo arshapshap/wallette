@@ -1,4 +1,4 @@
-package com.example.feature_settings.presentation.screen.accounts.single
+package com.example.feature_settings.presentation.screen.singleAccount
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -24,6 +24,12 @@ class SingleAccountViewModel @AssistedInject constructor(
     val stateLiveData: LiveData<Data?>
         get() = _stateLiveData
 
+    val isDataValid: Boolean
+        get() {
+            val editingAccount = _stateLiveData.value?.account ?: return false
+            return editingAccount.name != "" && editingAccount.startBalance != null
+        }
+
     init {
         val editingAccount = if (account == null) EditingAccount()
             else EditingAccount(
@@ -43,7 +49,10 @@ class SingleAccountViewModel @AssistedInject constructor(
     }
 
     fun save() {
-        val editingAccount = _stateLiveData.value?.account ?: return // TODO: выдавать ошибку?
+        if (!isDataValid)
+            return
+        val editingAccount = _stateLiveData.value?.account!!
+
         viewModelScope.launch {
             if (account == null)
                 interactor.createAccount(
@@ -52,7 +61,7 @@ class SingleAccountViewModel @AssistedInject constructor(
                         name = editingAccount.name,
                         icon = editingAccount.icon,
                         currentBalance = 0.0,
-                        startBalance = editingAccount.startBalance ?: return@launch,
+                        startBalance = editingAccount.startBalance!!,
                         currency = editingAccount.currency
                     )
                 )
@@ -63,7 +72,7 @@ class SingleAccountViewModel @AssistedInject constructor(
                         name = editingAccount.name,
                         icon = editingAccount.icon,
                         currentBalance = account.currentBalance,
-                        startBalance = editingAccount.startBalance ?: return@launch,
+                        startBalance = editingAccount.startBalance!!,
                         currency = editingAccount.currency
                     )
                 )

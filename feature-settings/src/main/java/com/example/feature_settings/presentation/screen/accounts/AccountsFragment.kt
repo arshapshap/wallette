@@ -1,6 +1,5 @@
 package com.example.feature_settings.presentation.screen.accounts
 
-import androidx.core.view.isGone
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.common.di.FeatureUtils
 import com.example.common.presentation.base.BaseFragment
@@ -10,8 +9,7 @@ import com.example.feature_settings.databinding.FragmentAccountsBinding
 import com.example.feature_settings.di.SettingsComponent
 import com.example.feature_settings.di.SettingsFeatureApi
 import com.example.feature_settings.presentation.screen.accounts.recyclerView.AccountsAdapter
-import com.example.feature_settings.presentation.utils.getColorPrimary
-import com.example.feature_settings.presentation.utils.setContent
+import com.example.feature_settings.presentation.utils.*
 
 class AccountsFragment : BaseFragment<AccountsViewModel>(R.layout.fragment_accounts) {
 
@@ -29,26 +27,28 @@ class AccountsFragment : BaseFragment<AccountsViewModel>(R.layout.fragment_accou
     }
 
     override fun initViews() {
-        with (binding) {
-            addAccountLayout.setContent(
-                iconRes = R.drawable.ic_plus,
-                titleRes = R.string.add_account,
-                colorInt = getColorPrimary(),
-                isStrokeVisible = true,
-            ) {
+        with (binding.addAccountLayout) {
+            setStrokeVisibility(true)
+            setRightArrowVisible(true)
+            setColor(getColorPrimary())
+            setImage(R.drawable.ic_plus)
+            setTitle(R.string.add_account)
+            setOnClickListener {
                 viewModel.openAccountCreating()
             }
+        }
 
-            listRecyclerView.adapter = AccountsAdapter {
-                viewModel.openAccount(it)
-            }
+        binding.listRecyclerView.adapter = AccountsAdapter {
+            viewModel.openAccount(it)
+        }
 
-            addMoneyTransferLayout.setContent(
-                iconRes = R.drawable.ic_transfer,
-                titleRes = R.string.transfer_money,
-                colorInt = getColorPrimary(),
-                isStrokeVisible = true,
-            ) {
+        with (binding.addMoneyTransferLayout) {
+            setStrokeVisibility(true)
+            setRightArrowVisible(true)
+            setColor(getColorPrimary())
+            setImage(R.drawable.ic_transfer)
+            setTitle(R.string.transfer_money)
+            setOnClickListener {
                 viewModel.openTransferCreating()
             }
         }
@@ -56,8 +56,11 @@ class AccountsFragment : BaseFragment<AccountsViewModel>(R.layout.fragment_accou
 
     override fun subscribe() {
         viewModel.listLiveData.observe(viewLifecycleOwner) {
-            (binding.listRecyclerView.adapter as AccountsAdapter).setList(it)
-            binding.addMoneyTransferLayout.root.isGone = it.count() < 2
+            getAccountsAdapter()?.setList(it)
+            binding.addMoneyTransferLayout.setGone(it.count() < 2)
         }
     }
+
+    private fun getAccountsAdapter()
+        = (binding.listRecyclerView.adapter as? AccountsAdapter)
 }

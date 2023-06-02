@@ -63,7 +63,13 @@
 
     <fragment
         android:id="@+id/singleAccountFragment"
-        android:name="com.example.feature_settings.presentation.screen.accounts.single.SingleAccountFragment"
+        android:name="com.example.feature_settings.presentation.screen.singleAccount.SingleAccountFragment"
         android:label="@string/single_account_fragment_name"
         tools:layout="@layout/fragment_single_account"/>
+
+    <fragment
+        android:id="@+id/singleCategoryFragment"
+        android:name="com.example.feature_settings.presentation.screen.singleCategory.SingleCategoryFragment"
+        android:label="@string/single_category_fragment_name"
+        tools:layout="@layout/fragment_single_category"/>
 </navigation>
