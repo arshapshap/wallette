@@ -3,6 +3,7 @@ package com.example.wallette.navigation
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
+import androidx.navigation.NavOptions
 import com.example.common.domain.models.Account
 import com.example.common.domain.models.Category
 import com.example.common.domain.models.Tag
@@ -45,15 +46,42 @@ class Navigator : StatisticsRouter, AuthorizationRouter, SettingsRouter {
     }
 
     override fun openAccounts() {
-        navController?.navigate(R.id.accountsFragment)
+        navController?.navigate(
+            resId = R.id.accountsFragment,
+            args = null,
+            navOptions = NavOptions.Builder()
+                .setPopUpTo(
+                    destinationId = R.id.settingsFragment,
+                    inclusive = false
+                )
+                .build()
+        )
     }
 
     override fun openCategories() {
-        navController?.navigate(R.id.categoriesFragment)
+        navController?.navigate(
+            resId = R.id.categoriesFragment,
+            args = null,
+            navOptions = NavOptions.Builder()
+                .setPopUpTo(
+                    destinationId = R.id.settingsFragment,
+                    inclusive = false
+                )
+                .build()
+        )
     }
 
     override fun openTags() {
-        navController?.navigate(R.id.tagsFragment)
+        navController?.navigate(
+            resId = R.id.tagsFragment,
+            args = null,
+            navOptions = NavOptions.Builder()
+                .setPopUpTo(
+                    destinationId = R.id.settingsFragment,
+                    inclusive = false
+                )
+                .build()
+        )
     }
 
     override fun openSingleAccount(account: Account?) {

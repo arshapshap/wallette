@@ -1,5 +1,6 @@
 package com.example.feature_settings.presentation.screen.singleCategory
 
+import androidx.core.widget.doAfterTextChanged
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.common.di.FeatureUtils
 import com.example.common.domain.models.Category
@@ -45,9 +46,7 @@ class SingleCategoryFragment :
             setImage(R.drawable.ic_done)
             setTitle(R.string.save)
             setOnClickListener {
-                viewModel.save(
-                    name = binding.categoryNameEditText.text.toString()
-                )
+                viewModel.save()
             }
         }
 
@@ -64,25 +63,32 @@ class SingleCategoryFragment :
                 R.id.incomesRadioButton -> viewModel.selectType(TransactionType.Income)
             }
         }
+
+        binding.categoryNameEditText.doAfterTextChanged {
+            viewModel.editName(it.toString())
+        }
     }
 
     override fun subscribe() {
-        viewModel.stateLiveData.observe(viewLifecycleOwner) {
+        viewModel.startLiveData.observe(viewLifecycleOwner) {
             with (binding) {
                 categoryNameEditText.setText(it?.category?.name)
                 getIconsAdapter()?.setList(it?.icons ?: listOf())
-
-                val iconIndex = it?.icons?.indexOf(it.category.icon)
-                if (iconIndex != null) {
-                    getIconsAdapter()?.setSelected(iconIndex)
-                    categoryIconsRecyclerView.scrollToPosition(iconIndex)
-                }
 
                 it?.category?.type?.let {
                     when (it) {
                         TransactionType.Expense -> categoryTypeRadio.check(R.id.expensesRadioButton)
                         TransactionType.Income -> categoryTypeRadio.check(R.id.incomesRadioButton)
                     }
+                }
+            }
+        }
+        viewModel.editingCategoryLiveData.observe(viewLifecycleOwner) {
+            with (binding) {
+                val iconIndex = viewModel.startLiveData.value?.icons?.indexOf(it.icon)
+                if (iconIndex != null) {
+                    getIconsAdapter()?.setSelected(iconIndex)
+                    categoryIconsRecyclerView.scrollToPosition(iconIndex)
                 }
             }
         }

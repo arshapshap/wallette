@@ -1,5 +1,6 @@
 package com.example.feature_settings.presentation.screen.singleAccount
 
+import androidx.core.widget.doAfterTextChanged
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.common.di.FeatureUtils
 import com.example.common.domain.models.Account
@@ -47,10 +48,7 @@ class SingleAccountFragment :
             setImage(R.drawable.ic_done)
             setTitle(R.string.save)
             setOnClickListener {
-                viewModel.save(
-                    name = binding.accountNameEditText.text.toString(),
-                    startBalanceString = binding.startBalanceEditText.text.toString()
-                )
+                viewModel.save()
             }
         }
 
@@ -67,29 +65,42 @@ class SingleAccountFragment :
             }
             layoutManager = getFlexboxLayoutManager()
         }
+
+        with (binding) {
+            accountNameEditText.doAfterTextChanged {
+                viewModel.editName(it.toString())
+            }
+            startBalanceEditText.doAfterTextChanged {
+                viewModel.editStartBalance(it.toString())
+            }
+        }
+
     }
 
     override fun subscribe() {
-        viewModel.stateLiveData.observe(viewLifecycleOwner) {
+        viewModel.startLiveData.observe(viewLifecycleOwner) {
             with (binding) {
                 accountNameEditText.setText(it?.account?.name)
                 startBalanceEditText.setText(it?.account?.startBalance?.toString() ?: "")
 
                 getIconsAdapter()?.setList(it?.icons ?: listOf())
-
-                val iconIndex = it?.icons?.indexOf(it.account.icon)
+            }
+        }
+        viewModel.editingAccountLiveData.observe(viewLifecycleOwner) {
+            with (binding) {
+                val iconIndex = viewModel.startLiveData.value?.icons?.indexOf(it.icon)
                 if (iconIndex != null) {
                     getIconsAdapter()?.setSelected(iconIndex)
                     accountIconsRecyclerView.scrollToPosition(iconIndex)
                 }
 
                 if (it != null) {
-                    currencyLayout.setValue(it.account.currency.name)
+                    currencyLayout.setValue(it.currency.name)
                     currencyLayout.setOnClickListener {
                         showPickerDialog(
                             fragmentManager = childFragmentManager,
                             title = getString(R.string.currency),
-                            items = it.availableCurrencies.map { it.name }.toTypedArray(),
+                            items = viewModel.startLiveData.value?.availableCurrencies?.map { it.name }?.toTypedArray() ?: arrayOf(),
                             pickerType = PickerType.Currency
                         )
                     }
@@ -100,7 +111,7 @@ class SingleAccountFragment :
 
     override fun onSelected(index: Int, pickerType: PickerType) {
         if (pickerType == PickerType.Currency) {
-            val currency = viewModel.stateLiveData.value!!.availableCurrencies[index]
+            val currency = viewModel.startLiveData.value!!.availableCurrencies[index]
             viewModel.selectCurrency(currency)
         }
     }

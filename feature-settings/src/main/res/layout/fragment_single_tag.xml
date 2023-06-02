@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -25,7 +24,7 @@
         android:layout_height="wrap_content"
         android:hint="@string/tag_name"
         android:importantForAutofill="no"
-        tools:ignore="TextFields" />
+        android:inputType="textShortMessage"/>
 
     <include
         android:id="@+id/tag_color_layout"

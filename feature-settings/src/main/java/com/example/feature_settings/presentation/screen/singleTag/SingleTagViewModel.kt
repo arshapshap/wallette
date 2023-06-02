@@ -20,13 +20,17 @@ class SingleTagViewModel @AssistedInject constructor(
     private val router: SettingsRouter
 ) : BaseViewModel() {
 
-    private val _stateLiveData = MutableLiveData<Data?>()
-    val stateLiveData: LiveData<Data?>
-        get() = _stateLiveData
+    private val _startTagLiveData = MutableLiveData<Tag?>(tag)
+    val startTagLiveData: LiveData<Tag?>
+        get() = _startTagLiveData
+
+    private val _editingTagLiveData = MutableLiveData<EditingTag>()
+    val editingTagLiveData: LiveData<EditingTag>
+        get() = _editingTagLiveData
 
     private val isDataValid: Boolean
         get() {
-            val editingTag = _stateLiveData.value?.tag ?: return false
+            val editingTag = _editingTagLiveData.value ?: return false
             return editingTag.name != ""
                     && editingTag.color != null
         }
@@ -38,20 +42,14 @@ class SingleTagViewModel @AssistedInject constructor(
                 name = tag.name,
                 color = Color.parseColor(tag.color)
             )
-        _stateLiveData.postValue(
-            Data(
-                tag = editingTag
-            )
-        )
+        _editingTagLiveData.value = editingTag
     }
 
-    fun save(name: String) {
-        editName(name)
-
+    fun save() {
         if (!isDataValid)
             return
 
-        val editingTag = _stateLiveData.value?.tag!!
+        val editingTag = _editingTagLiveData.value!!
         viewModelScope.launch {
             if (tag == null)
                 interactor.createTag(
@@ -74,21 +72,17 @@ class SingleTagViewModel @AssistedInject constructor(
     }
 
     fun selectColor(@ColorInt color: Int) {
-        val tag = _stateLiveData.value?.tag?.copy(
-            color = color
-        ) ?: return
+        val tag = _editingTagLiveData.value?.copy(color = color) ?: return
         updateTag(tag)
     }
 
-    private fun editName(name: String) {
-        val tag = _stateLiveData.value?.tag?.copy(
-            name = name
-        ) ?: return
+    fun editName(name: String) {
+        val tag = _editingTagLiveData.value?.copy(name = name) ?: return
         updateTag(tag)
     }
 
     private fun updateTag(tag: EditingTag) {
-        _stateLiveData.value = _stateLiveData.value?.copy(tag = tag)
+        _editingTagLiveData.value = tag
     }
 
     private fun convertColorIntToHexString(@ColorInt color: Int): String {
@@ -100,8 +94,4 @@ class SingleTagViewModel @AssistedInject constructor(
 
         fun create(@Assisted tag: Tag?): SingleTagViewModel
     }
-
-    data class Data(
-        val tag: EditingTag
-    )
 }

@@ -20,13 +20,17 @@ class SingleAccountViewModel @AssistedInject constructor(
     private val router: SettingsRouter
 ) : BaseViewModel() {
 
-    private val _stateLiveData = MutableLiveData<Data?>()
-    val stateLiveData: LiveData<Data?>
-        get() = _stateLiveData
+    private val _startLiveData = MutableLiveData<StartData>()
+    val startLiveData: LiveData<StartData>
+        get() = _startLiveData
+
+    private val _editingAccountLiveData = MutableLiveData<EditingAccount>()
+    val editingAccountLiveData: LiveData<EditingAccount>
+        get() = _editingAccountLiveData
 
     private val isDataValid: Boolean
         get() {
-            val editingAccount = _stateLiveData.value?.account ?: return false
+            val editingAccount = _editingAccountLiveData.value ?: return false
             return editingAccount.name != ""
                     && editingAccount.startBalance != null
                     && editingAccount.icon != AccountIcon.Empty
@@ -41,23 +45,19 @@ class SingleAccountViewModel @AssistedInject constructor(
                 startBalance = account.startBalance,
                 currency = account.currency
             )
-        _stateLiveData.postValue(
-            Data(
-                account = editingAccount,
-                icons = AccountIcon.values().filter { it.name != "Empty" },
-                availableCurrencies = Currency.values().toList()
-            )
+        _startLiveData.value = StartData(
+            account = account,
+            icons = AccountIcon.values().filter { it.name != "Empty" },
+            availableCurrencies = Currency.values().toList()
         )
+        _editingAccountLiveData.value = editingAccount
     }
 
-    fun save(name: String, startBalanceString: String) {
-        editName(name)
-        editStartBalance(startBalanceString)
-
+    fun save() {
         if (!isDataValid)
             return
 
-        val editingAccount = _stateLiveData.value?.account!!
+        val editingAccount = _editingAccountLiveData.value!!
 
         viewModelScope.launch {
             if (account == null)
@@ -87,44 +87,28 @@ class SingleAccountViewModel @AssistedInject constructor(
     }
 
     fun selectCurrency(currency: Currency) {
-        val account = _stateLiveData.value?.account?.copy(
-            currency = currency
-        ) ?: return
-        _stateLiveData.postValue(
-            _stateLiveData.value?.copy(
-                account = account
-            )
-        )
-    }
-
-    fun selectIcon(icon: AccountIcon) {
-        val account = _stateLiveData.value?.account?.copy(
-           icon = icon
-        ) ?: return
-        _stateLiveData.postValue(
-            _stateLiveData.value?.copy(
-                account = account
-            )
-        )
-    }
-
-    private fun editStartBalance(startBalanceString: String) {
-        val startBalance = startBalanceString.toDoubleOrNull()
-        val account = _stateLiveData.value?.account?.copy(
-            startBalance = startBalance
-        ) ?: return
+        val account = _editingAccountLiveData.value?.copy(currency = currency) ?: return
         updateAccount(account)
     }
 
-    private fun editName(name: String) {
-        val account = _stateLiveData.value?.account?.copy(
-            name = name
-        ) ?: return
+    fun selectIcon(icon: AccountIcon) {
+        val account = _editingAccountLiveData.value?.copy(icon = icon) ?: return
+        updateAccount(account)
+    }
+
+    fun editStartBalance(startBalanceString: String) {
+        val startBalance = startBalanceString.toDoubleOrNull()
+        val account = _editingAccountLiveData.value?.copy(startBalance = startBalance) ?: return
+        updateAccount(account)
+    }
+
+    fun editName(name: String) {
+        val account = _editingAccountLiveData.value?.copy(name = name) ?: return
         updateAccount(account)
     }
 
     private fun updateAccount(account: EditingAccount) {
-        _stateLiveData.value = _stateLiveData.value?.copy(account = account)
+        _editingAccountLiveData.value = account
     }
 
     @AssistedFactory
@@ -133,8 +117,8 @@ class SingleAccountViewModel @AssistedInject constructor(
         fun create(@Assisted account: Account?): SingleAccountViewModel
     }
 
-    data class Data(
-        val account: EditingAccount,
+    data class StartData(
+        val account: Account?,
         val icons: List<AccountIcon>,
         val availableCurrencies: List<Currency>
     )

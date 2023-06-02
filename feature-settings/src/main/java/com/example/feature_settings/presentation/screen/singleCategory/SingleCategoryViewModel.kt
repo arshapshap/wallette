@@ -18,13 +18,17 @@ class SingleCategoryViewModel @AssistedInject constructor(
     private val router: SettingsRouter
 ) : BaseViewModel() {
 
-    private val _stateLiveData = MutableLiveData<Data?>()
-    val stateLiveData: LiveData<Data?>
-        get() = _stateLiveData
+    private val _startLiveData = MutableLiveData<StartData>()
+    val startLiveData: LiveData<StartData>
+        get() = _startLiveData
+
+    private val _editingCategoryLiveData = MutableLiveData<EditingCategory>()
+    val editingCategoryLiveData: LiveData<EditingCategory>
+        get() = _editingCategoryLiveData
 
     private val isDataValid: Boolean
         get() {
-            val editingCategory = _stateLiveData.value?.category ?: return false
+            val editingCategory = _editingCategoryLiveData.value ?: return false
             return editingCategory.name != ""
                     && editingCategory.type != null
                     && editingCategory.icon != CategoryIcon.Empty
@@ -38,21 +42,18 @@ class SingleCategoryViewModel @AssistedInject constructor(
                 icon = category.icon,
                 type = category.type
             )
-        _stateLiveData.postValue(
-            Data(
-                category = editingCategory,
-                icons = CategoryIcon.values().filter { it.name != "Empty" }
-            )
+        _startLiveData.value = StartData(
+            category = category,
+            icons = CategoryIcon.values().filter { it.name != "Empty" }
         )
+        _editingCategoryLiveData.value = editingCategory
     }
 
-    fun save(name: String) {
-        editName(name)
-
+    fun save() {
         if (!isDataValid)
             return
 
-        val editingCategory = _stateLiveData.value?.category!!
+        val editingCategory = _editingCategoryLiveData.value!!
         viewModelScope.launch {
             if (category == null)
                 interactor.createCategory(
@@ -77,28 +78,22 @@ class SingleCategoryViewModel @AssistedInject constructor(
     }
 
     fun selectType(type: TransactionType) {
-        val category = _stateLiveData.value?.category?.copy(
-            type = type
-        ) ?: return
+        val category = _editingCategoryLiveData.value?.copy(type = type) ?: return
         updateCategory(category)
     }
 
     fun selectIcon(icon: CategoryIcon) {
-        val category = _stateLiveData.value?.category?.copy(
-           icon = icon
-        ) ?: return
+        val category = _editingCategoryLiveData.value?.copy(icon = icon) ?: return
         updateCategory(category)
     }
 
-    private fun editName(name: String) {
-        val category = _stateLiveData.value?.category?.copy(
-            name = name
-        ) ?: return
+    fun editName(name: String) {
+        val category = _editingCategoryLiveData.value?.copy(name = name) ?: return
         updateCategory(category)
     }
 
     private fun updateCategory(category: EditingCategory) {
-        _stateLiveData.value = _stateLiveData.value?.copy(category = category)
+        _editingCategoryLiveData.value = category
     }
 
     @AssistedFactory
@@ -107,8 +102,8 @@ class SingleCategoryViewModel @AssistedInject constructor(
         fun create(@Assisted category: Category?): SingleCategoryViewModel
     }
 
-    data class Data(
-        val category: EditingCategory,
+    data class StartData(
+        val category: Category?,
         val icons: List<CategoryIcon>
     )
 }

@@ -2,6 +2,7 @@ package com.example.feature_settings.presentation.screen.singleTag
 
 import android.graphics.Color
 import androidx.annotation.ColorInt
+import androidx.core.widget.doAfterTextChanged
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.common.di.FeatureUtils
 import com.example.common.domain.models.Tag
@@ -46,9 +47,7 @@ class SingleTagFragment :
             setImage(R.drawable.ic_done)
             setTitle(R.string.save)
             setOnClickListener {
-                viewModel.save(
-                    name = binding.tagNameEditText.text.toString()
-                )
+                viewModel.save()
             }
         }
 
@@ -63,15 +62,21 @@ class SingleTagFragment :
                 }
             }
         }
+
+        binding.tagNameEditText.doAfterTextChanged {
+            viewModel.editName(it.toString())
+        }
     }
 
     override fun subscribe() {
-        viewModel.stateLiveData.observe(viewLifecycleOwner) {
-            it?.tag?.name?.let {
+        viewModel.startTagLiveData.observe(viewLifecycleOwner) {
+            it?.name?.let {
                 binding.tagNameEditText.setText(it)
             }
+        }
 
-            it?.tag?.color?.let {
+        viewModel.editingTagLiveData.observe(viewLifecycleOwner) {
+            it?.color?.let {
                 binding.tagColorLayout.setColor(it)
                 binding.tagColorLayout.setOnClickListener {
                     openColorPickerDialog(it) {
@@ -79,7 +84,6 @@ class SingleTagFragment :
                     }
                 }
             }
-
         }
     }
 
