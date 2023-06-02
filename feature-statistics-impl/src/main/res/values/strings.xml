@@ -10,4 +10,6 @@
     <string name="description">Описание</string>
     <string name="account">Счет</string>
     <string name="save_operation">Сохранить операцию</string>
+    <string name="edit">Изменить</string>
+    <string name="delete">Удалить</string>
 </resources>
