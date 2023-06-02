@@ -10,6 +10,7 @@ import com.example.feature_auth.presentation.screen.AuthorizationRouter
 import com.example.feature_settings.presentation.SettingsRouter
 import com.example.feature_settings.presentation.screen.singleAccount.SingleAccountFragment
 import com.example.feature_settings.presentation.screen.singleCategory.SingleCategoryFragment
+import com.example.feature_settings.presentation.screen.singleTag.SingleTagFragment
 import com.example.feature_statistics_impl.presentation.StatisticsRouter
 import com.example.wallette.R
 
@@ -74,7 +75,12 @@ class Navigator : StatisticsRouter, AuthorizationRouter, SettingsRouter {
     }
 
     override fun openSingleTag(tag: Tag?) {
-        //TODO("Not yet implemented")
+        navController?.navigate(
+            resId = R.id.singleTagFragment,
+            args = Bundle().apply {
+                putSerializable(SingleTagFragment.TAG_KEY, tag)
+            }
+        )
     }
 
     override fun openTransferCreating() {

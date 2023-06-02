@@ -48,4 +48,6 @@
     <string name="start_balance">Начальный баланс</string>
     <string name="currency">Валюта</string>
     <string name="save">Сохранить</string>
+    <string name="tag_color">Цвет метки</string>
+    <string name="tag_name">Название метки</string>
 </resources>

@@ -46,9 +46,12 @@ class SingleCategoryViewModel @AssistedInject constructor(
         )
     }
 
-    fun save() {
+    fun save(name: String) {
+        editName(name)
+
         if (!isDataValid)
             return
+
         val editingCategory = _stateLiveData.value?.category!!
         viewModelScope.launch {
             if (category == null)
@@ -77,22 +80,25 @@ class SingleCategoryViewModel @AssistedInject constructor(
         val category = _stateLiveData.value?.category?.copy(
             type = type
         ) ?: return
-        _stateLiveData.postValue(
-            _stateLiveData.value?.copy(
-                category = category
-            )
-        )
+        updateCategory(category)
     }
 
     fun selectIcon(icon: CategoryIcon) {
         val category = _stateLiveData.value?.category?.copy(
            icon = icon
         ) ?: return
-        _stateLiveData.postValue(
-            _stateLiveData.value?.copy(
-                category = category
-            )
-        )
+        updateCategory(category)
+    }
+
+    private fun editName(name: String) {
+        val category = _stateLiveData.value?.category?.copy(
+            name = name
+        ) ?: return
+        updateCategory(category)
+    }
+
+    private fun updateCategory(category: EditingCategory) {
+        _stateLiveData.value = _stateLiveData.value?.copy(category = category)
     }
 
     @AssistedFactory

@@ -12,6 +12,8 @@ import com.example.feature_settings.presentation.screen.settings.SettingsFragmen
 import com.example.feature_settings.presentation.screen.settings.SettingsViewModel
 import com.example.feature_settings.presentation.screen.singleCategory.SingleCategoryFragment
 import com.example.feature_settings.presentation.screen.singleCategory.SingleCategoryViewModel
+import com.example.feature_settings.presentation.screen.singleTag.SingleTagFragment
+import com.example.feature_settings.presentation.screen.singleTag.SingleTagViewModel
 import com.example.feature_settings.presentation.screen.tags.TagsFragment
 import com.example.feature_settings.presentation.screen.tags.TagsViewModel
 import dagger.BindsInstance
@@ -54,4 +56,8 @@ interface SettingsComponent : SettingsFeatureApi {
     fun inject(fragment: SingleCategoryFragment)
 
     fun singleCategoryViewModel(): SingleCategoryViewModel.Factory
+
+    fun inject(fragment: SingleTagFragment)
+
+    fun singleTagViewModel(): SingleTagViewModel.Factory
 }

@@ -45,7 +45,9 @@ class SingleCategoryFragment :
             setImage(R.drawable.ic_done)
             setTitle(R.string.save)
             setOnClickListener {
-                viewModel.save()
+                viewModel.save(
+                    name = binding.categoryNameEditText.text.toString()
+                )
             }
         }
 

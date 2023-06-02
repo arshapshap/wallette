@@ -72,4 +72,10 @@
         android:name="com.example.feature_settings.presentation.screen.singleCategory.SingleCategoryFragment"
         android:label="@string/single_category_fragment_name"
         tools:layout="@layout/fragment_single_category"/>
+
+    <fragment
+        android:id="@+id/singleTagFragment"
+        android:name="com.example.feature_settings.presentation.screen.singleTag.SingleTagFragment"
+        android:label="@string/single_tag_fragment_name"
+        tools:layout="@layout/fragment_single_tag"/>
 </navigation>

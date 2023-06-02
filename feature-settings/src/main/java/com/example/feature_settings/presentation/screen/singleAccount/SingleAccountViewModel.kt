@@ -50,9 +50,13 @@ class SingleAccountViewModel @AssistedInject constructor(
         )
     }
 
-    fun save() {
+    fun save(name: String, startBalanceString: String) {
+        editName(name)
+        editStartBalance(startBalanceString)
+
         if (!isDataValid)
             return
+
         val editingAccount = _stateLiveData.value?.account!!
 
         viewModelScope.launch {
@@ -102,6 +106,25 @@ class SingleAccountViewModel @AssistedInject constructor(
                 account = account
             )
         )
+    }
+
+    private fun editStartBalance(startBalanceString: String) {
+        val startBalance = startBalanceString.toDoubleOrNull()
+        val account = _stateLiveData.value?.account?.copy(
+            startBalance = startBalance
+        ) ?: return
+        updateAccount(account)
+    }
+
+    private fun editName(name: String) {
+        val account = _stateLiveData.value?.account?.copy(
+            name = name
+        ) ?: return
+        updateAccount(account)
+    }
+
+    private fun updateAccount(account: EditingAccount) {
+        _stateLiveData.value = _stateLiveData.value?.copy(account = account)
     }
 
     @AssistedFactory

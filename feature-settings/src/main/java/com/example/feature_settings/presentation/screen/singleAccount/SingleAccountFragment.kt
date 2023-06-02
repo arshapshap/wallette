@@ -47,7 +47,10 @@ class SingleAccountFragment :
             setImage(R.drawable.ic_done)
             setTitle(R.string.save)
             setOnClickListener {
-                viewModel.save()
+                viewModel.save(
+                    name = binding.accountNameEditText.text.toString(),
+                    startBalanceString = binding.startBalanceEditText.text.toString()
+                )
             }
         }
 
