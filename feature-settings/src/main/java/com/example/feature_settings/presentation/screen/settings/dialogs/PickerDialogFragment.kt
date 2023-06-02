@@ -5,6 +5,7 @@ import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.FragmentManager
 
 class PickerDialogFragment : DialogFragment() {
 
@@ -12,15 +13,7 @@ class PickerDialogFragment : DialogFragment() {
 
     interface SelectDialogListener {
 
-        fun onCurrencySelected(index: Int)
-
-        fun onLanguageSelected(index: Int)
-
-        fun onFirstDayOfWeekSelected(index: Int)
-
-        fun onFirstDayOfMonthSelected(index: Int)
-
-        fun onTimePeriodSelected(index: Int)
+        fun onSelected(index: Int, pickerType: PickerType)
     }
 
     override fun onAttach(context: Context) {
@@ -34,20 +27,14 @@ class PickerDialogFragment : DialogFragment() {
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val title = requireArguments().getString(TITLE_TAG)
-        val items = requireArguments().getStringArray(ITEMS_LIST_TAG) ?: arrayOf()
-        val pickerType = requireArguments().getSerializable(PICKER_TYPE) as PickerType
+        val title = requireArguments().getString(TITLE_KEY)
+        val items = requireArguments().getStringArray(ITEMS_LIST_KEY) ?: arrayOf()
+        val pickerType = requireArguments().getSerializable(PICKER_KEY) as PickerType
         return requireActivity().let {
             val builder = AlertDialog.Builder(it)
             builder.setTitle(title)
                 .setItems(items) { _, index ->
-                    when (pickerType) {
-                        PickerType.Currency -> listener.onCurrencySelected(index)
-                        PickerType.Language -> listener.onLanguageSelected(index)
-                        PickerType.FirstDayOfWeek -> listener.onFirstDayOfWeekSelected(index)
-                        PickerType.FirstDayOfMonth -> listener.onFirstDayOfMonthSelected(index)
-                        PickerType.TimePeriod -> listener.onTimePeriodSelected(index)
-                    }
+                    listener.onSelected(index, pickerType)
                 }
             builder.create()
         }
@@ -55,8 +42,31 @@ class PickerDialogFragment : DialogFragment() {
 
     companion object {
 
-        const val ITEMS_LIST_TAG = "items_list"
-        const val TITLE_TAG = "title"
-        const val PICKER_TYPE = "picker_type"
+        const val ITEMS_LIST_KEY = "items_list"
+        const val TITLE_KEY = "title"
+        const val PICKER_KEY = "picker_type"
+
+        enum class PickerType {
+            Currency,
+            Language,
+            FirstDayOfWeek,
+            FirstDayOfMonth,
+            TimePeriod
+        }
+
+        fun showPickerDialog(
+            fragmentManager: FragmentManager,
+            title: String,
+            items: Array<String>,
+            pickerType: PickerType
+        ) {
+            val newFragment = PickerDialogFragment()
+            newFragment.arguments = Bundle().apply {
+                putString(TITLE_KEY, title)
+                putStringArray(ITEMS_LIST_KEY, items)
+                putSerializable(PICKER_KEY, pickerType)
+            }
+            newFragment.show(fragmentManager, title)
+        }
     }
 }

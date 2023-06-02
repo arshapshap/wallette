@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <EditText
+        android:id="@+id/accountNameEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/account_name"
+        app:layout_constraintBottom_toTopOf="@+id/start_balance_edit_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"
+        android:importantForAutofill="no"
+        tools:ignore="TextFields" />
+
+    <EditText
+        android:id="@+id/start_balance_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/start_balance"
+        android:inputType="numberDecimal"
+        app:layout_constraintBottom_toTopOf="@+id/currency_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/accountNameEditText"
+        app:layout_constraintVertical_chainStyle="packed"
+        android:importantForAutofill="no" />
+
+    <include
+        android:id="@+id/currency_layout"
+        layout="@layout/item_settings_element"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/start_balance_edit_text"
+        app:layout_constraintBottom_toTopOf="@+id/line" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/line"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/accountIconsRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:paddingBottom="@dimen/bottom_margin"
+        app:layoutManager="com.google.android.flexbox.FlexboxLayoutManager"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/line"
+        tools:itemCount="25"
+        tools:listitem="@layout/item_selecting_icon" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

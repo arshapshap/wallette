@@ -3,7 +3,9 @@ package com.example.common.domain.models
 import androidx.annotation.DrawableRes
 import com.example.common.R
 
-enum class CategoryIcon(@DrawableRes val drawableRes: Int) {
+enum class CategoryIcon(
+    @DrawableRes override val drawableRes: Int
+) : Icon {
     Apartment(R.drawable.ic_apartment),
     Bank(R.drawable.ic_bank),
     Basket(R.drawable.ic_basket),

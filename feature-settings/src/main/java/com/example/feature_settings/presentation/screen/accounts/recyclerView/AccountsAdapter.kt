@@ -6,10 +6,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.common.domain.models.Account
 import com.example.feature_settings.databinding.ItemSettingsElementBinding
+import com.example.feature_settings.presentation.utils.setContent
+import com.example.common.presentation.extensions.formatAsBalance
 
 class AccountsAdapter(
     private val onItemClick: (Account) -> Unit
-) : RecyclerView.Adapter<AccountsViewHolder>() {
+) : RecyclerView.Adapter<AccountsAdapter.AccountsViewHolder>() {
 
     private var list = mutableListOf<Account>()
 
@@ -34,4 +36,25 @@ class AccountsAdapter(
 
     private fun getBinding(parent: ViewGroup): ItemSettingsElementBinding
         = ItemSettingsElementBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+
+    class AccountsViewHolder(
+        private val binding: ItemSettingsElementBinding,
+        private val onClick: (Account) -> Unit
+    ) : RecyclerView.ViewHolder(binding.root) {
+
+        fun onBind(account: Account) {
+            binding.setContent(
+                iconRes = account.icon.drawableRes,
+                title = account.name,
+                isStrokeVisible = true,
+                value = account.currentBalance.formatAsBalance(
+                    currency = account.currency,
+                    withPlus = false
+                ),
+                isRightArrowVisible = false
+            ) {
+                onClick.invoke(account)
+            }
+        }
+    }
 }

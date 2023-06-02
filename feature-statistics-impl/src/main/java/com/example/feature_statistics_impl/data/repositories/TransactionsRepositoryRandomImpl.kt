@@ -18,7 +18,8 @@ class TransactionsRepositoryRandomImpl @Inject constructor() : TransactionsRepos
             id = "acc123",
             name = "Main",
             icon = AccountIcon.Card,
-            balance = 3500,
+            currentBalance = 3500.00,
+            startBalance = 0.0,
             currency = Currency.RUB
         )
         val rand = Random(123)
@@ -31,6 +32,7 @@ class TransactionsRepositoryRandomImpl @Inject constructor() : TransactionsRepos
             amount = amount,
             description = "",
             account = account,
+            accountDestination = null,
             category = null,
             transactionGroup = null,
             isTransactionGroup = false,
@@ -64,7 +66,6 @@ class TransactionsRepositoryRandomImpl @Inject constructor() : TransactionsRepos
 
     private fun getRandomTags(rand: Random): List<Tag> {
         val list = arrayListOf<Tag>()
-        val rand = Random(1234)
         for (i in 0..10) {
             list.add(
                 Tag(
@@ -91,11 +92,11 @@ class TransactionsRepositoryRandomImpl @Inject constructor() : TransactionsRepos
         return "#$r$g$b"
     }
 
-    private fun getRandomAmount(rand: Random): Int {
-        return (-1000..1000).random(rand)
+    private fun getRandomAmount(rand: Random): Double {
+        return rand.nextDouble(-10000.0, 10000.0)
     }
 
-    private fun getRandomCategory(amount: Int, rand: Random): Category? {
+    private fun getRandomCategory(amount: Double, rand: Random): Category? {
         val list = arrayListOf<Category>()
         for (i in 0..10) {
             list.add(

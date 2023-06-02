@@ -8,8 +8,8 @@ import com.example.feature_statistics_impl.R
 import com.example.feature_statistics_impl.databinding.ItemExpandableTransactionBinding
 import com.example.feature_statistics_impl.presentation.screen.transactionsList.SortingType
 import com.example.feature_statistics_impl.presentation.screen.transactionsList.extensions.getString
-import com.example.feature_statistics_impl.presentation.screen.transactionsList.extensions.formatAsBalance
-import com.example.feature_statistics_impl.presentation.screen.transactionsList.extensions.getColorBySign
+import com.example.common.presentation.extensions.formatAsBalance
+import com.example.common.presentation.extensions.getColorBySign
 
 class TransactionsViewHolder(
     private val binding: ItemExpandableTransactionBinding,

@@ -1,5 +1,6 @@
 package com.example.feature_settings.presentation.screen.categories
 
+import androidx.core.view.isGone
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.common.di.FeatureUtils
 import com.example.common.presentation.base.BaseFragment
@@ -32,7 +33,8 @@ class CategoriesFragment : BaseFragment<CategoriesViewModel>(R.layout.fragment_c
             addCategoryLayout.setContent(
                 iconRes = R.drawable.ic_plus_box,
                 titleRes = R.string.add_category,
-                colorInt = getColorPrimary()
+                colorInt = getColorPrimary(),
+                isStrokeVisible = true,
             ) {
                 viewModel.openCategoryCreating()
             }
@@ -43,15 +45,22 @@ class CategoriesFragment : BaseFragment<CategoriesViewModel>(R.layout.fragment_c
             listExpensesRecyclerView.adapter = CategoriesAdapter {
                 viewModel.openCategory(it)
             }
+
+            expensesTextView.isGone = true
+            incomesTextView.isGone = true
         }
     }
 
     override fun subscribe() {
         viewModel.listIncomesLiveData.observe(viewLifecycleOwner) {
             (binding.listIncomesRecyclerView.adapter as CategoriesAdapter).setList(it)
+            if (it.isNotEmpty())
+                binding.incomesTextView.isGone = false
         }
         viewModel.listExpensesLiveData.observe(viewLifecycleOwner) {
             (binding.listExpensesRecyclerView.adapter as CategoriesAdapter).setList(it)
+            if (it.isNotEmpty())
+                binding.expensesTextView.isGone = false
         }
     }
 }

@@ -19,7 +19,8 @@ class AccountsRepositoryImpl @Inject constructor(): AccountsRepository {
                     id = i.toString(),
                     name = "Счёт $i",
                     icon = AccountIcon.values().filter { it.name != "Empty" }.random(rand),
-                    balance = (0..5000).random(rand),
+                    currentBalance = rand.nextDouble(5000.0),
+                    startBalance = 0.0,
                     currency = Currency.RUB
                 )
             )

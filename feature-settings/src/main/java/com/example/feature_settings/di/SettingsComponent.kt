@@ -4,6 +4,8 @@ import com.example.common.di.scopes.SettingsScope
 import com.example.feature_settings.presentation.SettingsRouter
 import com.example.feature_settings.presentation.screen.accounts.AccountsFragment
 import com.example.feature_settings.presentation.screen.accounts.AccountsViewModel
+import com.example.feature_settings.presentation.screen.accounts.single.SingleAccountFragment
+import com.example.feature_settings.presentation.screen.accounts.single.SingleAccountViewModel
 import com.example.feature_settings.presentation.screen.categories.CategoriesFragment
 import com.example.feature_settings.presentation.screen.categories.CategoriesViewModel
 import com.example.feature_settings.presentation.screen.settings.SettingsFragment
@@ -42,4 +44,8 @@ interface SettingsComponent : SettingsFeatureApi {
     fun inject(fragment: TagsFragment)
 
     fun tagsViewModel(): TagsViewModel.Factory
+
+    fun inject(fragment: SingleAccountFragment)
+
+    fun singleAccountViewModel(): SingleAccountViewModel.Factory
 }

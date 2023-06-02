@@ -1,0 +1,12 @@
+package com.example.feature_settings.presentation.screen.accounts.single
+
+import com.example.common.domain.models.AccountIcon
+import com.example.common.domain.models.Currency
+
+data class EditingAccount(
+    val id: String? = null,
+    val name: String = "",
+    val icon: AccountIcon = AccountIcon.Empty,
+    val startBalance: Double? = null,
+    val currency: Currency = Currency.RUB // TODO: хранить дефолтную валюту?
+)

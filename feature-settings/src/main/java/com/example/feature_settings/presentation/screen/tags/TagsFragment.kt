@@ -32,7 +32,8 @@ class TagsFragment : BaseFragment<TagsViewModel>(R.layout.fragment_tags) {
             addTagLayout.setContent(
                 iconRes = R.drawable.ic_plus_circle,
                 titleRes = R.string.add_tag,
-                colorInt = getColorPrimary()
+                colorInt = getColorPrimary(),
+                isStrokeVisible = true,
             ) {
                 viewModel.openTagCreating()
             }

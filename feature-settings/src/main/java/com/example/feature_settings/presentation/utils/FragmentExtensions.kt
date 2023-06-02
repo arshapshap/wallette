@@ -12,7 +12,7 @@ fun Fragment.getColorPrimary(): Int {
 }
 
 @ColorInt
-fun Fragment.getTextColor(): Int {
+fun Fragment.getColorOnPrimary(): Int {
     val typedValue = TypedValue()
     activity?.theme?.resolveAttribute(com.google.android.material.R.attr.colorOnPrimary, typedValue, true)
     return typedValue.data

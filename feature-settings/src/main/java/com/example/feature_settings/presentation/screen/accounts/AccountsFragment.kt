@@ -1,5 +1,6 @@
 package com.example.feature_settings.presentation.screen.accounts
 
+import androidx.core.view.isGone
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.common.di.FeatureUtils
 import com.example.common.presentation.base.BaseFragment
@@ -32,7 +33,8 @@ class AccountsFragment : BaseFragment<AccountsViewModel>(R.layout.fragment_accou
             addAccountLayout.setContent(
                 iconRes = R.drawable.ic_plus,
                 titleRes = R.string.add_account,
-                colorInt = getColorPrimary()
+                colorInt = getColorPrimary(),
+                isStrokeVisible = true,
             ) {
                 viewModel.openAccountCreating()
             }
@@ -44,7 +46,8 @@ class AccountsFragment : BaseFragment<AccountsViewModel>(R.layout.fragment_accou
             addMoneyTransferLayout.setContent(
                 iconRes = R.drawable.ic_transfer,
                 titleRes = R.string.transfer_money,
-                colorInt = getColorPrimary()
+                colorInt = getColorPrimary(),
+                isStrokeVisible = true,
             ) {
                 viewModel.openTransferCreating()
             }
@@ -54,6 +57,7 @@ class AccountsFragment : BaseFragment<AccountsViewModel>(R.layout.fragment_accou
     override fun subscribe() {
         viewModel.listLiveData.observe(viewLifecycleOwner) {
             (binding.listRecyclerView.adapter as AccountsAdapter).setList(it)
+            binding.addMoneyTransferLayout.root.isGone = it.count() < 2
         }
     }
 }

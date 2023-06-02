@@ -25,4 +25,28 @@ class SettingsInteractor @Inject constructor(
     suspend fun getTags(): List<Tag> {
         return tagsRepository.getTags()
     }
+
+    suspend fun createAccount(account: Account) {
+
+    }
+
+    suspend fun createCategory(category: Category) {
+
+    }
+
+    suspend fun createTag(tag: Tag) {
+
+    }
+
+    suspend fun editAccount(account: Account) {
+
+    }
+
+    suspend fun editCategory(category: Category) {
+
+    }
+
+    suspend fun editTag(tag: Tag) {
+
+    }
 }

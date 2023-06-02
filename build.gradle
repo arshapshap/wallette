@@ -23,7 +23,9 @@ buildscript {
         navControllerVersion = '2.5.3'
         androidChartDep = 'v3.1.0'
         preferenceVersion = '1.2.0'
+        flexboxLayoutVersion = '3.0.0'
 
+        flexboxLayoutDep = "com.google.android.flexbox:flexbox:$flexboxLayoutVersion"
         coreKtxDep = "androidx.core:core-ktx:$coreKtxVersion"
         androidDep = "androidx.appcompat:appcompat:$supportVersion"
         recyclerViewDep = "androidx.recyclerview:recyclerview:$recyclerViewVersion"

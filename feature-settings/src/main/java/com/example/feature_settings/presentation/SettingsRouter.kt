@@ -11,7 +11,7 @@ interface SettingsRouter {
 
     fun openTags()
 
-    fun openAccount(account: com.example.common.domain.models.Account)
+    fun openSingleAccount(account: com.example.common.domain.models.Account)
 
     fun openCategory(category: Category)
 

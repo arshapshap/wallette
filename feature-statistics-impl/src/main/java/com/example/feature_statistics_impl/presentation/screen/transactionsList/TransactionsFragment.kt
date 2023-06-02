@@ -12,8 +12,8 @@ import com.example.feature_statistics_impl.R
 import com.example.feature_statistics_impl.databinding.FragmentTransactionsListBinding
 import com.example.feature_statistics_impl.di.StatisticsComponent
 import com.example.feature_statistics_impl.di.StatisticsFeatureApi
-import com.example.feature_statistics_impl.presentation.screen.transactionsList.extensions.formatAsBalance
-import com.example.feature_statistics_impl.presentation.screen.transactionsList.extensions.getColorBySign
+import com.example.common.presentation.extensions.formatAsBalance
+import com.example.common.presentation.extensions.getColorBySign
 import com.example.feature_statistics_impl.presentation.screen.transactionsList.groupsRecyclerView.TransactionGroupsAdapter
 
 class TransactionsFragment : BaseFragment<TransactionsViewModel>(R.layout.fragment_transactions_list) {

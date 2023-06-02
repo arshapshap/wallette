@@ -5,11 +5,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.common.domain.models.Category
-import com.example.feature_settings.databinding.ItemCategoryBinding
+import com.example.feature_settings.databinding.ItemSettingsElementBinding
+import com.example.feature_settings.presentation.utils.setContent
 
 class CategoriesAdapter(
     private val onItemClick: (Category) -> Unit
-) : RecyclerView.Adapter<CategoriesViewHolder>() {
+) : RecyclerView.Adapter<CategoriesAdapter.CategoriesViewHolder>() {
 
     private var list = mutableListOf<Category>()
 
@@ -32,6 +33,23 @@ class CategoriesAdapter(
         holder.onBind(list[position])
     }
 
-    private fun getBinding(parent: ViewGroup): ItemCategoryBinding
-        = ItemCategoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+    private fun getBinding(parent: ViewGroup): ItemSettingsElementBinding
+        = ItemSettingsElementBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+
+    class CategoriesViewHolder(
+        private val binding: ItemSettingsElementBinding,
+        private val onClick: (Category) -> Unit
+    ) : RecyclerView.ViewHolder(binding.root) {
+
+        fun onBind(category: Category) {
+            binding.setContent(
+                iconRes = category.icon.drawableRes,
+                title = category.name,
+                isStrokeVisible = true,
+                isRightArrowVisible = false
+            ) {
+                onClick.invoke(category)
+            }
+        }
+    }
 }

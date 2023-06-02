@@ -15,14 +15,16 @@ class AccountMapperImpl @Inject constructor() : AccountMapper {
                 id = response.id ?: "",
                 name = response.name ?: "",
                 icon = AccountIcon.valueOf(response.icon ?: "empty"),
-                balance = response.balance ?: 0,
+                currentBalance = response.currentBalance ?: 0.0,
+                startBalance = response.startBalance ?: 0.0,
                 currency = Currency.RUB // TODO: получать валюту с бэка
             )
         } ?: Account(
             id = "",
             name = "",
             icon = AccountIcon.Empty,
-            balance = 0,
+            currentBalance = 0.0,
+            startBalance = 0.0,
             currency = Currency.RUB
         )
     }

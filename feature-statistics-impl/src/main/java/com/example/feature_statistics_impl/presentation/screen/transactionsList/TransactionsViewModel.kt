@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.common.presentation.base.BaseViewModel
 import com.example.feature_statistics_impl.presentation.StatisticsRouter
 import com.example.feature_statistics_impl.domain.StatisticsInteractor
+import com.example.feature_statistics_impl.presentation.screen.transactionsList.groupsRecyclerView.transactionGroups.TransactionGroup
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.launch
@@ -15,8 +16,8 @@ class TransactionsViewModel @AssistedInject constructor(
     private val router: StatisticsRouter
 ) : BaseViewModel() {
 
-    private val _stateLiveData = MutableLiveData<TransactionsData>()
-    val stateLiveData : LiveData<TransactionsData>
+    private val _stateLiveData = MutableLiveData<Data>()
+    val stateLiveData : LiveData<Data>
         get() = _stateLiveData
 
     init {
@@ -39,7 +40,7 @@ class TransactionsViewModel @AssistedInject constructor(
     private fun loadData(sortingType: SortingType) {
         viewModelScope.launch {
             val transactionGroups = interactor.getTransactionGroups(sortingType = sortingType)
-            val state = TransactionsData(
+            val state = Data(
                 balance = transactionGroups
                     .flatMap { it.list }
                     .distinctBy { it.id }
@@ -56,4 +57,11 @@ class TransactionsViewModel @AssistedInject constructor(
 
         fun create(): TransactionsViewModel
     }
+
+    data class Data(
+        val balance: Double = 0.00,
+        val sortingType: SortingType = SortingType.ByDate,
+        val groups: List<TransactionGroup> = listOf()
+    )
+
 }

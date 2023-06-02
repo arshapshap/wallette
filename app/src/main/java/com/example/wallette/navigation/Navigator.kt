@@ -1,5 +1,6 @@
 package com.example.wallette.navigation
 
+import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import com.example.common.domain.models.Account
@@ -7,6 +8,7 @@ import com.example.common.domain.models.Category
 import com.example.common.domain.models.Tag
 import com.example.feature_auth.presentation.screen.AuthorizationRouter
 import com.example.feature_settings.presentation.SettingsRouter
+import com.example.feature_settings.presentation.screen.accounts.single.SingleAccountFragment
 import com.example.feature_statistics_impl.presentation.StatisticsRouter
 import com.example.wallette.R
 
@@ -52,8 +54,13 @@ class Navigator : StatisticsRouter, AuthorizationRouter, SettingsRouter {
         navController?.navigate(R.id.tagsFragment)
     }
 
-    override fun openAccount(account: Account) {
-        //TODO("Not yet implemented")
+    override fun openSingleAccount(account: Account) {
+        navController?.navigate(
+            resId = R.id.singleAccountFragment,
+            args = Bundle().apply {
+                putSerializable(SingleAccountFragment.ACCOUNT_KEY, account)
+            }
+        )
     }
 
     override fun openCategory(category: Category) {
@@ -65,7 +72,7 @@ class Navigator : StatisticsRouter, AuthorizationRouter, SettingsRouter {
     }
 
     override fun openAccountCreating() {
-        //TODO("Not yet implemented")
+        navController?.navigate(R.id.singleAccountFragment)
     }
 
     override fun openCategoryCreating() {

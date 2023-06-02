@@ -60,4 +60,10 @@
         android:label="@string/tags_fragment_name"
         tools:layout="@layout/fragment_tags">
     </fragment>
+
+    <fragment
+        android:id="@+id/singleAccountFragment"
+        android:name="com.example.feature_settings.presentation.screen.accounts.single.SingleAccountFragment"
+        android:label="@string/single_account_fragment_name"
+        tools:layout="@layout/fragment_single_account"/>
 </navigation>

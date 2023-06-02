@@ -1,6 +1,5 @@
 package com.example.feature_settings.presentation.screen.settings
 
-import android.os.Bundle
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.common.di.FeatureUtils
 import com.example.common.presentation.base.BaseFragment
@@ -10,9 +9,10 @@ import com.example.feature_settings.databinding.FragmentSettingsBinding
 import com.example.feature_settings.di.SettingsComponent
 import com.example.feature_settings.di.SettingsFeatureApi
 import com.example.feature_settings.presentation.screen.settings.dialogs.PickerDialogFragment
-import com.example.feature_settings.presentation.screen.settings.dialogs.PickerType
+import com.example.feature_settings.presentation.screen.settings.dialogs.PickerDialogFragment.Companion.PickerType
+import com.example.feature_settings.presentation.screen.settings.dialogs.PickerDialogFragment.Companion.showPickerDialog
 import com.example.feature_settings.presentation.utils.getColorPrimary
-import com.example.feature_settings.presentation.utils.getTextColor
+import com.example.feature_settings.presentation.utils.getColorOnPrimary
 import com.example.feature_settings.presentation.utils.setContent
 
 
@@ -36,8 +36,8 @@ class SettingsFragment : BaseFragment<SettingsViewModel>(R.layout.fragment_setti
         binding.enableSyncLayout.setContent(
             iconRes = R.drawable.ic_sync,
             titleRes = R.string.enable_synchronization,
-            colorInt = getTextColor(),
-            backgroundColorInt = getColorPrimary(),
+            colorInt = getColorOnPrimary(),
+            fillColorInt = getColorPrimary(),
             isRightArrowVisible = false
         ) {
             viewModel.enableSynchronization()
@@ -69,7 +69,7 @@ class SettingsFragment : BaseFragment<SettingsViewModel>(R.layout.fragment_setti
 
         binding.currencyLayout.setContent(
             iconRes = R.drawable.ic_currency,
-            titleRes = R.string.currency,
+            titleRes = R.string.main_currency,
             isRightArrowVisible = true
         )
 
@@ -108,6 +108,7 @@ class SettingsFragment : BaseFragment<SettingsViewModel>(R.layout.fragment_setti
                         iconRes = R.drawable.ic_sync,
                         titleRes = R.string.disable_synchronization,
                         colorInt = getColorPrimary(),
+                        isStrokeVisible = true,
                         isRightArrowVisible = false
                     ) {
                         viewModel.enableSynchronization()
@@ -116,8 +117,8 @@ class SettingsFragment : BaseFragment<SettingsViewModel>(R.layout.fragment_setti
                     binding.enableSyncLayout.setContent(
                         iconRes = R.drawable.ic_sync,
                         titleRes = R.string.enable_synchronization,
-                        colorInt = getTextColor(),
-                        backgroundColorInt = getColorPrimary(),
+                        colorInt = getColorOnPrimary(),
+                        fillColorInt = getColorPrimary(),
                         isRightArrowVisible = false
                     ) {
                         viewModel.enableSynchronization()
@@ -129,7 +130,8 @@ class SettingsFragment : BaseFragment<SettingsViewModel>(R.layout.fragment_setti
                     value = it.currency.name
                 ) {
                     showPickerDialog(
-                        title = getString(R.string.currency),
+                        fragmentManager = childFragmentManager,
+                        title = getString(R.string.main_currency),
                         items = it.availableCurrencies.map { it.name }.toTypedArray(),
                         pickerType = PickerType.Currency
                     )
@@ -139,6 +141,7 @@ class SettingsFragment : BaseFragment<SettingsViewModel>(R.layout.fragment_setti
                     valueRes = it.language.stringRes
                 ) {
                     showPickerDialog(
+                        fragmentManager = childFragmentManager,
                         title = getString(R.string.language),
                         items = it.availableLanguages.map { getString(it.stringRes) }.toTypedArray(),
                         pickerType = PickerType.Language
@@ -149,6 +152,7 @@ class SettingsFragment : BaseFragment<SettingsViewModel>(R.layout.fragment_setti
                     valueRes = it.firstDayOfWeek.stringRes
                 ) {
                     showPickerDialog(
+                        fragmentManager = childFragmentManager,
                         title = getString(R.string.first_day_of_week),
                         items = it.daysOfWeek.map { getString(it.stringRes) }.toTypedArray(),
                         pickerType = PickerType.FirstDayOfWeek
@@ -159,6 +163,7 @@ class SettingsFragment : BaseFragment<SettingsViewModel>(R.layout.fragment_setti
                     value = it.firstDayOfMonth.toString()
                 ) {
                     showPickerDialog(
+                        fragmentManager = childFragmentManager,
                         title = getString(R.string.first_day_of_month),
                         items = it.daysOfMonth.map { it.toString() }.toTypedArray(),
                         pickerType = PickerType.FirstDayOfMonth
@@ -169,6 +174,7 @@ class SettingsFragment : BaseFragment<SettingsViewModel>(R.layout.fragment_setti
                     valueRes = it.timePeriod.stringRes
                 ) {
                     showPickerDialog(
+                        fragmentManager = childFragmentManager,
                         title = getString(R.string.time_period),
                         items = it.availableTimePeriods.map { getString(it.stringRes) }.toTypedArray(),
                         pickerType = PickerType.TimePeriod
@@ -178,41 +184,37 @@ class SettingsFragment : BaseFragment<SettingsViewModel>(R.layout.fragment_setti
         }
     }
 
-    private fun showPickerDialog(
-        title: String,
-        items: Array<String>,
-        pickerType: PickerType
-    ) {
-        val newFragment = PickerDialogFragment()
-        newFragment.arguments = Bundle().apply {
-            putString(PickerDialogFragment.TITLE_TAG, title)
-            putStringArray(PickerDialogFragment.ITEMS_LIST_TAG, items)
-            putSerializable(PickerDialogFragment.PICKER_TYPE, pickerType)
+    override fun onSelected(index: Int, pickerType: PickerType) {
+        when (pickerType) {
+            PickerType.Currency -> onCurrencySelected(index)
+            PickerType.Language -> onLanguageSelected(index)
+            PickerType.FirstDayOfWeek -> onFirstDayOfWeekSelected(index)
+            PickerType.FirstDayOfMonth -> onFirstDayOfMonthSelected(index)
+            PickerType.TimePeriod -> onTimePeriodSelected(index)
         }
-        newFragment.show(childFragmentManager, title)
     }
 
-    override fun onCurrencySelected(index: Int) {
+    private fun onCurrencySelected(index: Int) {
         val currency = viewModel.dataLiveData.value!!.availableCurrencies[index]
         viewModel.selectCurrency(currency)
     }
 
-    override fun onLanguageSelected(index: Int) {
+    private fun onLanguageSelected(index: Int) {
         val language = viewModel.dataLiveData.value!!.availableLanguages[index]
         viewModel.selectLanguage(language)
     }
 
-    override fun onFirstDayOfWeekSelected(index: Int) {
+    private fun onFirstDayOfWeekSelected(index: Int) {
         val firstDayOfWeek = viewModel.dataLiveData.value!!.daysOfWeek[index]
         viewModel.selectFirstDayOfWeek(firstDayOfWeek)
     }
 
-    override fun onFirstDayOfMonthSelected(index: Int) {
+    private fun onFirstDayOfMonthSelected(index: Int) {
         val firstDayOfMonth = viewModel.dataLiveData.value!!.daysOfMonth[index]
         viewModel.selectFirstDayOfMonth(firstDayOfMonth)
     }
 
-    override fun onTimePeriodSelected(index: Int) {
+    private fun onTimePeriodSelected(index: Int) {
         val timePeriod = viewModel.dataLiveData.value!!.availableTimePeriods[index]
         viewModel.selectTimePeriod(timePeriod)
     }

@@ -16,8 +16,8 @@ class SettingsViewModel @AssistedInject constructor(
     private val router: SettingsRouter
 ) : BaseViewModel() {
 
-    private val _dataLiveData = MutableLiveData<SettingsData>()
-    val dataLiveData : LiveData<SettingsData>
+    private val _dataLiveData = MutableLiveData<Data>()
+    val dataLiveData : LiveData<Data>
         get() = _dataLiveData
 
     private val _isSynchronized = MutableLiveData(false)
@@ -25,7 +25,7 @@ class SettingsViewModel @AssistedInject constructor(
         get() = _isSynchronized
 
     init {
-        val data = SettingsData(
+        val data = Data(
             currency = Currency.RUB,
             language = Language.RU,
             firstDayOfWeek = DayOfWeek.Monday,
@@ -101,4 +101,17 @@ class SettingsViewModel @AssistedInject constructor(
 
         fun create(): SettingsViewModel
     }
+
+    data class Data(
+        val currency: Currency,
+        val language: Language,
+        val firstDayOfWeek: DayOfWeek,
+        val firstDayOfMonth: Int,
+        val timePeriod: TimePeriod,
+        val availableCurrencies: List<Currency>,
+        val availableLanguages: List<Language>,
+        val daysOfWeek: List<DayOfWeek>,
+        val daysOfMonth: List<Int>,
+        val availableTimePeriods: List<TimePeriod>
+    )
 }

@@ -11,6 +11,10 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/top_margin"/>
+
         <include
             android:id="@+id/add_tag_layout"
             layout="@layout/item_settings_element"
@@ -19,8 +23,7 @@
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginVertical="30dp" />
+            android:layout_height="@dimen/settings_element_height"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/listRecyclerView"

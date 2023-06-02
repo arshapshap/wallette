@@ -1,6 +1,7 @@
 package com.example.feature_settings.presentation.utils
 
 import android.content.res.ColorStateList
+import android.graphics.Color
 import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
@@ -15,7 +16,8 @@ fun ItemSettingsElementBinding.setContent(
     @StringRes valueRes: Int? = null,
     value: String? = null,
     @ColorInt colorInt: Int? = null,
-    @ColorInt backgroundColorInt: Int? = null,
+    @ColorInt fillColorInt: Int? = null,
+    isStrokeVisible: Boolean? = null,
     isRightArrowVisible: Boolean? = null,
     onClick: (() -> Unit)? = null
 ) {
@@ -38,11 +40,13 @@ fun ItemSettingsElementBinding.setContent(
         rightArrowImageView.imageTintList = ColorStateList.valueOf(it)
         root.backgroundTintList = ColorStateList.valueOf(it)
     }
-    if (backgroundColorInt == null) {
-        root.setBackgroundResource(R.drawable.stroke)
+    if (fillColorInt != null) {
+        root.setBackgroundResource(R.drawable.bg_button_fill)
+        root.backgroundTintList = ColorStateList.valueOf(fillColorInt)
     }
     else {
-        root.setBackgroundResource(R.drawable.fill)
-        root.backgroundTintList = ColorStateList.valueOf(backgroundColorInt)
+        root.setBackgroundResource(R.drawable.bg_button_stroke)
+        if (isStrokeVisible != true)
+            root.backgroundTintList = ColorStateList.valueOf(Color.TRANSPARENT)
     }
 }

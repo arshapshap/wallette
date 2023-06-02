@@ -36,7 +36,7 @@ class AccountsViewModel @AssistedInject constructor(
     }
 
     fun openAccount(account: Account) {
-        router.openAccount(account)
+        router.openSingleAccount(account)
     }
 
     @AssistedFactory
