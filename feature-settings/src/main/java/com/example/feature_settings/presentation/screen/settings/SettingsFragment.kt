@@ -105,9 +105,6 @@ class SettingsFragment : BaseFragment<SettingsViewModel>(R.layout.fragment_setti
                 with (binding.enableSyncLayout) {
                     invalidate()
                     setImage(R.drawable.ic_sync)
-                    setOnClickListener {
-                        viewModel.enableSynchronization()
-                    }
                 }
 
                 if (it)
@@ -115,16 +112,22 @@ class SettingsFragment : BaseFragment<SettingsViewModel>(R.layout.fragment_setti
                         setColor(getColorPrimary())
                         setStrokeVisibility(true)
                         setTitle(R.string.disable_synchronization)
+                        setOnClickListener {
+                            viewModel.disableSynchronization()
+                        }
                     }
                 else
                     with (binding.enableSyncLayout) {
                         setColor(getColorOnPrimary())
                         setFillColor(getColorPrimary())
                         setTitle(R.string.enable_synchronization)
+                        setOnClickListener {
+                            viewModel.enableSynchronization()
+                        }
                     }
             }
 
-            dataLiveData.observe(viewLifecycleOwner) {
+            settingsLiveData.observe(viewLifecycleOwner) {
                 with (binding.currencyLayout) {
                     setValue(it.currency.name)
                     setOnClickListener {
@@ -199,27 +202,27 @@ class SettingsFragment : BaseFragment<SettingsViewModel>(R.layout.fragment_setti
     }
 
     private fun onCurrencySelected(index: Int) {
-        val currency = viewModel.dataLiveData.value!!.availableCurrencies[index]
+        val currency = viewModel.settingsLiveData.value!!.availableCurrencies[index]
         viewModel.selectCurrency(currency)
     }
 
     private fun onLanguageSelected(index: Int) {
-        val language = viewModel.dataLiveData.value!!.availableLanguages[index]
+        val language = viewModel.settingsLiveData.value!!.availableLanguages[index]
         viewModel.selectLanguage(language)
     }
 
     private fun onFirstDayOfWeekSelected(index: Int) {
-        val firstDayOfWeek = viewModel.dataLiveData.value!!.daysOfWeek[index]
+        val firstDayOfWeek = viewModel.settingsLiveData.value!!.daysOfWeek[index]
         viewModel.selectFirstDayOfWeek(firstDayOfWeek)
     }
 
     private fun onFirstDayOfMonthSelected(index: Int) {
-        val firstDayOfMonth = viewModel.dataLiveData.value!!.daysOfMonth[index]
+        val firstDayOfMonth = viewModel.settingsLiveData.value!!.daysOfMonth[index]
         viewModel.selectFirstDayOfMonth(firstDayOfMonth)
     }
 
     private fun onTimePeriodSelected(index: Int) {
-        val timePeriod = viewModel.dataLiveData.value!!.availableTimePeriods[index]
+        val timePeriod = viewModel.settingsLiveData.value!!.availableTimePeriods[index]
         viewModel.selectTimePeriod(timePeriod)
     }
 }

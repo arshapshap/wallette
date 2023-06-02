@@ -19,4 +19,6 @@ interface SettingsRouter {
     fun openSingleTag(tag: Tag? = null)
 
     fun openTransferCreating()
+
+    fun openLoginPage()
 }

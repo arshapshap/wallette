@@ -2,6 +2,7 @@ package com.example.feature_settings.presentation.screen.settings
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.common.data.TokenManager
 import com.example.common.domain.models.Currency
 import com.example.common.presentation.base.BaseViewModel
 import com.example.feature_settings.domain.models.DayOfWeek
@@ -13,19 +14,20 @@ import dagger.assisted.AssistedInject
 import kotlin.Int
 
 class SettingsViewModel @AssistedInject constructor(
-    private val router: SettingsRouter
+    private val router: SettingsRouter,
+    private val tokenManager: TokenManager
 ) : BaseViewModel() {
 
-    private val _dataLiveData = MutableLiveData<Data>()
-    val dataLiveData : LiveData<Data>
-        get() = _dataLiveData
+    private val _settingsLiveData = MutableLiveData<Settings>()
+    val settingsLiveData : LiveData<Settings>
+        get() = _settingsLiveData
 
     private val _isSynchronized = MutableLiveData(false)
     val isSynchronized : LiveData<Boolean>
         get() = _isSynchronized
 
     init {
-        val data = Data(
+        val settings = Settings(
             currency = Currency.RUB,
             language = Language.RU,
             firstDayOfWeek = DayOfWeek.Monday,
@@ -37,11 +39,22 @@ class SettingsViewModel @AssistedInject constructor(
             daysOfMonth = (1..31).toList(),
             availableTimePeriods = TimePeriod.values().toList()
         )
-        _dataLiveData.postValue(data)
+        _settingsLiveData.postValue(settings)
+
+        val token = tokenManager.getAuthorizationToken()
+        _isSynchronized.value = token != null
     }
 
     fun enableSynchronization() {
-        _isSynchronized.postValue(!(isSynchronized.value ?: false))
+        if (_isSynchronized.value == true)
+            return
+        router.openLoginPage()
+    }
+
+    fun disableSynchronization() {
+        if (_isSynchronized.value == false)
+            return
+        tokenManager.deleteToken()
     }
 
     fun openCategories() {
@@ -57,40 +70,40 @@ class SettingsViewModel @AssistedInject constructor(
     }
 
     fun selectCurrency(currency: Currency) {
-        _dataLiveData.postValue(
-            _dataLiveData.value?.copy(
+        _settingsLiveData.postValue(
+            _settingsLiveData.value?.copy(
                 currency = currency
             )
         )
     }
 
     fun selectLanguage(language: Language) {
-        _dataLiveData.postValue(
-            _dataLiveData.value?.copy(
+        _settingsLiveData.postValue(
+            _settingsLiveData.value?.copy(
                 language = language
             )
         )
     }
 
     fun selectFirstDayOfWeek(firstDayOfWeek: DayOfWeek) {
-        _dataLiveData.postValue(
-            _dataLiveData.value?.copy(
+        _settingsLiveData.postValue(
+            _settingsLiveData.value?.copy(
                 firstDayOfWeek = firstDayOfWeek
             )
         )
     }
 
     fun selectFirstDayOfMonth(firstDayOfMonth: Int) {
-        _dataLiveData.postValue(
-            _dataLiveData.value?.copy(
+        _settingsLiveData.postValue(
+            _settingsLiveData.value?.copy(
                 firstDayOfMonth = firstDayOfMonth
             )
         )
     }
 
     fun selectTimePeriod(timePeriod: TimePeriod) {
-        _dataLiveData.postValue(
-            _dataLiveData.value?.copy(
+        _settingsLiveData.postValue(
+            _settingsLiveData.value?.copy(
                 timePeriod = timePeriod
             )
         )
@@ -102,7 +115,7 @@ class SettingsViewModel @AssistedInject constructor(
         fun create(): SettingsViewModel
     }
 
-    data class Data(
+    data class Settings(
         val currency: Currency,
         val language: Language,
         val firstDayOfWeek: DayOfWeek,
