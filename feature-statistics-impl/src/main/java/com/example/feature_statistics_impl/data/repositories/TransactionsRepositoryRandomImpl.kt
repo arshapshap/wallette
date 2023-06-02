@@ -17,7 +17,7 @@ class TransactionsRepositoryRandomImpl @Inject constructor() : TransactionsRepos
         val account = Account(
             id = "acc123",
             name = "Main",
-            icon = "card",
+            icon = AccountIcon.Card,
             balance = 3500,
             currency = Currency.RUB
         )
@@ -63,31 +63,32 @@ class TransactionsRepositoryRandomImpl @Inject constructor() : TransactionsRepos
     }
 
     private fun getRandomTags(rand: Random): List<Tag> {
-        val tagRed = Tag(
-            id = "tagRed",
-            name = "Красный",
-            color = "#FF0000"
-        )
-        val tagBlue = Tag(
-            id = "tagBlue",
-            name = "Синий",
-            color = "#0000FF"
-        )
-        val tagGreen = Tag(
-            id = "tagGreen",
-            name = "Зелёный",
-            color = "#00FF00"
-        )
+        val list = arrayListOf<Tag>()
+        val rand = Random(1234)
+        for (i in 0..10) {
+            list.add(
+                Tag(
+                    id = i.toString(),
+                    name = "Метка $i",
+                    color = getRandomColor(rand)
+                )
+            )
+        }
 
         val result = mutableListOf<Tag>()
-        if ((0..1).random(rand) == 1)
-            result.add(tagRed)
-        if ((0..1).random(rand) == 1)
-            result.add(tagBlue)
-        if ((0..1).random(rand) == 1)
-            result.add(tagGreen)
+        list.forEach {
+            if ((0..1).random(rand) == 1)
+                result.add(it)
+        }
 
         return result
+    }
+
+    private fun getRandomColor(rand: Random): String {
+        val r = rand.nextInt(256).toString(16).padStart(2, '0')
+        val g = rand.nextInt(256).toString(16).padStart(2, '0')
+        val b = rand.nextInt(256).toString(16).padStart(2, '0')
+        return "#$r$g$b"
     }
 
     private fun getRandomAmount(rand: Random): Int {
@@ -95,34 +96,17 @@ class TransactionsRepositoryRandomImpl @Inject constructor() : TransactionsRepos
     }
 
     private fun getRandomCategory(amount: Int, rand: Random): Category? {
-        val category1 = Category(
-            id = "cat1",
-            name = "Доход 1",
-            icon = "",
-            type = TransactionType.Income
-        )
-        val category2 = Category(
-            id = "cat2",
-            name = "Доход 2",
-            icon = "",
-            type = TransactionType.Income
-        )
-        val category3 = Category(
-            id = "cat3",
-            name = "Расход 1",
-            icon = "",
-            type = TransactionType.Expense
-        )
-        val category4 = Category(
-            id = "cat4",
-            name = "Расход 2",
-            icon = "",
-            type = TransactionType.Expense
-        )
-        return when ((0..2).random(rand)) {
-            1 -> if (amount > 0) category1 else category3
-            2 -> if (amount > 0) category2 else category4
-            else -> null
+        val list = arrayListOf<Category>()
+        for (i in 0..10) {
+            list.add(
+                Category(
+                    id = i.toString(),
+                    name = "Категория $i",
+                    icon = CategoryIcon.values().filter { it.name != "Empty" }.random(rand),
+                    type = TransactionType.values().random(rand)
+                )
+            )
         }
+        return list.random(rand)
     }
 }

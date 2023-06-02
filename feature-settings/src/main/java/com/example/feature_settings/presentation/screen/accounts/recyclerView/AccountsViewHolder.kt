@@ -2,7 +2,6 @@ package com.example.feature_settings.presentation.screen.accounts.recyclerView
 
 import androidx.recyclerview.widget.RecyclerView
 import com.example.common.domain.models.Account
-import com.example.feature_settings.R
 import com.example.feature_settings.databinding.ItemSettingsElementBinding
 import com.example.feature_settings.presentation.utils.setContent
 import com.example.feature_statistics_impl.presentation.screen.transactionsList.extensions.formatAsBalance
@@ -14,7 +13,7 @@ class AccountsViewHolder(
 
     fun onBind(account: Account) {
         binding.setContent(
-            iconRes = R.drawable.ic_account, // TODO: доставать иконку
+            iconRes = account.icon.drawableRes,
             title = account.name,
             value = account.balance.formatAsBalance(
                 currency = account.currency,

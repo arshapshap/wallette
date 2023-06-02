@@ -11,7 +11,7 @@ class CategoriesViewHolder(
 
     fun onBind(category: Category) {
         with (binding) {
-            iconImageView.setImageResource(com.example.common.R.drawable.ic_category_cash) // TODO: добавить иконку
+            iconImageView.setImageResource(category.icon.drawableRes)
             titleTextView.text = category.name
             root.setOnClickListener {
                 onClick.invoke(category)

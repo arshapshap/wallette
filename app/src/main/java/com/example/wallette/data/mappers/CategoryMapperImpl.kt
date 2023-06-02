@@ -3,6 +3,7 @@ package com.example.wallette.data.mappers
 import com.example.common.data.mappers.CategoryMapper
 import com.example.common.data.models.response.CategoryResponse
 import com.example.common.domain.models.Category
+import com.example.common.domain.models.CategoryIcon
 import com.example.common.domain.models.TransactionType
 import javax.inject.Inject
 
@@ -13,13 +14,13 @@ class CategoryMapperImpl @Inject constructor() : CategoryMapper {
             Category(
                 id = response.id ?: "",
                 name = response.name ?: "",
-                icon = response.icon ?: "",
+                icon = CategoryIcon.valueOf(response.icon ?: "empty"),
                 type = TransactionType.valueOf(response.type ?: "")
             )
         } ?: Category(
             id = "",
             name = "",
-            icon = "",
+            icon = CategoryIcon.Empty,
             type = TransactionType.Expense
         )
     }
