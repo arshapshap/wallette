@@ -28,7 +28,7 @@ class TagsViewModel @AssistedInject constructor(
     }
 
     fun openTagCreating() {
-        router.openTagCreating()
+        router.openSingleTag()
     }
 
     fun openTag(tag: Tag) {

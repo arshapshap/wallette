@@ -28,7 +28,7 @@ class AccountsViewModel @AssistedInject constructor(
     }
 
     fun openAccountCreating() {
-        router.openAccountCreating()
+        router.openSingleAccount()
     }
 
     fun openTransferCreating() {

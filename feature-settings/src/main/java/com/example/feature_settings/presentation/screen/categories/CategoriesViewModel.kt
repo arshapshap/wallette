@@ -34,7 +34,7 @@ class CategoriesViewModel @AssistedInject constructor(
     }
 
     fun openCategoryCreating() {
-        router.openCategoryCreating()
+        router.openSingleCategory()
     }
 
     fun openCategory(category: Category) {

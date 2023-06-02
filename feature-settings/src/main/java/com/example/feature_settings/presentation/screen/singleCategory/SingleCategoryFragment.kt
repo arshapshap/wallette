@@ -58,8 +58,8 @@ class SingleCategoryFragment :
 
         binding.categoryTypeRadio.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
-                1 -> viewModel.selectType(TransactionType.Expense)
-                2 -> viewModel.selectType(TransactionType.Income)
+                R.id.expensesRadioButton -> viewModel.selectType(TransactionType.Expense)
+                R.id.incomesRadioButton -> viewModel.selectType(TransactionType.Income)
             }
         }
     }
@@ -74,6 +74,13 @@ class SingleCategoryFragment :
                 if (iconIndex != null) {
                     getIconsAdapter()?.setSelected(iconIndex)
                     categoryIconsRecyclerView.scrollToPosition(iconIndex)
+                }
+
+                it?.category?.type?.let {
+                    when (it) {
+                        TransactionType.Expense -> categoryTypeRadio.check(R.id.expensesRadioButton)
+                        TransactionType.Income -> categoryTypeRadio.check(R.id.incomesRadioButton)
+                    }
                 }
             }
         }

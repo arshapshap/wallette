@@ -55,7 +55,7 @@ class Navigator : StatisticsRouter, AuthorizationRouter, SettingsRouter {
         navController?.navigate(R.id.tagsFragment)
     }
 
-    override fun openSingleAccount(account: Account) {
+    override fun openSingleAccount(account: Account?) {
         navController?.navigate(
             resId = R.id.singleAccountFragment,
             args = Bundle().apply {
@@ -64,7 +64,7 @@ class Navigator : StatisticsRouter, AuthorizationRouter, SettingsRouter {
         )
     }
 
-    override fun openSingleCategory(category: Category) {
+    override fun openSingleCategory(category: Category?) {
         navController?.navigate(
             resId = R.id.singleCategoryFragment,
             args = Bundle().apply {
@@ -73,19 +73,7 @@ class Navigator : StatisticsRouter, AuthorizationRouter, SettingsRouter {
         )
     }
 
-    override fun openSingleTag(tag: Tag) {
-        //TODO("Not yet implemented")
-    }
-
-    override fun openAccountCreating() {
-        navController?.navigate(R.id.singleAccountFragment)
-    }
-
-    override fun openCategoryCreating() {
-        navController?.navigate(R.id.singleCategoryFragment)
-    }
-
-    override fun openTagCreating() {
+    override fun openSingleTag(tag: Tag?) {
         //TODO("Not yet implemented")
     }
 
