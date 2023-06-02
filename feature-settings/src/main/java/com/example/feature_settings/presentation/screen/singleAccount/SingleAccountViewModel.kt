@@ -24,10 +24,12 @@ class SingleAccountViewModel @AssistedInject constructor(
     val stateLiveData: LiveData<Data?>
         get() = _stateLiveData
 
-    val isDataValid: Boolean
+    private val isDataValid: Boolean
         get() {
             val editingAccount = _stateLiveData.value?.account ?: return false
-            return editingAccount.name != "" && editingAccount.startBalance != null
+            return editingAccount.name != ""
+                    && editingAccount.startBalance != null
+                    && editingAccount.icon != AccountIcon.Empty
         }
 
     init {

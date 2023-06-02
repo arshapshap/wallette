@@ -22,6 +22,14 @@ class SingleCategoryViewModel @AssistedInject constructor(
     val stateLiveData: LiveData<Data?>
         get() = _stateLiveData
 
+    private val isDataValid: Boolean
+        get() {
+            val editingCategory = _stateLiveData.value?.category ?: return false
+            return editingCategory.name != ""
+                    && editingCategory.type != null
+                    && editingCategory.icon != CategoryIcon.Empty
+        }
+
     init {
         val editingCategory = if (category == null) EditingCategory()
             else EditingCategory(
@@ -39,7 +47,9 @@ class SingleCategoryViewModel @AssistedInject constructor(
     }
 
     fun save() {
-        val editingCategory = _stateLiveData.value?.category ?: return // TODO: выдавать ошибку?
+        if (!isDataValid)
+            return
+        val editingCategory = _stateLiveData.value?.category!!
         viewModelScope.launch {
             if (category == null)
                 interactor.createCategory(
@@ -47,7 +57,7 @@ class SingleCategoryViewModel @AssistedInject constructor(
                         id = "",
                         name = editingCategory.name,
                         icon = editingCategory.icon,
-                        type = editingCategory.type ?: return@launch
+                        type = editingCategory.type!!
                     )
                 )
             else
@@ -56,7 +66,7 @@ class SingleCategoryViewModel @AssistedInject constructor(
                         id = category.id,
                         name = editingCategory.name,
                         icon = editingCategory.icon,
-                        type = editingCategory.type ?: return@launch
+                        type = editingCategory.type!!
                     )
                 )
             router.openCategories()
