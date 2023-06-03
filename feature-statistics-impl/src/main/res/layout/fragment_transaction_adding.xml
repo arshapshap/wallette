@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/incomeTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/income"
+        android:textFontWeight="400"
+        android:textSize="18sp"
+        android:layout_marginTop="22dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/expenseTextView"/>
+
+    <TextView
+        android:id="@+id/expenseTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/expense"
+        android:textFontWeight="400"
+        android:textSize="18sp"
+        android:layout_marginTop="22dp"
+        app:layout_constraintStart_toEndOf="@+id/incomeTextView"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/moneyTransferTextView"/>
+
+    <TextView
+        android:id="@+id/moneyTransferTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="22dp"
+        android:text="@string/money_transfer"
+        android:textFontWeight="400"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/expenseTextView"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/lineView"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/grey"
+        app:layout_constraintTop_toBottomOf="@+id/expenseTextView"
+        android:layout_marginTop="5dp"/>
+
+    <EditText
+        android:id="@+id/sumAddingTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textFontWeight="600"
+        android:textSize="32sp"
+        android:layout_marginTop="28dp"
+        android:layout_marginStart="28dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lineView"
+        tools:text="890 ₽" />
+
+    <TextView
+        android:id="@+id/categoryTitleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="@string/category_title"
+        android:alpha="0.5"
+        android:textFontWeight="500"
+        android:textSize="17sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sumAddingTextView" />
+
+    <Spinner
+        android:id="@+id/categoriesSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:listitem="@android:layout/activity_list_item"
+        app:layout_constraintBottom_toBottomOf="@id/categoryTitleTextView"/>
+
+    <TextView
+        android:id="@+id/dateTitleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="@string/date_title"
+        android:alpha="0.5"
+        android:textFontWeight="500"
+        android:textSize="17sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/categoryTitleTextView" />
+
+    <TextView
+        android:id="@+id/dateTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/dateTitleTextView"
+        tools:text="1 июня"
+        tools:textSize="18sp"/>
+
+    <EditText
+        android:id="@+id/tagsInputEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:hint="@string/tags"
+        android:alpha="0.5"
+        android:textFontWeight="500"
+        android:textSize="17sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dateTitleTextView" />
+
+
+    <EditText
+        android:id="@+id/descriptionInputEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:hint="@string/description"
+        android:alpha="0.5"
+        android:textFontWeight="500"
+        android:textSize="17sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tagsInputEditText" />
+
+
+    <TextView
+        android:id="@+id/accountTitleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="@string/account"
+        android:alpha="0.5"
+        android:textFontWeight="500"
+        android:textSize="17sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/descriptionInputEditText" />
+
+    <Spinner
+        android:id="@+id/accountSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:listitem="@android:layout/activity_list_item"
+        app:layout_constraintBottom_toBottomOf="@id/accountTitleTextView"/>
+
+
+    <Button
+        android:id="@+id/saveOperationButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_balance_button_background"
+        app:icon="@drawable/ic_jackdaw"
+        android:text="@string/save_operation"
+        android:textSize="16sp"
+        android:layout_marginTop="60dp"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@+id/accountTitleTextView"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <Button
+        android:id="@+id/editButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_balance_button_background"
+        app:backgroundTint="@color/grey"
+        app:icon="@drawable/ic_edit"
+        android:text="@string/edit"
+        android:textColor="?attr/colorPrimary"
+        android:textFontWeight="800"
+        android:textSize="16sp"
+        android:layout_marginTop="60dp"
+        app:layout_constraintTop_toBottomOf="@+id/accountTitleTextView"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <Button
+        android:id="@+id/deleteButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_balance_button_background"
+        app:backgroundTint="@color/grey"
+        app:icon="@drawable/ic_delete"
+        android:text="@string/delete"
+        android:textColor="?attr/colorPrimary"
+        android:textFontWeight="800"
+        android:textSize="16sp"
+        android:layout_marginTop="60dp"
+        app:layout_constraintTop_toBottomOf="@+id/accountSpinner"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
