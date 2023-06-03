@@ -6,12 +6,14 @@ import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.core.view.isGone
 import androidx.recyclerview.widget.RecyclerView
+import com.example.common.domain.models.CategoryIcon
 import com.example.common.domain.models.Currency
 import com.example.feature_statistics_impl.R
 import com.example.feature_statistics_impl.databinding.ItemGroupBinding
 import com.example.feature_statistics_impl.presentation.screen.transactionsList.SortingType
 import com.example.feature_statistics_impl.presentation.screen.transactionsList.extensions.getString
-import com.example.feature_statistics_impl.presentation.screen.transactionsList.extensions.getTextColor
+import com.example.common.presentation.extensions.formatAsBalance
+import com.example.common.presentation.extensions.getColorBySign
 import com.example.feature_statistics_impl.presentation.screen.transactionsList.groupsRecyclerView.transactionGroups.TransactionGroup
 import com.example.feature_statistics_impl.presentation.screen.transactionsList.groupsRecyclerView.transactionGroups.TransactionGroupByCategory
 import com.example.feature_statistics_impl.presentation.screen.transactionsList.groupsRecyclerView.transactionGroups.TransactionGroupByDate
@@ -34,11 +36,11 @@ class TransactionGroupsViewHolder(
             arrowImageView.rotateArrowWithAnimation(group.isExpanded)
 
             val groupAmount = group.list.sumOf { it.amount }
-            groupAmountTextView.text = groupAmount.getString(Currency.RUB) // TODO: откуда брать валюту??
+            groupAmountTextView.text = groupAmount.formatAsBalance(Currency.RUB) // TODO: откуда брать валюту??
             groupAmountTextView.setTextColor(
                 ContextCompat.getColor(
                     binding.root.context,
-                    groupAmount.getTextColor()
+                    groupAmount.getColorBySign()
                 )
             )
 
@@ -76,11 +78,7 @@ class TransactionGroupsViewHolder(
             categoryTextView.text = group.category?.name
                 ?: binding.root.context.getString(R.string.no_category)
 
-            if (group.category == null)
-                categoryIconImageView.setImageResource(com.example.common.R.drawable.ic_category_empty)
-            else
-                categoryIconImageView.setImageResource(com.example.common.R.drawable.ic_category_cash)
-            //TODO: добавить отображение иконки
+            categoryIconImageView.setImageResource(group.category?.icon?.drawableRes ?: CategoryIcon.Empty.drawableRes)
         }
     }
 

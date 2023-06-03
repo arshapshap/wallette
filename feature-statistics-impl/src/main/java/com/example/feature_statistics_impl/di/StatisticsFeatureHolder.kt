@@ -3,7 +3,7 @@ package com.example.feature_statistics_impl.di
 import com.example.common.di.FeatureApiHolder
 import com.example.common.di.FeatureContainer
 import com.example.common.di.scopes.ApplicationScope
-import com.example.feature_statistics_impl.StatisticsRouter
+import com.example.feature_statistics_impl.presentation.StatisticsRouter
 import javax.inject.Inject
 
 @ApplicationScope

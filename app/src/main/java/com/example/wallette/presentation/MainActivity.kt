@@ -48,10 +48,11 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNavigationView.setupWithNavController(controller)
         navigator.attachNavController(controller, this)
 
-        if (checkIfAuthorized())
-            navigator.openStatistics()
-        else
-            navigator.openLoginPage()
+//        if (checkIfAuthorized())
+//            navigator.openStatistics()
+//        else
+//            navigator.openLoginPage()
+        navigator.openStatistics()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -61,7 +62,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.action_settings -> true
+            //R.id.action_settings -> true
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -73,17 +74,9 @@ class MainActivity : AppCompatActivity() {
     private fun hideNavBars(controller: NavController) {
         controller.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
-                R.id.loginFragment -> {
-                    setNavBarsVisibility(View.GONE)
-                }
-
-                R.id.registerFragment -> {
-                    setNavBarsVisibility(View.GONE)
-                }
-
-                else -> {
-                    setNavBarsVisibility(View.VISIBLE)
-                }
+                R.id.loginFragment -> setNavBarsVisibility(View.GONE)
+                R.id.registerFragment -> setNavBarsVisibility(View.GONE)
+                else -> setNavBarsVisibility(View.VISIBLE)
             }
         }
     }

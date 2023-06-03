@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/top_margin" />
+
+    <include
+        android:id="@+id/save_layout"
+        layout="@layout/item_settings_element"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settings_element_height" />
+
+    <EditText
+        android:id="@+id/accountNameEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/account_name"
+        android:importantForAutofill="no"
+        android:inputType="textShortMessage"/>
+
+    <EditText
+        android:id="@+id/start_balance_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/start_balance"
+        android:importantForAutofill="no"
+        android:inputType="numberDecimal" />
+
+    <include
+        android:id="@+id/currency_layout"
+        layout="@layout/item_settings_element"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/accountIconsRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:paddingBottom="@dimen/bottom_margin"
+        tools:itemCount="25"
+        tools:listitem="@layout/item_selecting_icon" />
+
+</androidx.appcompat.widget.LinearLayoutCompat>

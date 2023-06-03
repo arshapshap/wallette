@@ -2,7 +2,6 @@
     <string name="app_name">Wallette</string>
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
-    <string name="blank_fragment_label">Blank Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
 

@@ -3,13 +3,17 @@
     <item
         android:id="@+id/statisticsFragment"
         android:icon="@drawable/ic_pie_chart"
-        android:title="Отчёт" />
+        android:title="@string/statistics_fragment_name" />
     <item
         android:id="@+id/empty"
         android:title=""
         android:enabled="false"/>
-    <item
+    <!--<item
         android:id="@+id/blankFragment"
         android:icon="@drawable/ic_monitoring"
-        android:title="План" />
+        android:title="План" />-->
+    <item
+        android:id="@+id/settingsFragment"
+        android:icon="@drawable/ic_settings"
+        android:title="@string/settings_fragment_name" />
 </menu>

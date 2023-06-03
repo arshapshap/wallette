@@ -9,6 +9,8 @@ data class AccountResponse(
     val name: String?,
     @SerializedName("icon")
     val icon: String?,
-    @SerializedName("balance")
-    val balance: Int?
+    @SerializedName("current_balance")
+    val currentBalance: Double?,
+    @SerializedName("start_balance")
+    val startBalance: Double?
 )

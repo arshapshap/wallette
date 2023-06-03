@@ -10,11 +10,13 @@ data class TransactionResponse(
     @SerializedName("date")
     val date: String?,
     @SerializedName("amount")
-    val amount: Int?,
+    val amount: Double?,
     @SerializedName("description")
     val description: String?,
     @SerializedName("account")
     val account: AccountResponse?,
+    @SerializedName("account_destination")
+    val accountDestination: AccountResponse?,
     @SerializedName("category")
     val category: CategoryResponse?,
     @SerializedName("transactionGroup")
