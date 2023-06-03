@@ -4,9 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".presentation.MainActivity">
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true"
@@ -45,6 +46,7 @@
         app:menu="@menu/menu_bottom_navigation" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addFloatingButton"
         style="@style/App.Custom.FloatingActionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

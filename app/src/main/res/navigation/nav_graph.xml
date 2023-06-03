@@ -3,19 +3,79 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/StatisticsFragment">
+    app:startDestination="@id/statisticsFragment">
 
     <fragment
-        android:id="@+id/BlankFragment"
-        android:name="com.example.wallette.BlankFragment"
-        android:label="@string/blank_fragment_label"
-        tools:layout="@layout/fragment_blank">
-    </fragment>
-
-    <fragment
-        android:id="@+id/StatisticsFragment"
-        android:name="com.example.feature_statistics_impl.presentation.StatisticsFragment"
+        android:id="@+id/statisticsFragment"
+        android:name="com.example.feature_statistics_impl.presentation.screen.statistics.StatisticsFragment"
         android:label="@string/statistics_fragment_name"
         tools:layout="@layout/fragment_statistics">
     </fragment>
+
+    <fragment
+        android:id="@+id/transactionsFragment"
+        android:name="com.example.feature_statistics_impl.presentation.screen.transactionsList.TransactionsFragment"
+        android:label="@string/statistics_fragment_name"
+        tools:layout="@layout/fragment_transactions_list">
+    </fragment>
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.feature_auth.presentation.screen.login.LoginFragment"
+        android:label="@string/login_fragment_name"
+        tools:layout="@layout/fragment_login">
+    </fragment>
+
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="com.example.feature_auth.presentation.screen.register.RegisterFragment"
+        android:label="@string/register_fragment_name"
+        tools:layout="@layout/fragment_register">
+    </fragment>
+
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.example.feature_settings.presentation.screen.settings.SettingsFragment"
+        android:label="@string/settings_fragment_name"
+        tools:layout="@layout/fragment_settings">
+    </fragment>
+
+    <fragment
+        android:id="@+id/accountsFragment"
+        android:name="com.example.feature_settings.presentation.screen.accounts.AccountsFragment"
+        android:label="@string/accounts_fragment_name"
+        tools:layout="@layout/fragment_accounts">
+    </fragment>
+
+    <fragment
+        android:id="@+id/categoriesFragment"
+        android:name="com.example.feature_settings.presentation.screen.categories.CategoriesFragment"
+        android:label="@string/categories_fragment_name"
+        tools:layout="@layout/fragment_categories">
+    </fragment>
+
+    <fragment
+        android:id="@+id/tagsFragment"
+        android:name="com.example.feature_settings.presentation.screen.tags.TagsFragment"
+        android:label="@string/tags_fragment_name"
+        tools:layout="@layout/fragment_tags">
+    </fragment>
+
+    <fragment
+        android:id="@+id/singleAccountFragment"
+        android:name="com.example.feature_settings.presentation.screen.singleAccount.SingleAccountFragment"
+        android:label="@string/single_account_fragment_name"
+        tools:layout="@layout/fragment_single_account"/>
+
+    <fragment
+        android:id="@+id/singleCategoryFragment"
+        android:name="com.example.feature_settings.presentation.screen.singleCategory.SingleCategoryFragment"
+        android:label="@string/single_category_fragment_name"
+        tools:layout="@layout/fragment_single_category"/>
+
+    <fragment
+        android:id="@+id/singleTagFragment"
+        android:name="com.example.feature_settings.presentation.screen.singleTag.SingleTagFragment"
+        android:label="@string/single_tag_fragment_name"
+        tools:layout="@layout/fragment_single_tag"/>
 </navigation>

@@ -1,7 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.example.wallette.MainActivity">
+    tools:context="com.example.wallette.presentation.MainActivity">
     <item
         android:id="@+id/action_search"
         android:icon="@drawable/ic_search"
@@ -14,10 +14,10 @@
         android:orderInCategory="200"
         android:title="@string/action_notifications"
         app:showAsAction="always" />
-    <item
+    <!--<item
         android:id="@+id/action_settings"
         android:icon="@drawable/ic_settings"
         android:orderInCategory="300"
         android:title="@string/action_settings"
-        app:showAsAction="always" />
+        app:showAsAction="always" />-->
 </menu>

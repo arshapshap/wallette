@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="statistics_fragment_name">Statistics</string>
+    <string name="statistics_fragment_name">Отчёт</string>
+    <string name="no_category">Без категории</string>
+    <string name="no_tags">Без меток</string>
     <string name="income">Доход</string>
     <string name="expense">Расход</string>
     <string name="money_transfer">Перевод</string>

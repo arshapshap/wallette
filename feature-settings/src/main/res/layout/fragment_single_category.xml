@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/top_margin" />
+
+    <include
+        android:id="@+id/save_layout"
+        layout="@layout/item_settings_element"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settings_element_height" />
+
+    <EditText
+        android:id="@+id/categoryNameEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/category_name"
+        android:importantForAutofill="no"
+        android:inputType="textShortMessage"/>
+
+    <RadioGroup
+        android:id="@+id/categoryTypeRadio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/expensesRadioButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/expenses"
+            android:textSize="17sp" />
+
+        <RadioButton
+            android:id="@+id/incomesRadioButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/incomes"
+            android:textSize="17sp" />
+    </RadioGroup>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/categoryIconsRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:paddingBottom="@dimen/bottom_margin"
+        tools:itemCount="25"
+        tools:listitem="@layout/item_selecting_icon" />
+
+</androidx.appcompat.widget.LinearLayoutCompat>
