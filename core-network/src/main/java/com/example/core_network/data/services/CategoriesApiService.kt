@@ -17,7 +17,7 @@ interface CategoriesApiService {
     suspend fun getCategoryById(id: Long): CategoryResponse
 
     @POST("tags/create")
-    suspend fun createCategory(model: CategoryCreatingModel): EntityCreatingResponse
+    suspend fun createCategory(model: CategoryCreatingModel): BasicResponse
 
     @PUT("tags/update")
     suspend fun updateCategory(model: CategoryEditingModel): BasicResponse

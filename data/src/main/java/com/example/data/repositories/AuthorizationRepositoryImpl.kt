@@ -3,7 +3,7 @@ package com.example.data.repositories
 import com.example.common.domain.models.network.AuthorizationResult
 import com.example.common.domain.repositories.AuthorizationRepository
 import com.example.common.data.TokenManager
-import com.example.data.mappers.AuthorizationResponseMapper
+import com.example.data.mappers.AuthorizationResultMapper
 import com.example.core_network.data.models.request.LoginRequestModel
 import com.example.core_network.data.models.request.RegisterRequestModel
 import com.example.core_network.data.services.AuthorizationApiService
@@ -11,7 +11,7 @@ import javax.inject.Inject
 
 class AuthorizationRepositoryImpl @Inject constructor(
     private val service: AuthorizationApiService,
-    private val mapper: AuthorizationResponseMapper,
+    private val mapper: AuthorizationResultMapper,
     private val tokenManager: TokenManager
 ) : AuthorizationRepository {
 

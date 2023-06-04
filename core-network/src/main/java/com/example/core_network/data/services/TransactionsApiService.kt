@@ -3,7 +3,6 @@ package com.example.core_network.data.services
 import com.example.core_network.data.models.request.transaction.TransactionCreatingModel
 import com.example.core_network.data.models.request.transaction.TransactionEditingModel
 import com.example.core_network.data.models.response.BasicResponse
-import com.example.core_network.data.models.response.EntityCreatingResponse
 import com.example.core_network.data.models.response.TransactionResponse
 import retrofit2.http.DELETE
 import retrofit2.http.GET
@@ -19,7 +18,7 @@ interface TransactionsApiService {
     suspend fun getTransactionById(id: Long): TransactionResponse
 
     @POST("transactions/create")
-    suspend fun createTransaction(model: TransactionCreatingModel): EntityCreatingResponse
+    suspend fun createTransaction(model: TransactionCreatingModel): BasicResponse
 
     @PUT("transactions/update")
     suspend fun updateTransaction(model: TransactionEditingModel): BasicResponse

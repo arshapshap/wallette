@@ -11,17 +11,17 @@ import retrofit2.http.PUT
 interface AccountsApiService {
 
     @GET("accounts/get")
-    suspend fun getAccountss(): ArrayList<AccountResponse>
+    suspend fun getAccounts(): ArrayList<AccountResponse>
 
     @GET("accounts/get/:id")
-    suspend fun getAccountsById(id: Long): AccountResponse
+    suspend fun getAccountById(id: Long): AccountResponse
 
     @POST("accounts/create")
-    suspend fun createAccounts(model: AccountCreatingModel): EntityCreatingResponse
+    suspend fun createAccount(model: AccountCreatingModel): BasicResponse
 
     @PUT("accounts/update")
-    suspend fun updateAccounts(model: AccountEditingModel): BasicResponse
+    suspend fun updateAccount(model: AccountEditingModel): BasicResponse
 
     @DELETE("accounts/delete/:id")
-    suspend fun deleteAccountsById(id: Long): BasicResponse
+    suspend fun deleteAccountById(id: Long): BasicResponse
 }

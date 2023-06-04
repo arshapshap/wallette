@@ -7,7 +7,7 @@ import com.example.core_db.models.entities.TagLocal
 abstract class TagDao {
 
     @Insert
-    abstract suspend fun addTag(tagLocal: TagLocal)
+    abstract suspend fun addTag(tagLocal: TagLocal): Long
 
     @Update
     abstract suspend fun updateTag(tagLocal: TagLocal)

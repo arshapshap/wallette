@@ -3,7 +3,6 @@ package com.example.core_network.data.services
 import com.example.core_network.data.models.request.tag.TagCreatingModel
 import com.example.core_network.data.models.request.tag.TagEditingModel
 import com.example.core_network.data.models.response.BasicResponse
-import com.example.core_network.data.models.response.EntityCreatingResponse
 import com.example.core_network.data.models.response.TagResponse
 import retrofit2.http.DELETE
 import retrofit2.http.GET
@@ -19,7 +18,7 @@ interface TagsApiService {
     suspend fun getTagById(id: Long): TagResponse
 
     @POST("tags/create")
-    suspend fun createTag(model: TagCreatingModel): EntityCreatingResponse
+    suspend fun createTag(model: TagCreatingModel): BasicResponse
 
     @PUT("tags/update")
     suspend fun updateTag(model: TagEditingModel): BasicResponse

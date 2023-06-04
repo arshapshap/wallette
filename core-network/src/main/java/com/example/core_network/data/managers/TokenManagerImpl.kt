@@ -17,6 +17,9 @@ class TokenManagerImpl @Inject constructor(
     override fun deleteToken()
         = sharedPrefs.edit().putString(TOKEN_KEY, null).apply()
 
+    override fun isAuthorized(): Boolean
+        = getAuthorizationToken() != null
+
     companion object {
         private const val TOKEN_KEY = "token"
     }

@@ -28,7 +28,7 @@ class SettingsInteractor @Inject constructor(
     }
 
     suspend fun editAccount(account: Account) {
-        accountRepository.editAccount(account)
+        accountRepository.updateAccount(account)
     }
 
     suspend fun deleteAccount(account: Account) {
@@ -48,7 +48,7 @@ class SettingsInteractor @Inject constructor(
     }
 
     suspend fun editCategory(category: Category) {
-        categoryRepository.editCategory(category)
+        categoryRepository.updateCategory(category)
     }
 
     suspend fun getCategories(): List<Category> {
@@ -60,7 +60,7 @@ class SettingsInteractor @Inject constructor(
     }
 
     suspend fun editTag(tag: Tag) {
-        tagRepository.editTag(tag)
+        tagRepository.updateTag(tag)
     }
 
     suspend fun deleteTag(tag: Tag) {

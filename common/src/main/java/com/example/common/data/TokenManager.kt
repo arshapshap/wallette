@@ -7,4 +7,6 @@ interface TokenManager {
     fun saveAuthorizationToken(token: String)
 
     fun deleteToken()
+
+    fun isAuthorized(): Boolean
 }
