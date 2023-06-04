@@ -1,9 +1,9 @@
 package com.example.data.mappers
 
-import com.example.common.data.models.response.CategoryResponse
+import com.example.core_network.data.models.response.CategoryResponse
 import com.example.common.domain.models.Category
-import com.example.common.domain.models.CategoryIcon
-import com.example.common.domain.models.TransactionType
+import com.example.common.domain.models.enums.CategoryIcon
+import com.example.common.domain.models.enums.TransactionType
 import com.example.core_db.models.entities.CategoryLocal
 import javax.inject.Inject
 
@@ -43,6 +43,8 @@ class CategoryMapper @Inject constructor() {
                 name = name,
                 icon = icon.name,
                 type = type.name,
+                isSynchronized = false,
+                mustBeDeleted = false,
             )
         }
     }

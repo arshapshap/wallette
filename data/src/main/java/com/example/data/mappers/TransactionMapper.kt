@@ -1,8 +1,8 @@
 package com.example.data.mappers
 
-import com.example.common.data.models.response.TransactionResponse
+import com.example.core_network.data.models.response.TransactionResponse
 import com.example.common.domain.models.Transaction
-import com.example.common.domain.models.TransactionType
+import com.example.common.domain.models.enums.TransactionType
 import com.example.common.presentation.extensions.roundToDay
 import com.example.core_db.models.FullTransactionLocal
 import com.example.core_db.models.entities.TransactionLocal
@@ -56,7 +56,9 @@ class TransactionMapper @Inject constructor(
                 description = description,
                 accountId = account.id,
                 accountDestinationId = accountDestination?.id,
-                categoryId = category?.id
+                categoryId = category?.id,
+                isSynchronized = false,
+                mustBeDeleted = false,
             )
         }
     }

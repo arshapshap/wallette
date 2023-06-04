@@ -18,5 +18,9 @@ data class AccountLocal(
     @ColumnInfo(name = "start_balance")
     val startBalance: Double,
     @ColumnInfo(name = "currency")
-    val currency: String
+    val currency: String,
+    @ColumnInfo(name = "is_synchronized")
+    val isSynchronized: Boolean,
+    @ColumnInfo(name = "must_be_deleted")
+    val mustBeDeleted: Boolean
 )

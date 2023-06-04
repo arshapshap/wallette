@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.common.domain.models.Account
-import com.example.common.domain.models.AccountIcon
-import com.example.common.domain.models.Currency
+import com.example.common.domain.models.enums.AccountIcon
+import com.example.common.domain.models.enums.Currency
 import com.example.common.presentation.base.BaseViewModel
 import com.example.feature_settings.domain.SettingsInteractor
 import com.example.feature_settings.presentation.SettingsRouter

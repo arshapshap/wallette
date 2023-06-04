@@ -5,11 +5,13 @@ import com.example.common.domain.models.Transaction
 import com.example.common.domain.repositories.TransactionRepository
 import com.example.core_db.dao.TransactionDao
 import com.example.core_db.models.TransactionTagCrossRef
+import com.example.core_network.data.services.TransactionsApiService
 import com.example.data.mappers.TransactionMapper
 import javax.inject.Inject
 
 class TransactionRepositoryImpl @Inject constructor(
     private val localSource: TransactionDao,
+    private val remoteSource: TransactionsApiService,
     private val mapper: TransactionMapper
 ) : TransactionRepository {
 
@@ -44,7 +46,9 @@ class TransactionRepositoryImpl @Inject constructor(
                 localSource.addTransactionTag(
                     TransactionTagCrossRef(
                         transactionId = transactionId,
-                        tagId = it.id)
+                        tagId = it.id,
+                        isSynchronized = false
+                    )
                 )
             }
         currentTags
@@ -53,7 +57,9 @@ class TransactionRepositoryImpl @Inject constructor(
                 localSource.deleteTransactionTag(
                     TransactionTagCrossRef(
                         transactionId = transactionId,
-                        tagId = it)
+                        tagId = it,
+                        isSynchronized = false
+                    )
                 )
             }
     }

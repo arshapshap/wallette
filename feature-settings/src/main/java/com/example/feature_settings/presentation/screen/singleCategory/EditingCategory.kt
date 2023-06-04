@@ -1,7 +1,7 @@
 package com.example.feature_settings.presentation.screen.singleCategory
 
-import com.example.common.domain.models.CategoryIcon
-import com.example.common.domain.models.TransactionType
+import com.example.common.domain.models.enums.CategoryIcon
+import com.example.common.domain.models.enums.TransactionType
 
 data class EditingCategory(
     val id: Long? = null,

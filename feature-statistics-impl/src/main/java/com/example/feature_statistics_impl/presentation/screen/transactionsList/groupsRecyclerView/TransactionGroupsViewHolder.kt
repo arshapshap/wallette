@@ -6,8 +6,8 @@ import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.core.view.isGone
 import androidx.recyclerview.widget.RecyclerView
-import com.example.common.domain.models.CategoryIcon
-import com.example.common.domain.models.Currency
+import com.example.common.domain.models.enums.CategoryIcon
+import com.example.common.domain.models.enums.Currency
 import com.example.common.domain.models.Transaction
 import com.example.feature_statistics_impl.R
 import com.example.feature_statistics_impl.databinding.ItemGroupBinding

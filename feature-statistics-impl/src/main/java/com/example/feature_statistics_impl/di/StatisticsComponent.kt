@@ -2,7 +2,6 @@ package com.example.feature_statistics_impl.di
 
 import com.example.common.di.scopes.StatisticsScope
 import com.example.di.DataApi
-import com.example.feature_statistics_impl.data.di.DataModule
 import com.example.feature_statistics_impl.presentation.StatisticsRouter
 import com.example.feature_statistics_impl.presentation.screen.singleTransaction.SingleTransactionFragment
 import com.example.feature_statistics_impl.presentation.screen.singleTransaction.SingleTransactionViewModel
@@ -15,8 +14,7 @@ import dagger.Component
 
 @StatisticsScope
 @Component(
-    dependencies = [StatisticsDependencies::class],
-    modules = [DataModule::class]
+    dependencies = [StatisticsDependencies::class]
 )
 interface StatisticsComponent : StatisticsFeatureApi {
 

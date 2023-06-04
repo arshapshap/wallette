@@ -4,6 +4,7 @@ import com.example.common.di.FeatureApiHolder
 import com.example.common.di.FeatureContainer
 import com.example.common.di.scopes.ApplicationScope
 import com.example.core_db.di.DbApi
+import com.example.core_network.di.NetworkApi
 import javax.inject.Inject
 
 @ApplicationScope
@@ -15,6 +16,7 @@ class DataHolder @Inject constructor(
         val dataDependencies = DaggerDataComponent_DataDependenciesComponent.builder()
             .commonApi(commonApi())
             .dbApi(getFeature(DbApi::class.java))
+            .networkApi(getFeature(NetworkApi::class.java))
             .build()
         return DaggerDataComponent.builder()
             .withDependencies(dataDependencies)

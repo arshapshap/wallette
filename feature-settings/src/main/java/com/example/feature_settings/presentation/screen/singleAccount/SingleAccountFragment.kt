@@ -4,7 +4,7 @@ import androidx.core.widget.doAfterTextChanged
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.common.di.FeatureUtils
 import com.example.common.domain.models.Account
-import com.example.common.domain.models.AccountIcon
+import com.example.common.domain.models.enums.AccountIcon
 import com.example.common.presentation.base.BaseFragment
 import com.example.common.presentation.base.BaseViewModel
 import com.example.common.presentation.extensions.*

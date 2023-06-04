@@ -6,6 +6,8 @@ interface DataApi {
 
     fun provideAccountsRepository(): AccountRepository
 
+    fun provideAuthorizationRepository(): AuthorizationRepository
+
     fun provideCategoriesRepository(): CategoryRepository
 
     fun provideTagsRepository(): TagRepository

@@ -9,7 +9,6 @@ import androidx.core.view.WindowCompat
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
-import com.example.common.data.TokenManager
 import com.example.common.di.findComponentDependencies
 import com.example.common.presentation.floatingButtonInterfaces.FloatingButtonListenersManager
 import com.example.common.presentation.floatingButtonInterfaces.OnFloatingButtonClickListener
@@ -26,9 +25,6 @@ class MainActivity : AppCompatActivity(), OnFloatingButtonClickListener, Floatin
 
     @Inject
     lateinit var navigator: Navigator
-
-    @Inject
-    lateinit var tokenManager: TokenManager
 
     private lateinit var onFloatingButtonClickListener: OnFloatingButtonClickListener
 
@@ -86,10 +82,6 @@ class MainActivity : AppCompatActivity(), OnFloatingButtonClickListener, Floatin
             //R.id.action_settings -> true
             else -> super.onOptionsItemSelected(item)
         }
-    }
-
-    private fun checkIfAuthorized(): Boolean {
-        return !tokenManager.getAuthorizationToken().isNullOrEmpty()
     }
 
     private fun hideNavBars(controller: NavController) {

@@ -4,6 +4,7 @@ import com.example.common.domain.models.Account
 import com.example.common.domain.models.Category
 import com.example.common.domain.models.Tag
 import com.example.common.domain.repositories.AccountRepository
+import com.example.common.domain.repositories.AuthorizationRepository
 import com.example.common.domain.repositories.CategoryRepository
 import com.example.common.domain.repositories.TagRepository
 import javax.inject.Inject
@@ -11,8 +12,17 @@ import javax.inject.Inject
 class SettingsInteractor @Inject constructor(
     private val accountRepository: AccountRepository,
     private val categoryRepository: CategoryRepository,
-    private val tagRepository: TagRepository
+    private val tagRepository: TagRepository,
+    private val authorizationRepository: AuthorizationRepository
 ) {
+    suspend fun checkIsAuthorized(): Boolean {
+        return authorizationRepository.checkIsAuthorized()
+    }
+
+    suspend fun logout() {
+        return authorizationRepository.logout()
+    }
+
     suspend fun createAccount(account: Account) {
         accountRepository.createAccount(account)
     }

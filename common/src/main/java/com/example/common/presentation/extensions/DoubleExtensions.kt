@@ -1,6 +1,6 @@
 package com.example.common.presentation.extensions
 
-import com.example.common.domain.models.Currency
+import com.example.common.domain.models.enums.Currency
 import java.text.DecimalFormat
 import kotlin.math.abs
 

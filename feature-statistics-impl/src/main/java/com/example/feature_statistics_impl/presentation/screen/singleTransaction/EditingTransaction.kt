@@ -1,6 +1,7 @@
 package com.example.feature_statistics_impl.presentation.screen.singleTransaction
 
 import com.example.common.domain.models.*
+import com.example.common.domain.models.enums.TransactionType
 import java.util.*
 
 data class EditingTransaction(

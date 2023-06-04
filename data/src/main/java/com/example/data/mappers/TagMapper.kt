@@ -1,6 +1,6 @@
 package com.example.data.mappers
 
-import com.example.common.data.models.response.TagResponse
+import com.example.core_network.data.models.response.TagResponse
 import com.example.common.domain.models.Tag
 import com.example.core_db.models.entities.TagLocal
 import javax.inject.Inject
@@ -36,7 +36,9 @@ class TagMapper @Inject constructor() {
             TagLocal(
                 tagId = id,
                 name = name,
-                color = color
+                color = color,
+                isSynchronized = false,
+                mustBeDeleted = false,
             )
         }
     }

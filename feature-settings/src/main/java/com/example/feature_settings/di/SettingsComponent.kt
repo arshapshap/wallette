@@ -1,6 +1,5 @@
 package com.example.feature_settings.di
 
-import com.example.common.data.TokenManager
 import com.example.common.di.scopes.SettingsScope
 import com.example.di.DataApi
 import com.example.feature_settings.presentation.SettingsRouter
@@ -37,9 +36,6 @@ interface SettingsComponent : SettingsFeatureApi {
 
         @BindsInstance
         fun router(router: SettingsRouter): Builder
-
-        @BindsInstance
-        fun tokenManager(tokenManager: TokenManager): Builder
     }
 
     @Component(

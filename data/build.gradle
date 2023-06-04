@@ -40,6 +40,7 @@ dependencies {
 
     implementation project(path: ':common')
     implementation project(path: ':core-db')
+    implementation project(path: ':core-network')
 
     implementation coreKtxDep
     implementation androidDep

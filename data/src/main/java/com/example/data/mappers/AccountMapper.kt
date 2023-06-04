@@ -1,9 +1,9 @@
 package com.example.data.mappers
 
-import com.example.common.data.models.response.AccountResponse
+import com.example.core_network.data.models.response.AccountResponse
 import com.example.common.domain.models.Account
-import com.example.common.domain.models.AccountIcon
-import com.example.common.domain.models.Currency
+import com.example.common.domain.models.enums.AccountIcon
+import com.example.common.domain.models.enums.Currency
 import com.example.core_db.models.entities.AccountLocal
 import javax.inject.Inject
 
@@ -50,7 +50,9 @@ class AccountMapper @Inject constructor() {
                 icon = icon.name,
                 currentBalance = currentBalance,
                 startBalance = startBalance,
-                currency = currency.name
+                currency = currency.name,
+                isSynchronized = false,
+                mustBeDeleted = false,
             )
         }
     }
