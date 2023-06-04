@@ -1,4 +1,4 @@
-package com.example.feature_settings.presentation.utils
+package com.example.common.presentation.extensions
 
 import android.util.TypedValue
 import androidx.annotation.ColorInt

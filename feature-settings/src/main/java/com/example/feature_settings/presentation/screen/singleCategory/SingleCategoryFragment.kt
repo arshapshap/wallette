@@ -8,12 +8,13 @@ import com.example.common.domain.models.CategoryIcon
 import com.example.common.domain.models.TransactionType
 import com.example.common.presentation.base.BaseFragment
 import com.example.common.presentation.base.BaseViewModel
+import com.example.common.presentation.extensions.*
 import com.example.feature_settings.R
 import com.example.feature_settings.databinding.FragmentSingleCategoryBinding
 import com.example.feature_settings.di.SettingsComponent
 import com.example.feature_settings.di.SettingsFeatureApi
 import com.example.feature_settings.presentation.screen.common.IconsAdapter
-import com.example.feature_settings.presentation.utils.*
+import com.example.common.presentation.extensions.getColorPrimary
 import com.google.android.flexbox.*
 
 class SingleCategoryFragment :
@@ -43,7 +44,7 @@ class SingleCategoryFragment :
         with (binding.saveLayout) {
             setStrokeVisibility(true)
             setColor(getColorPrimary())
-            setImage(R.drawable.ic_done)
+            setImage(com.example.common.R.drawable.ic_done)
             setTitle(R.string.save)
             setOnClickListener {
                 viewModel.save()
@@ -79,6 +80,7 @@ class SingleCategoryFragment :
                     when (it) {
                         TransactionType.Expense -> categoryTypeRadio.check(R.id.expensesRadioButton)
                         TransactionType.Income -> categoryTypeRadio.check(R.id.incomesRadioButton)
+                        else -> return@let
                     }
                 }
             }

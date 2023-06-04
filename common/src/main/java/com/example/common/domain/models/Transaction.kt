@@ -1,5 +1,6 @@
 package com.example.common.domain.models
 
+import java.io.Serializable
 import java.util.*
 
 data class Transaction(
@@ -14,4 +15,4 @@ data class Transaction(
     val transactionGroup: Transaction?,
     val isTransactionGroup: Boolean,
     val tags: List<Tag>
-)
+) : Serializable

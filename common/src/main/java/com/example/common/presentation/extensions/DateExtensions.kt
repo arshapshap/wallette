@@ -1,9 +1,9 @@
-package com.example.feature_statistics_impl.presentation.screen.transactionsList.extensions
+package com.example.common.presentation.extensions
 
 import java.text.SimpleDateFormat
 import java.util.*
 
-fun Date.getString(): String {
+fun Date.formatToString(): String {
     val currentYear = Calendar.getInstance().get(Calendar.YEAR)
 
     val calendar = Calendar.getInstance()

@@ -1,7 +1,6 @@
 package com.example.feature_statistics_impl.domain
 
-import com.example.common.domain.models.Tag
-import com.example.common.domain.models.Transaction
+import com.example.common.domain.models.*
 import com.example.feature_statistics_impl.domain.repositories.TransactionsRepository
 import com.example.feature_statistics_impl.presentation.screen.transactionsList.SortingType
 import com.example.feature_statistics_impl.presentation.screen.transactionsList.groupsRecyclerView.transactionGroups.TransactionGroup
@@ -11,9 +10,10 @@ import com.example.feature_statistics_impl.presentation.screen.transactionsList.
 import java.util.*
 import javax.inject.Inject
 import kotlin.math.absoluteValue
+import kotlin.random.Random
 
 class StatisticsInteractor @Inject constructor(
-    private val repository: TransactionsRepository
+    private val repository: TransactionsRepository,
 ) {
 
     suspend fun getTransactionGroups(sortingType: SortingType): List<TransactionGroup> {
@@ -25,6 +25,14 @@ class StatisticsInteractor @Inject constructor(
         }
 
         return groups
+    }
+
+    suspend fun createTransaction(transaction: Transaction) {
+        // TODO: добавить функционал
+    }
+
+    suspend fun editTransaction(transaction: Transaction) {
+        // TODO: добавить функционал
     }
 
     private fun getGroupsByDate(transactions: List<Transaction>): List<TransactionGroupByDate> {
@@ -75,6 +83,50 @@ class StatisticsInteractor @Inject constructor(
                 .thenByDescending { it.list.sumOf { it.amount }.absoluteValue })
     }
 
+    fun getCategories(): List<Category> {
+        // TODO: убрать рандом
+        val list = arrayListOf<Category>()
+        val rand = Random(1234)
+        for (i in 0..10) {
+            list.add(
+                Category(
+                    id = i.toString(),
+                    name = "Категория $i",
+                    icon = CategoryIcon.values().filter { it.name != "Empty" }.random(rand),
+                    type = TransactionType.values().random(rand)
+                )
+            )
+        }
+        return list
+    }
+
+    fun getAccounts(): List<Account> {
+        return listOf() // TODO: добавить данные
+    }
+
+    fun getTags(): List<Tag> {
+        // TODO: убрать рандом
+        val list = arrayListOf<Tag>()
+        val rand = Random(1234)
+        for (i in 0..10) {
+            list.add(
+                Tag(
+                    id = i.toString(),
+                    name = "Метка $i",
+                    color = getRandomColor(rand)
+                )
+            )
+        }
+        return list
+    }
+
+    private fun getRandomColor(rand: Random): String {
+        val r = rand.nextInt(256).toString(16).padStart(2, '0')
+        val g = rand.nextInt(256).toString(16).padStart(2, '0')
+        val b = rand.nextInt(256).toString(16).padStart(2, '0')
+        return "#$r$g$b"
+    }
+
     private fun List<Transaction>.sortTransactionsByAmount(): List<Transaction> {
         return this
             .sortedWith(compareBy<Transaction> { it.amount < 0 }
@@ -82,6 +134,13 @@ class StatisticsInteractor @Inject constructor(
     }
 
     private fun Date.roundToDay(): Date {
-        return Date((this.time / (1000*60*60)) * 1000*60*60)
+        val calendar = Calendar.getInstance().apply {
+            time = this@roundToDay
+            set(Calendar.HOUR_OF_DAY, 0)
+            set(Calendar.MINUTE, 0)
+            set(Calendar.SECOND, 0)
+            set(Calendar.MILLISECOND, 0)
+        }
+        return calendar.time
     }
 }

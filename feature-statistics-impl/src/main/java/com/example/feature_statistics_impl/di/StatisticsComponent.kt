@@ -3,6 +3,8 @@ package com.example.feature_statistics_impl.di
 import com.example.common.di.scopes.StatisticsScope
 import com.example.feature_statistics_impl.data.di.DataModule
 import com.example.feature_statistics_impl.presentation.StatisticsRouter
+import com.example.feature_statistics_impl.presentation.screen.singleTransaction.SingleTransactionFragment
+import com.example.feature_statistics_impl.presentation.screen.singleTransaction.SingleTransactionViewModel
 import com.example.feature_statistics_impl.presentation.screen.statistics.StatisticsFragment
 import com.example.feature_statistics_impl.presentation.screen.statistics.StatisticsViewModel
 import com.example.feature_statistics_impl.presentation.screen.transactionsList.TransactionsFragment
@@ -31,4 +33,8 @@ interface StatisticsComponent : StatisticsFeatureApi {
     fun inject(transactionsFragment: TransactionsFragment)
 
     fun transactionsViewModel(): TransactionsViewModel.Factory
+
+    fun inject(fragment: SingleTransactionFragment)
+
+    fun singleTransactionViewModel(): SingleTransactionViewModel.Factory
 }

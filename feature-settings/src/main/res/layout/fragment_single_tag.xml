@@ -10,7 +10,7 @@
 
     <include
         android:id="@+id/save_layout"
-        layout="@layout/item_settings_element"
+        layout="@layout/item_button_with_icon"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
@@ -23,12 +23,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/tag_name"
+        android:textFontWeight="600"
+        android:textSize="32sp"
         android:importantForAutofill="no"
+        android:gravity="center"
         android:inputType="textShortMessage"/>
 
     <include
         android:id="@+id/tag_color_layout"
-        layout="@layout/item_settings_element"
+        layout="@layout/item_button_with_icon"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

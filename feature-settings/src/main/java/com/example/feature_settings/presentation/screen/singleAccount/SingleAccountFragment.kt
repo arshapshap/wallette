@@ -7,23 +7,24 @@ import com.example.common.domain.models.Account
 import com.example.common.domain.models.AccountIcon
 import com.example.common.presentation.base.BaseFragment
 import com.example.common.presentation.base.BaseViewModel
+import com.example.common.presentation.extensions.*
 import com.example.feature_settings.R
 import com.example.feature_settings.databinding.FragmentSingleAccountBinding
 import com.example.feature_settings.di.SettingsComponent
 import com.example.feature_settings.di.SettingsFeatureApi
 import com.example.feature_settings.presentation.screen.common.IconsAdapter
-import com.example.feature_settings.presentation.screen.settings.dialogs.PickerDialogFragment
-import com.example.feature_settings.presentation.screen.settings.dialogs.PickerDialogFragment.Companion.PickerType
-import com.example.feature_settings.presentation.screen.settings.dialogs.PickerDialogFragment.Companion.showPickerDialog
-import com.example.feature_settings.presentation.utils.*
+import com.example.common.presentation.dialogs.PickerFragment
+import com.example.common.presentation.dialogs.PickerFragment.Companion.showPickerDialog
+import com.example.common.presentation.extensions.getColorPrimary
 import com.google.android.flexbox.*
 
 class SingleAccountFragment :
-    BaseFragment<SingleAccountViewModel>(R.layout.fragment_single_account), PickerDialogFragment.SelectDialogListener {
+    BaseFragment<SingleAccountViewModel>(R.layout.fragment_single_account), PickerFragment.OnSelectListener {
 
     companion object {
 
         const val ACCOUNT_KEY = "account_key"
+        private const val CURRENCY_PICKER_TAG = "currency"
     }
 
     private val binding by viewBinding(FragmentSingleAccountBinding::bind)
@@ -42,10 +43,10 @@ class SingleAccountFragment :
     }
 
     override fun initViews() {
-        with(binding.saveLayout) {
+        with (binding.saveLayout) {
             setStrokeVisibility(true)
             setColor(getColorPrimary())
-            setImage(R.drawable.ic_done)
+            setImage(com.example.common.R.drawable.ic_done)
             setTitle(R.string.save)
             setOnClickListener {
                 viewModel.save()
@@ -53,7 +54,7 @@ class SingleAccountFragment :
         }
 
         with (binding.currencyLayout) {
-            setStrokeVisibility(true)
+            setStrokeVisibility(false)
             setRightArrowVisible(true)
             setImage(R.drawable.ic_currency)
             setTitle(R.string.currency)
@@ -101,7 +102,7 @@ class SingleAccountFragment :
                             fragmentManager = childFragmentManager,
                             title = getString(R.string.currency),
                             items = viewModel.startLiveData.value?.availableCurrencies?.map { it.name }?.toTypedArray() ?: arrayOf(),
-                            pickerType = PickerType.Currency
+                            tag = CURRENCY_PICKER_TAG
                         )
                     }
                 }
@@ -109,8 +110,8 @@ class SingleAccountFragment :
         }
     }
 
-    override fun onSelected(index: Int, pickerType: PickerType) {
-        if (pickerType == PickerType.Currency) {
+    override fun onSelect(tag: String?, index: Int) {
+        if (tag == CURRENCY_PICKER_TAG) {
             val currency = viewModel.startLiveData.value!!.availableCurrencies[index]
             viewModel.selectCurrency(currency)
         }

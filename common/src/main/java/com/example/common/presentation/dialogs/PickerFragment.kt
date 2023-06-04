@@ -1,4 +1,4 @@
-package com.example.feature_settings.presentation.screen.settings.dialogs
+package com.example.common.presentation.dialogs
 
 import android.app.AlertDialog
 import android.app.Dialog
@@ -7,34 +7,34 @@ import android.os.Bundle
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 
-class PickerDialogFragment : DialogFragment() {
+class PickerFragment : DialogFragment() {
 
-    private lateinit var listener: SelectDialogListener
+    private lateinit var listener: OnSelectListener
 
-    interface SelectDialogListener {
+    interface OnSelectListener {
 
-        fun onSelected(index: Int, pickerType: PickerType)
+        fun onSelect(tag: String?, index: Int)
     }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         try {
-            listener = parentFragment as SelectDialogListener
+            listener = parentFragment as OnSelectListener
         } catch (e: ClassCastException) {
             throw ClassCastException((parentFragment.toString() +
-                    " must implement SelectDialogListener"))
+                    " must implement ${OnSelectListener::class.java}"))
         }
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val title = requireArguments().getString(TITLE_KEY)
         val items = requireArguments().getStringArray(ITEMS_LIST_KEY) ?: arrayOf()
-        val pickerType = requireArguments().getSerializable(PICKER_KEY) as PickerType
+        val tag = requireArguments().getString(TAG_KEY)
         return requireActivity().let {
             val builder = AlertDialog.Builder(it)
             builder.setTitle(title)
                 .setItems(items) { _, index ->
-                    listener.onSelected(index, pickerType)
+                    listener.onSelect(tag, index)
                 }
             builder.create()
         }
@@ -42,31 +42,23 @@ class PickerDialogFragment : DialogFragment() {
 
     companion object {
 
-        const val ITEMS_LIST_KEY = "items_list"
-        const val TITLE_KEY = "title"
-        const val PICKER_KEY = "picker_type"
-
-        enum class PickerType {
-            Currency,
-            Language,
-            FirstDayOfWeek,
-            FirstDayOfMonth,
-            TimePeriod
-        }
+        private const val ITEMS_LIST_KEY = "items_list"
+        private const val TITLE_KEY = "title"
+        private const val TAG_KEY = "tag"
 
         fun showPickerDialog(
             fragmentManager: FragmentManager,
             title: String,
             items: Array<String>,
-            pickerType: PickerType
+            tag: String
         ) {
-            val newFragment = PickerDialogFragment()
+            val newFragment = PickerFragment()
             newFragment.arguments = Bundle().apply {
                 putString(TITLE_KEY, title)
                 putStringArray(ITEMS_LIST_KEY, items)
-                putSerializable(PICKER_KEY, pickerType)
+                putString(TAG_KEY, tag)
             }
-            newFragment.show(fragmentManager, title)
+            newFragment.show(fragmentManager, tag)
         }
     }
 }
