@@ -27,7 +27,7 @@ class TransactionsRepositoryRandomImpl @Inject constructor() : TransactionsRepos
         var amount = getRandomAmount(rand)
         var transaction = Transaction(
             id = "0",
-            type = TransactionType.Expense,
+            type = if (amount > 0) TransactionType.Income else TransactionType.Expense,
             date = Calendar.getInstance().time,
             amount = amount,
             description = "",
@@ -45,9 +45,10 @@ class TransactionsRepositoryRandomImpl @Inject constructor() : TransactionsRepos
             amount = getRandomAmount(rand)
             transaction = transaction.copy(
                 id = "$i",
+                type = if (amount > 0) TransactionType.Income else TransactionType.Expense,
                 date = getRandomDate(rand),
                 amount = amount,
-                category = getRandomCategory(amount, rand),
+                category = getRandomCategory(rand),
                 description = "id $i",
                 tags = getRandomTags(rand)
             )
@@ -96,7 +97,7 @@ class TransactionsRepositoryRandomImpl @Inject constructor() : TransactionsRepos
         return rand.nextDouble(-10000.0, 10000.0)
     }
 
-    private fun getRandomCategory(amount: Double, rand: Random): Category? {
+    private fun getRandomCategory(rand: Random): Category {
         val list = arrayListOf<Category>()
         for (i in 0..10) {
             list.add(

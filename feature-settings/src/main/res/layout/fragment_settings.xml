@@ -14,7 +14,7 @@
 
         <include
             android:id="@+id/enable_sync_layout"
-            layout="@layout/item_settings_element"
+            layout="@layout/item_button_with_icon"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
@@ -26,19 +26,19 @@
 
         <include
             android:id="@+id/accounts_layout"
-            layout="@layout/item_settings_element"
+            layout="@layout/item_button_with_icon"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
         <include
             android:id="@+id/categories_layout"
-            layout="@layout/item_settings_element"
+            layout="@layout/item_button_with_icon"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
         <include
             android:id="@+id/tags_layout"
-            layout="@layout/item_settings_element"
+            layout="@layout/item_button_with_icon"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
@@ -50,31 +50,31 @@
 
         <include
             android:id="@+id/currency_layout"
-            layout="@layout/item_settings_element"
+            layout="@layout/item_button_with_icon"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
         <include
             android:id="@+id/language_layout"
-            layout="@layout/item_settings_element"
+            layout="@layout/item_button_with_icon"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
         <include
             android:id="@+id/first_day_of_week_layout"
-            layout="@layout/item_settings_element"
+            layout="@layout/item_button_with_icon"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
         <include
             android:id="@+id/first_day_of_month_layout"
-            layout="@layout/item_settings_element"
+            layout="@layout/item_button_with_icon"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
         <include
             android:id="@+id/time_period_layout"
-            layout="@layout/item_settings_element"
+            layout="@layout/item_button_with_icon"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 

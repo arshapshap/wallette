@@ -48,11 +48,11 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNavigationView.setupWithNavController(controller)
         navigator.attachNavController(controller, this)
 
-//        if (checkIfAuthorized())
-//            navigator.openStatistics()
-//        else
-//            navigator.openLoginPage()
         navigator.openStatistics()
+
+        binding.addFloatingButton.setOnClickListener {
+            navigator.openSingleTransaction(null)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

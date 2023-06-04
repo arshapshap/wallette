@@ -4,12 +4,13 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.common.domain.models.Transaction
 import com.example.feature_statistics_impl.databinding.ItemGroupBinding
 import com.example.feature_statistics_impl.presentation.screen.transactionsList.SortingType
 import com.example.feature_statistics_impl.presentation.screen.transactionsList.groupsRecyclerView.transactionGroups.TransactionGroup
 
 class TransactionGroupsAdapter(
-    private val onTransactionClick: (String) -> Unit
+    private val onTransactionClick: (Transaction) -> Unit
 ) : RecyclerView.Adapter<TransactionGroupsViewHolder>() {
 
     private var list = mutableListOf<TransactionGroup>()

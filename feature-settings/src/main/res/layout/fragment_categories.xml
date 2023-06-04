@@ -16,7 +16,7 @@
 
         <include
             android:id="@+id/add_category_layout"
-            layout="@layout/item_settings_element"
+            layout="@layout/item_button_with_icon"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
@@ -36,7 +36,7 @@
             android:layout_height="match_parent"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:itemCount="5"
-            tools:listitem="@layout/item_settings_element" />
+            tools:listitem="@layout/item_button_with_icon" />
 
         <TextView
             android:id="@+id/incomesTextView"
@@ -56,7 +56,7 @@
             android:paddingBottom="@dimen/bottom_margin"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:itemCount="5"
-            tools:listitem="@layout/item_settings_element" />
+            tools:listitem="@layout/item_button_with_icon" />
 
 
     </androidx.appcompat.widget.LinearLayoutCompat>

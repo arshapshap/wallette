@@ -34,7 +34,6 @@ class TransactionsFragment : BaseFragment<TransactionsViewModel>(R.layout.fragme
     override fun initViews() {
         with (binding) {
             listRecyclerView.adapter = TransactionGroupsAdapter {
-                //Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
                 viewModel.openTransaction(it)
             }
 

@@ -11,7 +11,7 @@
 
     <include
         android:id="@+id/save_layout"
-        layout="@layout/item_settings_element"
+        layout="@layout/item_button_with_icon"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
@@ -24,7 +24,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/category_name"
+        android:textFontWeight="600"
+        android:textSize="32sp"
         android:importantForAutofill="no"
+        android:gravity="center"
         android:inputType="textShortMessage"/>
 
     <RadioGroup
@@ -56,6 +59,6 @@
         android:clipToPadding="false"
         android:paddingBottom="@dimen/bottom_margin"
         tools:itemCount="25"
-        tools:listitem="@layout/item_selecting_icon" />
+        tools:listitem="@layout/item_icon" />
 
 </androidx.appcompat.widget.LinearLayoutCompat>

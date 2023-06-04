@@ -8,11 +8,11 @@ import com.example.common.di.FeatureUtils
 import com.example.common.domain.models.Tag
 import com.example.common.presentation.base.BaseFragment
 import com.example.common.presentation.base.BaseViewModel
+import com.example.common.presentation.extensions.*
 import com.example.feature_settings.R
 import com.example.feature_settings.databinding.FragmentSingleTagBinding
 import com.example.feature_settings.di.SettingsComponent
 import com.example.feature_settings.di.SettingsFeatureApi
-import com.example.feature_settings.presentation.utils.*
 import com.google.android.flexbox.*
 import vadiole.colorpicker.ColorModel
 import vadiole.colorpicker.ColorPickerDialog
@@ -44,7 +44,7 @@ class SingleTagFragment :
         with (binding.saveLayout) {
             setStrokeVisibility(true)
             setColor(getColorPrimary())
-            setImage(R.drawable.ic_done)
+            setImage(com.example.common.R.drawable.ic_done)
             setTitle(R.string.save)
             setOnClickListener {
                 viewModel.save()

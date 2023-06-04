@@ -10,7 +10,7 @@ import com.example.feature_statistics_impl.presentation.screen.transactionsList.
 class TransactionsAdapter(
     private val list: List<Transaction>,
     private val sortingType: SortingType,
-    private val onItemClick: (String) -> Unit
+    private val onItemClick: (Transaction) -> Unit
 ) : RecyclerView.Adapter<TransactionsViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TransactionsViewHolder {

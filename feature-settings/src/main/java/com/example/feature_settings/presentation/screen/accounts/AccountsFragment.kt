@@ -4,12 +4,13 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.common.di.FeatureUtils
 import com.example.common.presentation.base.BaseFragment
 import com.example.common.presentation.base.BaseViewModel
+import com.example.common.presentation.extensions.getColorPrimary
+import com.example.common.presentation.extensions.*
 import com.example.feature_settings.R
 import com.example.feature_settings.databinding.FragmentAccountsBinding
 import com.example.feature_settings.di.SettingsComponent
 import com.example.feature_settings.di.SettingsFeatureApi
 import com.example.feature_settings.presentation.screen.accounts.recyclerView.AccountsAdapter
-import com.example.feature_settings.presentation.utils.*
 
 class AccountsFragment : BaseFragment<AccountsViewModel>(R.layout.fragment_accounts) {
 
