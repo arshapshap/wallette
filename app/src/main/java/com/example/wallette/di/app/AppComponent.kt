@@ -1,5 +1,6 @@
 package com.example.wallette.di.app
 
+import com.example.common.di.CommonApi
 import com.example.common.di.scopes.ApplicationScope
 import com.example.wallette.App
 import com.example.wallette.data.di.DataModule
@@ -18,7 +19,7 @@ import dagger.Component
         FeatureManagerModule::class,
         ComponentDependenciesModule::class
     ])
-interface AppComponent : MainDependencies {
+interface AppComponent : MainDependencies, CommonApi {
 
     companion object {
 
