@@ -44,6 +44,10 @@ class Navigator : MainRouter, StatisticsRouter, AuthorizationRouter, SettingsRou
         navController?.navigate(R.id.statisticsFragment)
     }
 
+    override fun close() {
+        navController?.popBackStack()
+    }
+
     override fun openAccounts() {
         navController?.navigate(
             resId = R.id.accountsFragment,

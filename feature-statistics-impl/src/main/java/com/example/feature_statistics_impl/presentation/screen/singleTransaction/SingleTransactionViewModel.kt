@@ -13,7 +13,7 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.launch
-import java.util.Date
+import java.util.*
 
 class SingleTransactionViewModel @AssistedInject constructor(
     @Assisted private val transaction: Transaction?,
@@ -21,9 +21,9 @@ class SingleTransactionViewModel @AssistedInject constructor(
     private val router: StatisticsRouter
 ) : BaseViewModel() {
 
-    private val _startLiveData = MutableLiveData<StartData>()
-    val startLiveData: LiveData<StartData>
-        get() = _startLiveData
+    private val _transactionLiveData = MutableLiveData<Transaction?>()
+    val transactionLiveData: LiveData<Transaction?>
+        get() = _transactionLiveData
 
     private val _editingTransactionLiveData = MutableLiveData<EditingTransaction>()
     val editingTransactionLiveData: LiveData<EditingTransaction>
@@ -37,48 +37,51 @@ class SingleTransactionViewModel @AssistedInject constructor(
     val onTagAddedLiveEvent: LiveEvent<Tag>
         get() = _onTagAddedLiveEvent
 
-    val tagsSuggestions
-        get() = _startLiveData.value?.tags
-            ?.filter { tag ->
-                tag !in (_editingTransactionLiveData.value?.tags ?: listOf())
-            } ?: listOf()
+    private val _onAccountsRequestedLiveEvent = MutableLiveEvent<List<Account>>()
+    val onAccountsRequestedLiveEvent: LiveEvent<List<Account>>
+        get() = _onAccountsRequestedLiveEvent
 
-    val availableCategories
-        get() = _startLiveData.value?.categories
-            ?.filter { category ->
-                category.type == _editingTransactionLiveData.value?.type
-            } ?: listOf()
+    private val _onAccountsToTransferRequestedLiveEvent = MutableLiveEvent<List<Account>>()
+    val onAccountsToTransferRequestedLiveEvent: LiveEvent<List<Account>>
+        get() = _onAccountsToTransferRequestedLiveEvent
+
+    private val _onCategoriesRequestedLiveEvent = MutableLiveEvent<List<Category>>()
+    val onCategoriesRequestedLiveEvent: LiveEvent<List<Category>>
+        get() = _onCategoriesRequestedLiveEvent
+
+    private val _onTagsRequestedLiveEvent = MutableLiveEvent<List<Tag>>()
+    val onTagsRequestedLiveEvent: LiveEvent<List<Tag>>
+        get() = _onTagsRequestedLiveEvent
 
     private val isDataValid: Boolean
         get() {
             val editingTransaction = _editingTransactionLiveData.value ?: return false
             return editingTransaction.amount != null
                     && editingTransaction.account != null
-                    && editingTransaction.date != null
                     && (editingTransaction.type != TransactionType.Transfer
                         || editingTransaction.accountDestination != null)
         }
 
     init {
-        val editingTransaction = if (transaction == null) EditingTransaction()
-        else EditingTransaction(
-            id = transaction.id,
-            type = transaction.type,
-            date = transaction.date,
-            amount = transaction.amount,
-            description = transaction.description,
-            account = transaction.account,
-            accountDestination = transaction.accountDestination,
-            category = transaction.category,
-            tags = transaction.tags
-        )
-        _startLiveData.value = StartData(
-            transaction = transaction,
-            categories = interactor.getCategories(),
-            accounts = interactor.getAccounts(),
-            tags = interactor.getTags()
-        )
-        _editingTransactionLiveData.value = editingTransaction
+        viewModelScope.launch {
+            val editingTransaction = if (transaction == null) EditingTransaction(
+                account = interactor.getAccounts().firstOrNull()
+            )
+            else EditingTransaction(
+                id = transaction.id,
+                type = transaction.type,
+                date = transaction.date,
+                amount = transaction.amount,
+                description = transaction.description,
+                account = transaction.account,
+                accountDestination = transaction.accountDestination,
+                category = transaction.category,
+                tags = transaction.tags
+            )
+            _transactionLiveData.postValue(transaction)
+            _editingTransactionLiveData.postValue(editingTransaction)
+        }
+        updateTagsSuggestions()
     }
 
     fun save() {
@@ -91,7 +94,7 @@ class SingleTransactionViewModel @AssistedInject constructor(
             Transaction(
                 id = transaction?.id ?: 0,
                 type = type,
-                date = date!!,
+                date = date,
                 amount = amount!!,
                 description = description,
                 account = account!!,
@@ -107,17 +110,55 @@ class SingleTransactionViewModel @AssistedInject constructor(
             else
                 interactor.editTransaction(newTransaction)
         }
-        router.openStatistics()
+        router.close()
     }
 
-    fun selectCategory(category: Category) {
-        val transaction = _editingTransactionLiveData.value?.copy(category = category) ?: return
+    fun editAmount(amountString: String) {
+        var amount = amountString.toDoubleOrNull()
+        if (amount != null && _editingTransactionLiveData.value?.type == TransactionType.Expense)
+            amount *= -1
+        val transaction = _editingTransactionLiveData.value?.copy(amount = amount) ?: return
         updateTransaction(transaction)
     }
 
-    fun selectDate(date: Date) {
-        val transaction = _editingTransactionLiveData.value?.copy(date = date) ?: return
+    fun editDescription(description: String) {
+        val transaction = _editingTransactionLiveData.value?.copy(description = description) ?: return
         updateTransaction(transaction)
+    }
+
+    fun getAccounts() {
+        viewModelScope.launch {
+            _onAccountsRequestedLiveEvent.post(interactor.getAccounts())
+        }
+    }
+
+    fun getAccountsToTransfer() {
+        viewModelScope.launch {
+            val currentAccount = editingTransactionLiveData.value?.account
+            _onAccountsRequestedLiveEvent.post(interactor.getAccounts().filter { it != currentAccount })
+        }
+    }
+
+    fun getCategories() {
+        viewModelScope.launch {
+            _onCategoriesRequestedLiveEvent.post(interactor
+                .getCategories()
+                .filter { category ->
+                    category.type == editingTransactionLiveData.value?.type
+                }
+            )
+        }
+    }
+
+    private fun updateTagsSuggestions() {
+        viewModelScope.launch {
+            _onTagsRequestedLiveEvent.post(interactor
+                .getTags()
+                .filter { tag ->
+                    tag !in (_editingTransactionLiveData.value?.tags ?: listOf())
+                }
+            )
+        }
     }
 
     fun selectAccount(account: Account) {
@@ -127,6 +168,16 @@ class SingleTransactionViewModel @AssistedInject constructor(
 
     fun selectAccountDestination(account: Account) {
         val transaction = _editingTransactionLiveData.value?.copy(accountDestination = account) ?: return
+        updateTransaction(transaction)
+    }
+
+    fun selectCategory(category: Category) {
+        val transaction = _editingTransactionLiveData.value?.copy(category = category) ?: return
+        updateTransaction(transaction)
+    }
+
+    fun selectDate(date: Date) {
+        val transaction = _editingTransactionLiveData.value?.copy(date = date) ?: return
         updateTransaction(transaction)
     }
 
@@ -147,17 +198,19 @@ class SingleTransactionViewModel @AssistedInject constructor(
         val transaction = _editingTransactionLiveData.value?.copy(tags = tags) ?: return
 
         _onTagRemovedLiveEvent.post(index)
+        updateTagsSuggestions()
         updateTransaction(transaction)
     }
 
     fun addTag(index: Int) {
         val tags = _editingTransactionLiveData.value?.tags?.toMutableList() ?: return
-        val tag = tagsSuggestions[index]
+        val tag = _onTagsRequestedLiveEvent.value?.message?.get(index) ?: return
 
         tags.add(tag)
         val transaction = _editingTransactionLiveData.value?.copy(tags = tags) ?: return
 
         _onTagAddedLiveEvent.post(tag)
+        updateTagsSuggestions()
         updateTransaction(transaction)
     }
 
@@ -170,11 +223,4 @@ class SingleTransactionViewModel @AssistedInject constructor(
 
         fun create(@Assisted transaction: Transaction?): SingleTransactionViewModel
     }
-
-    data class StartData(
-        val transaction: Transaction?,
-        val categories: List<Category>,
-        val accounts: List<Account>,
-        val tags: List<Tag>
-    )
 }

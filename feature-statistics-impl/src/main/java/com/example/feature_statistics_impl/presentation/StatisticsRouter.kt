@@ -8,4 +8,6 @@ interface StatisticsRouter {
     fun openSingleTransaction(transaction: Transaction?)
 
     fun openStatistics()
+
+    fun close()
 }

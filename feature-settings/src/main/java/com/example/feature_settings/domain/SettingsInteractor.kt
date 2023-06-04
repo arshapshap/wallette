@@ -13,40 +13,51 @@ class SettingsInteractor @Inject constructor(
     private val categoryRepository: CategoryRepository,
     private val tagRepository: TagRepository
 ) {
+    suspend fun createAccount(account: Account) {
+        accountRepository.createAccount(account)
+    }
+
+    suspend fun editAccount(account: Account) {
+        accountRepository.editAccount(account)
+    }
+
+    suspend fun deleteAccount(account: Account) {
+        accountRepository.deleteAccount(account)
+    }
 
     suspend fun getAccounts(): List<Account> {
         return accountRepository.getAccounts()
+    }
+
+    suspend fun createCategory(category: Category) {
+        categoryRepository.createCategory(category)
+    }
+
+    suspend fun deleteCategory(category: Category) {
+        categoryRepository.deleteCategory(category)
+    }
+
+    suspend fun editCategory(category: Category) {
+        categoryRepository.editCategory(category)
     }
 
     suspend fun getCategories(): List<Category> {
         return categoryRepository.getCategories()
     }
 
-    suspend fun getTags(): List<Tag> {
-        return tagRepository.getTags()
-    }
-
-    suspend fun createAccount(account: Account) {
-
-    }
-
-    suspend fun createCategory(category: Category) {
-
-    }
-
     suspend fun createTag(tag: Tag) {
-
-    }
-
-    suspend fun editAccount(account: Account) {
-
-    }
-
-    suspend fun editCategory(category: Category) {
-
+        tagRepository.createTag(tag)
     }
 
     suspend fun editTag(tag: Tag) {
+        tagRepository.editTag(tag)
+    }
 
+    suspend fun deleteTag(tag: Tag) {
+        tagRepository.deleteTag(tag)
+    }
+
+    suspend fun getTags(): List<Tag> {
+        return tagRepository.getTags()
     }
 }
