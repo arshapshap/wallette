@@ -11,13 +11,16 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.common.data.TokenManager
 import com.example.common.di.findComponentDependencies
+import com.example.common.presentation.floatingButtonInterfaces.FloatingButtonListenersManager
+import com.example.common.presentation.floatingButtonInterfaces.OnFloatingButtonClickListener
 import com.example.wallette.R
 import com.example.wallette.databinding.ActivityMainBinding
 import com.example.wallette.di.main.MainComponent
 import com.example.wallette.navigation.Navigator
+import com.example.wallette.presentation.extensions.applyStyle
 import javax.inject.Inject
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), OnFloatingButtonClickListener, FloatingButtonListenersManager {
 
     private lateinit var binding: ActivityMainBinding
 
@@ -26,6 +29,8 @@ class MainActivity : AppCompatActivity() {
 
     @Inject
     lateinit var tokenManager: TokenManager
+
+    private lateinit var onFloatingButtonClickListener: OnFloatingButtonClickListener
 
     private fun inject() {
         MainComponent
@@ -50,9 +55,25 @@ class MainActivity : AppCompatActivity() {
 
         navigator.openStatistics()
 
+        setDefaultOnFloatingButtonClickListener()
+
         binding.addFloatingButton.setOnClickListener {
-            navigator.openSingleTransaction(null)
+            onFloatingButtonClickListener.onFloatingButtonClick()
         }
+    }
+
+    override fun subscribeOnFloatingButtonClick(listener: OnFloatingButtonClickListener) {
+        onFloatingButtonClickListener = listener
+        binding.addFloatingButton.applyStyle(R.style.App_Custom_FloatingActionButton_Outlined)
+    }
+
+    override fun setDefaultOnFloatingButtonClickListener() {
+        onFloatingButtonClickListener = this
+        binding.addFloatingButton.applyStyle(R.style.App_Custom_FloatingActionButton)
+    }
+
+    override fun onFloatingButtonClick() {
+        navigator.openSingleTransaction(null)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

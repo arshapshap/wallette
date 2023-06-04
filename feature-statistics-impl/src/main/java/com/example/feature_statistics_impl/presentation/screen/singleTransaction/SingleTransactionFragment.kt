@@ -19,13 +19,15 @@ import com.example.feature_statistics_impl.di.StatisticsComponent
 import com.example.feature_statistics_impl.di.StatisticsFeatureApi
 import com.example.common.presentation.dialogs.PickerFragment.Companion.showPickerDialog
 import com.example.common.presentation.dialogs.PickerFragment.OnSelectListener
+import com.example.common.presentation.floatingButtonInterfaces.FloatingButtonListenersManager
+import com.example.common.presentation.floatingButtonInterfaces.OnFloatingButtonClickListener
 import com.example.feature_statistics_impl.presentation.screen.singleTransaction.tagsRecyclerView.TagsAdapter
 import com.google.android.flexbox.*
 import java.util.*
 import kotlin.math.absoluteValue
 
 class SingleTransactionFragment : BaseFragment<SingleTransactionViewModel>(R.layout.fragment_single_transaction),
-    OnSelectListener, OnSelectDateListener {
+    OnSelectListener, OnSelectDateListener, OnFloatingButtonClickListener {
 
     companion object {
 
@@ -43,6 +45,16 @@ class SingleTransactionFragment : BaseFragment<SingleTransactionViewModel>(R.lay
 
     override fun inject() {
         component.inject(this)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        (requireActivity() as? FloatingButtonListenersManager)?.subscribeOnFloatingButtonClick(this)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        (requireActivity() as? FloatingButtonListenersManager)?.setDefaultOnFloatingButtonClickListener()
     }
 
     @Suppress("DEPRECATION")
@@ -206,6 +218,10 @@ class SingleTransactionFragment : BaseFragment<SingleTransactionViewModel>(R.lay
                 }
             }
         }
+    }
+
+    override fun onFloatingButtonClick() {
+        viewModel.save()
     }
 
     override fun onSelect(tag: String?, index: Int) {

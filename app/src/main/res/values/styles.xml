@@ -12,6 +12,11 @@
         <item name="tint">?attr/colorOnPrimary</item>
     </style>
 
+    <style name="App.Custom.FloatingActionButton.Outlined" parent="App.Custom.FloatingActionButton">
+        <item name="backgroundTint">?attr/colorOnPrimary</item>
+        <item name="tint">?attr/colorPrimary</item>
+    </style>
+
     <style name="App.Custom.BottomAppBar" parent="ThemeOverlay.Material3.BottomAppBar">
         <item name="fabCradleMargin">20dp</item>
     </style>
