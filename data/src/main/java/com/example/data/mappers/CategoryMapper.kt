@@ -1,10 +1,12 @@
 package com.example.data.mappers
 
-import com.example.core_network.data.models.response.CategoryResponse
 import com.example.common.domain.models.Category
 import com.example.common.domain.models.enums.CategoryIcon
 import com.example.common.domain.models.enums.TransactionType
 import com.example.core_db.models.entities.CategoryLocal
+import com.example.core_network.data.models.request.category.CategoryCreatingModel
+import com.example.core_network.data.models.request.category.CategoryEditingModel
+import com.example.core_network.data.models.response.CategoryResponse
 import javax.inject.Inject
 
 class CategoryMapper @Inject constructor() {
@@ -45,6 +47,27 @@ class CategoryMapper @Inject constructor() {
                 type = type.name,
                 isSynchronized = false,
                 mustBeDeleted = false,
+            )
+        }
+    }
+
+    fun mapToCreatingModel(category: Category): CategoryCreatingModel {
+        return with (category) {
+            CategoryCreatingModel(
+                id = id,
+                name = name,
+                icon = icon.name,
+                type = type.name
+            )
+        }
+    }
+
+    fun mapToEditingModel(category: Category): CategoryEditingModel {
+        return with (category) {
+            CategoryEditingModel(
+                id = id,
+                name = name,
+                icon = icon.name
             )
         }
     }

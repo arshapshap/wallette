@@ -5,6 +5,8 @@ import com.example.common.domain.models.Account
 import com.example.common.domain.models.enums.AccountIcon
 import com.example.common.domain.models.enums.Currency
 import com.example.core_db.models.entities.AccountLocal
+import com.example.core_network.data.models.request.account.AccountCreatingModel
+import com.example.core_network.data.models.request.account.AccountEditingModel
 import javax.inject.Inject
 
 class AccountMapper @Inject constructor() {
@@ -53,6 +55,31 @@ class AccountMapper @Inject constructor() {
                 currency = currency.name,
                 isSynchronized = false,
                 mustBeDeleted = false,
+            )
+        }
+    }
+
+    fun mapToCreatingModel(account: Account): AccountCreatingModel {
+        return with (account) {
+            AccountCreatingModel(
+                id = id,
+                name = name,
+                icon = icon.name,
+                startBalance = startBalance,
+                currency = currency.name
+            )
+        }
+    }
+
+    fun mapToEditingModel(account: Account): AccountEditingModel {
+        return with (account) {
+            AccountEditingModel(
+                id = id,
+                name = name,
+                icon = icon.name,
+                currentBalance = currentBalance,
+                startBalance = startBalance,
+                currency = currency.name
             )
         }
     }

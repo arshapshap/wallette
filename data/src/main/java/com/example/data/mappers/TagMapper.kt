@@ -1,8 +1,10 @@
 package com.example.data.mappers
 
-import com.example.core_network.data.models.response.TagResponse
 import com.example.common.domain.models.Tag
 import com.example.core_db.models.entities.TagLocal
+import com.example.core_network.data.models.request.tag.TagCreatingModel
+import com.example.core_network.data.models.request.tag.TagEditingModel
+import com.example.core_network.data.models.response.TagResponse
 import javax.inject.Inject
 
 class TagMapper @Inject constructor() {
@@ -39,6 +41,26 @@ class TagMapper @Inject constructor() {
                 color = color,
                 isSynchronized = false,
                 mustBeDeleted = false,
+            )
+        }
+    }
+
+    fun mapToCreatingModel(tag: Tag): TagCreatingModel {
+        return with (tag) {
+            TagCreatingModel(
+                id = id,
+                name = name,
+                color = color
+            )
+        }
+    }
+
+    fun mapToEditingModel(tag: Tag): TagEditingModel {
+        return with (tag) {
+            TagEditingModel(
+                id = id,
+                name = name,
+                color = color
             )
         }
     }
