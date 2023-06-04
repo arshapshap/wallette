@@ -28,13 +28,6 @@ import androidx.room.PrimaryKey
             childColumns = arrayOf("category_id"),
             onUpdate = ForeignKey.SET_NULL,
             onDelete = ForeignKey.SET_NULL
-        ),
-        ForeignKey(
-            entity = TransactionLocal::class,
-            parentColumns = arrayOf("transaction_id"),
-            childColumns = arrayOf("transaction_group_id"),
-            onUpdate = ForeignKey.CASCADE,
-            onDelete = ForeignKey.CASCADE
         )
     ]
 )
@@ -51,13 +44,9 @@ data class TransactionLocal (
     @ColumnInfo(name = "description")
     val description: String,
     @ColumnInfo(name = "account_id", index = true)
-    val accountId: String,
+    val accountId: Long,
     @ColumnInfo(name = "account_destination_id", index = true)
-    val accountDestinationId: String?,
+    val accountDestinationId: Long?,
     @ColumnInfo(name = "category_id", index = true)
-    val categoryId: String?,
-    @ColumnInfo(name = "transaction_group_id", index = true)
-    val transactionGroupId: String?,
-    @ColumnInfo(name = "is_transaction_group")
-    val isTransactionGroup: Boolean
+    val categoryId: Long?
 )

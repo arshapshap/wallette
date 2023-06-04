@@ -7,14 +7,14 @@ import com.example.core_db.models.entities.AccountLocal
 abstract class AccountDao {
 
     @Insert
-    abstract fun addAccount(accountLocal: AccountLocal)
+    abstract suspend fun addAccount(accountLocal: AccountLocal)
 
     @Update
-    abstract fun updateAccount(accountLocal: AccountLocal)
+    abstract suspend fun updateAccount(accountLocal: AccountLocal)
 
     @Delete
-    abstract fun deleteAccount(accountLocal: AccountLocal)
+    abstract suspend fun deleteAccount(accountLocal: AccountLocal)
 
     @Query("SELECT * FROM Accounts")
-    abstract fun getAccounts(): List<AccountLocal>
+    abstract suspend fun getAccounts(): List<AccountLocal>
 }

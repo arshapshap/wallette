@@ -1,7 +1,8 @@
 package com.example.feature_statistics_impl.domain
 
 import com.example.common.domain.models.*
-import com.example.feature_statistics_impl.domain.repositories.TransactionsRepository
+import com.example.common.domain.repositories.TransactionRepository
+import com.example.common.presentation.extensions.roundToDay
 import com.example.feature_statistics_impl.presentation.screen.transactionsList.SortingType
 import com.example.feature_statistics_impl.presentation.screen.transactionsList.groupsRecyclerView.transactionGroups.TransactionGroup
 import com.example.feature_statistics_impl.presentation.screen.transactionsList.groupsRecyclerView.transactionGroups.TransactionGroupByCategory
@@ -13,7 +14,7 @@ import kotlin.math.absoluteValue
 import kotlin.random.Random
 
 class StatisticsInteractor @Inject constructor(
-    private val repository: TransactionsRepository,
+    private val repository: TransactionRepository,
 ) {
 
     suspend fun getTransactionGroups(sortingType: SortingType): List<TransactionGroup> {
@@ -90,7 +91,7 @@ class StatisticsInteractor @Inject constructor(
         for (i in 0..10) {
             list.add(
                 Category(
-                    id = i.toString(),
+                    id = i.toLong(),
                     name = "Категория $i",
                     icon = CategoryIcon.values().filter { it.name != "Empty" }.random(rand),
                     type = TransactionType.values().random(rand)
@@ -111,7 +112,7 @@ class StatisticsInteractor @Inject constructor(
         for (i in 0..10) {
             list.add(
                 Tag(
-                    id = i.toString(),
+                    id = i.toLong()     ,
                     name = "Метка $i",
                     color = getRandomColor(rand)
                 )
@@ -131,16 +132,5 @@ class StatisticsInteractor @Inject constructor(
         return this
             .sortedWith(compareBy<Transaction> { it.amount < 0 }
                 .thenByDescending { it.amount.absoluteValue })
-    }
-
-    private fun Date.roundToDay(): Date {
-        val calendar = Calendar.getInstance().apply {
-            time = this@roundToDay
-            set(Calendar.HOUR_OF_DAY, 0)
-            set(Calendar.MINUTE, 0)
-            set(Calendar.SECOND, 0)
-            set(Calendar.MILLISECOND, 0)
-        }
-        return calendar.time
     }
 }

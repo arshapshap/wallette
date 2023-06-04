@@ -7,14 +7,14 @@ import com.example.core_db.models.entities.CategoryLocal
 abstract class CategoryDao {
 
     @Insert
-    abstract fun addCategory(categoryLocal: CategoryLocal)
+    abstract suspend fun addCategory(categoryLocal: CategoryLocal)
 
     @Update
-    abstract fun updateCategory(categoryLocal: CategoryLocal)
+    abstract suspend fun updateCategory(categoryLocal: CategoryLocal)
 
     @Delete
-    abstract fun deleteCategory(categoryLocal: CategoryLocal)
+    abstract suspend fun deleteCategory(categoryLocal: CategoryLocal)
 
     @Query("SELECT * FROM Categories")
-    abstract fun getCategories(): List<CategoryLocal>
+    abstract suspend fun getCategories(): List<CategoryLocal>
 }

@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 data class AccountResponse(
     @SerializedName("id")
-    val id: String?,
+    val id: Long?,
     @SerializedName("name")
     val name: String?,
     @SerializedName("icon")

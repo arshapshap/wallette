@@ -4,7 +4,7 @@ import com.example.common.domain.models.*
 import java.util.*
 
 data class EditingTransaction(
-    val id: String = "",
+    val id: Long = 0,
     val type: TransactionType = TransactionType.Expense,
     val date: Date? = null,
     val amount: Double? = null,

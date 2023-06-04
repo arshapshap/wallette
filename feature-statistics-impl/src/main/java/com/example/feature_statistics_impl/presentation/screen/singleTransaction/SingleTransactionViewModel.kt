@@ -70,8 +70,6 @@ class SingleTransactionViewModel @AssistedInject constructor(
             account = transaction.account,
             accountDestination = transaction.accountDestination,
             category = transaction.category,
-            transactionGroup = transaction.transactionGroup,
-            isTransactionGroup = transaction.isTransactionGroup,
             tags = transaction.tags
         )
         _startLiveData.value = StartData(
@@ -91,7 +89,7 @@ class SingleTransactionViewModel @AssistedInject constructor(
 
         val newTransaction = with (editingTransaction) {
             Transaction(
-                id = transaction?.id ?: "",
+                id = transaction?.id ?: 0,
                 type = type,
                 date = date!!,
                 amount = amount!!,
@@ -99,8 +97,6 @@ class SingleTransactionViewModel @AssistedInject constructor(
                 account = account!!,
                 accountDestination = if (type == TransactionType.Transfer) accountDestination else null,
                 category = if (type != TransactionType.Transfer) category else null,
-                transactionGroup = transactionGroup,
-                isTransactionGroup = false,
                 tags = tags
             )
         }

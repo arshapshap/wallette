@@ -39,6 +39,8 @@ dependencies {
     implementation project(path: ':feature-statistics-impl')
     implementation project(path: ':feature-auth')
     implementation project(path: ':feature-settings')
+    implementation project(path: ':data')
+    implementation project(path: ':core-db')
     implementation project(path: ':common')
 
     implementation preferenceDep

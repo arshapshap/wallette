@@ -1,15 +1,14 @@
 package com.example.feature_statistics_impl.presentation.screen.transactionsList.transactionsRecyclerView
 
 import androidx.core.content.ContextCompat
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.example.common.domain.models.Transaction
-import com.example.feature_statistics_impl.R
-import com.example.feature_statistics_impl.databinding.ItemExpandableTransactionBinding
-import com.example.feature_statistics_impl.presentation.screen.transactionsList.SortingType
 import com.example.common.presentation.extensions.formatAsBalance
 import com.example.common.presentation.extensions.formatToString
 import com.example.common.presentation.extensions.getColorBySign
+import com.example.feature_statistics_impl.R
+import com.example.feature_statistics_impl.databinding.ItemExpandableTransactionBinding
+import com.example.feature_statistics_impl.presentation.screen.transactionsList.SortingType
 
 class TransactionsViewHolder(
     private val binding: ItemExpandableTransactionBinding,
@@ -19,8 +18,6 @@ class TransactionsViewHolder(
 
     fun onBind(transaction: Transaction) {
         with (binding) {
-            arrowImageView.isVisible = transaction.isTransactionGroup
-
             if (sortingType == SortingType.ByCategory)
                 nameTextView.text = transaction.date.formatToString()
             else
