@@ -17,6 +17,7 @@ import java.util.*
 
 class SingleTransactionViewModel @AssistedInject constructor(
     @Assisted private val transaction: Transaction?,
+    @Assisted private val transactionType: TransactionType?,
     private val interactor: StatisticsInteractor,
     private val router: StatisticsRouter
 ) : BaseViewModel() {
@@ -65,6 +66,7 @@ class SingleTransactionViewModel @AssistedInject constructor(
     init {
         viewModelScope.launch {
             val editingTransaction = if (transaction == null) EditingTransaction(
+                type = transactionType ?: TransactionType.Expense,
                 account = interactor.getAccounts().firstOrNull()
             )
             else EditingTransaction(
@@ -135,7 +137,7 @@ class SingleTransactionViewModel @AssistedInject constructor(
     fun getAccountsToTransfer() {
         viewModelScope.launch {
             val currentAccount = editingTransactionLiveData.value?.account
-            _onAccountsRequestedLiveEvent.post(interactor.getAccounts().filter { it != currentAccount })
+            _onAccountsToTransferRequestedLiveEvent.post(interactor.getAccounts().filter { it != currentAccount })
         }
     }
 
@@ -221,6 +223,9 @@ class SingleTransactionViewModel @AssistedInject constructor(
     @AssistedFactory
     interface Factory {
 
-        fun create(@Assisted transaction: Transaction?): SingleTransactionViewModel
+        fun create(
+            @Assisted transaction: Transaction?,
+            @Assisted transactionType: TransactionType?
+        ): SingleTransactionViewModel
     }
 }

@@ -33,6 +33,7 @@ class SingleTransactionFragment : BaseFragment<SingleTransactionViewModel>(R.lay
     companion object {
 
         const val TRANSACTION_KEY = "transaction_key"
+        const val TRANSACTION_TYPE_KEY = "transaction_type_key"
         private const val ACCOUNT_PICKER_TAG = "account"
         private const val ACCOUNT_DESTINATION_PICKER_TAG = "account_destination"
         private const val CATEGORY_PICKER_TAG = "category"
@@ -61,7 +62,10 @@ class SingleTransactionFragment : BaseFragment<SingleTransactionViewModel>(R.lay
     @Suppress("DEPRECATION")
     override fun createViewModel(): BaseViewModel {
         return component.singleTransactionViewModel()
-            .create(arguments?.getSerializable(TRANSACTION_KEY) as? Transaction)
+            .create(
+                arguments?.getSerializable(TRANSACTION_KEY) as? Transaction,
+                arguments?.getSerializable(TRANSACTION_TYPE_KEY) as? TransactionType
+            )
     }
 
     override fun initViews() {

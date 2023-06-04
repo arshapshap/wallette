@@ -4,10 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.NavOptions
-import com.example.common.domain.models.Account
-import com.example.common.domain.models.Category
-import com.example.common.domain.models.Tag
-import com.example.common.domain.models.Transaction
+import com.example.common.domain.models.*
 import com.example.feature_auth.presentation.screen.AuthorizationRouter
 import com.example.feature_settings.presentation.SettingsRouter
 import com.example.feature_settings.presentation.screen.singleAccount.SingleAccountFragment
@@ -136,6 +133,14 @@ class Navigator : MainRouter, StatisticsRouter, AuthorizationRouter, SettingsRou
     }
 
     override fun openTransferCreating() {
-        //TODO("Not yet implemented")
+        navController?.navigate(
+            resId = R.id.singleTransactionFragment,
+            args = Bundle().apply {
+                putSerializable(SingleTransactionFragment.TRANSACTION_TYPE_KEY, TransactionType.Transfer)
+            },
+            navOptions = NavOptions.Builder()
+                .setLaunchSingleTop(true)
+                .build()
+        )
     }
 }
