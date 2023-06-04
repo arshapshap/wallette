@@ -3,7 +3,9 @@ package com.example.feature_settings.presentation.screen.singleCategory
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.common.domain.models.*
+import com.example.common.domain.models.Category
+import com.example.common.domain.models.CategoryIcon
+import com.example.common.domain.models.TransactionType
 import com.example.common.presentation.base.BaseViewModel
 import com.example.feature_settings.domain.SettingsInteractor
 import com.example.feature_settings.presentation.SettingsRouter
@@ -50,31 +52,22 @@ class SingleCategoryViewModel @AssistedInject constructor(
     }
 
     fun save() {
-        if (!isDataValid)
-            return
+        if (!isDataValid) return
 
         val editingCategory = _editingCategoryLiveData.value!!
+        val newCategory = Category(
+            id = category?.id ?: 0,
+            name = editingCategory.name,
+            icon = editingCategory.icon,
+            type = editingCategory.type!!
+        )
         viewModelScope.launch {
             if (category == null)
-                interactor.createCategory(
-                    Category(
-                        id = "",
-                        name = editingCategory.name,
-                        icon = editingCategory.icon,
-                        type = editingCategory.type!!
-                    )
-                )
+                interactor.createCategory(newCategory)
             else
-                interactor.editCategory(
-                    Category(
-                        id = category.id,
-                        name = editingCategory.name,
-                        icon = editingCategory.icon,
-                        type = editingCategory.type!!
-                    )
-                )
-            router.openCategories()
+                interactor.editCategory(newCategory)
         }
+        router.openCategories()
     }
 
     fun selectType(type: TransactionType) {

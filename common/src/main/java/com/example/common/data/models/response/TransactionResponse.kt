@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 data class TransactionResponse(
     @SerializedName("id")
-    val id: String?,
+    val id: Long?,
     @SerializedName("type")
     val type: String?,
     @SerializedName("date")

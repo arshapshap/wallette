@@ -58,30 +58,19 @@ class SingleAccountViewModel @AssistedInject constructor(
             return
 
         val editingAccount = _editingAccountLiveData.value!!
-
+        val newAccount = Account(
+            id = account?.id ?: 0,
+            name = editingAccount.name,
+            icon = editingAccount.icon,
+            currentBalance = 0.0,
+            startBalance = editingAccount.startBalance!!,
+            currency = editingAccount.currency
+        )
         viewModelScope.launch {
             if (account == null)
-                interactor.createAccount(
-                    Account(
-                        id = "",
-                        name = editingAccount.name,
-                        icon = editingAccount.icon,
-                        currentBalance = 0.0,
-                        startBalance = editingAccount.startBalance!!,
-                        currency = editingAccount.currency
-                    )
-                )
+                interactor.createAccount(newAccount)
             else
-                interactor.editAccount(
-                    Account(
-                        id = account.id,
-                        name = editingAccount.name,
-                        icon = editingAccount.icon,
-                        currentBalance = account.currentBalance,
-                        startBalance = editingAccount.startBalance!!,
-                        currency = editingAccount.currency
-                    )
-                )
+                interactor.editAccount(newAccount)
         }
         router.openAccounts()
     }

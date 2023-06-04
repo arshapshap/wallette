@@ -4,8 +4,10 @@ import android.content.Context
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.core.view.isGone
+import androidx.core.widget.doAfterTextChanged
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.common.di.FeatureUtils
+import com.example.common.domain.models.Tag
 import com.example.common.domain.models.Transaction
 import com.example.common.domain.models.TransactionType
 import com.example.common.presentation.base.BaseFragment
@@ -32,6 +34,7 @@ class SingleTransactionFragment : BaseFragment<SingleTransactionViewModel>(R.lay
     companion object {
 
         const val TRANSACTION_KEY = "transaction_key"
+        const val TRANSACTION_TYPE_KEY = "transaction_type_key"
         private const val ACCOUNT_PICKER_TAG = "account"
         private const val ACCOUNT_DESTINATION_PICKER_TAG = "account_destination"
         private const val CATEGORY_PICKER_TAG = "category"
@@ -60,7 +63,10 @@ class SingleTransactionFragment : BaseFragment<SingleTransactionViewModel>(R.lay
     @Suppress("DEPRECATION")
     override fun createViewModel(): BaseViewModel {
         return component.singleTransactionViewModel()
-            .create(arguments?.getSerializable(TRANSACTION_KEY) as? Transaction)
+            .create(
+                arguments?.getSerializable(TRANSACTION_KEY) as? Transaction,
+                arguments?.getSerializable(TRANSACTION_TYPE_KEY) as? TransactionType
+            )
     }
 
     override fun initViews() {
@@ -98,12 +104,31 @@ class SingleTransactionFragment : BaseFragment<SingleTransactionViewModel>(R.lay
             }
             layoutManager = getFlexboxLayoutManager()
         }
+
+        with (binding.tagsAutoCompleteTextView) {
+            val adapter = TagsAutocompleteAdapter(requireContext(), listOf(Tag(1, "lol", "#FFFF00")))
+            setAdapter(adapter)
+            setOnItemClickListener { _, _, position, _ ->
+                viewModel.addTag(position)
+                setText("")
+                hideKeyboard(this)
+            }
+        }
+
+        with (binding) {
+            amountEditText.doAfterTextChanged {
+                viewModel.editAmount(it.toString())
+            }
+            descriptionEditText.doAfterTextChanged {
+                viewModel.editDescription(it.toString())
+            }
+        }
     }
 
     override fun subscribe() {
-        viewModel.startLiveData.observe(viewLifecycleOwner) {
+        viewModel.transactionLiveData.observe(viewLifecycleOwner) {
             with (binding) {
-                it?.transaction?.let {
+                it?.let {
                     incomeTextView.isGone = it.type != TransactionType.Income
                     expenseTextView.isGone = it.type != TransactionType.Expense
                     transferTextView.isGone = it.type != TransactionType.Transfer
@@ -112,7 +137,7 @@ class SingleTransactionFragment : BaseFragment<SingleTransactionViewModel>(R.lay
                     expenseTextView.setOnClickListener { viewModel.selectType(TransactionType.Expense) }
                     transferTextView.setOnClickListener { viewModel.selectType(TransactionType.Transfer) }
 
-                    getTagsAdapter().setList(it.tags)
+                    getTagsAdapter()?.setList(it.tags)
                     amountEditText.setText(it.amount.absoluteValue.toString())
                     descriptionEditText.setText(it.description)
                 } ?: run {
@@ -128,30 +153,21 @@ class SingleTransactionFragment : BaseFragment<SingleTransactionViewModel>(R.lay
                     }
                 }
             }
-
-            with (binding.tagsAutoCompleteTextView) {
-                val adapter = TagsAutocompleteAdapter(requireContext(), it.tags)
-                setAdapter(adapter)
-                setOnItemClickListener { _, _, position, _ ->
-                    viewModel.addTag(position)
-                    setText("")
-                    hideKeyboard(this)
-                }
-            }
+        }
+        viewModel.onTagsRequestedLiveEvent.observe(viewLifecycleOwner) {
+            getTagsAutocompleteAdapter()?.updateSuggestions(it)
         }
         viewModel.onTagRemovedLiveEvent.observe(viewLifecycleOwner) {
-            getTagsAdapter().removeItem(it)
+            getTagsAdapter()?.removeItem(it)
         }
         viewModel.onTagAddedLiveEvent.observe(viewLifecycleOwner) {
-            getTagsAdapter().addItem(it)
+            getTagsAdapter()?.addItem(it)
         }
         viewModel.editingTransactionLiveData.observe(viewLifecycleOwner) {
             with (binding) {
                 incomeTextView.alpha = if (it.type == TransactionType.Income) 1f else 0.5f
                 expenseTextView.alpha = if (it.type == TransactionType.Expense) 1f else 0.5f
                 transferTextView.alpha = if (it.type == TransactionType.Transfer) 1f else 0.5f
-
-                getTagsAutocompleteAdapter().updateSuggestions(viewModel.tagsSuggestions)
 
                 with (selectAccountButton) {
                     it.account?.let {
@@ -160,21 +176,16 @@ class SingleTransactionFragment : BaseFragment<SingleTransactionViewModel>(R.lay
                     }
                     setTitle(if (it.type != TransactionType.Transfer) R.string.account else R.string.account_source)
                     setOnClickListener {
-                        showPickerDialog(
-                            fragmentManager = childFragmentManager,
-                            title = getString(R.string.account),
-                            items = viewModel.startLiveData.value?.accounts?.map { it.name }?.toTypedArray() ?: arrayOf(),
-                            tag = ACCOUNT_PICKER_TAG
-                        )
+                        viewModel.getAccounts()
                     }
                 }
 
                 with(selectDateButton) {
-                    setValue(it.date?.formatToString() ?: "")
+                    setValue(it.date.formatToString())
                     setOnClickListener {
                         showDatePickerDialog(
                             fragmentManager = childFragmentManager,
-                            calendar = it.date?.toCalendar() ?: Calendar.getInstance(),
+                            calendar = it.date.toCalendar(),
                             tag = DATE_PICKER_TAG
                         )
                     }
@@ -190,14 +201,7 @@ class SingleTransactionFragment : BaseFragment<SingleTransactionViewModel>(R.lay
                         setImage(com.example.common.R.drawable.ic_category)
                     }
                     setOnClickListener {
-                        showPickerDialog(
-                            fragmentManager = childFragmentManager,
-                            title = getString(R.string.category),
-                            items = viewModel.availableCategories
-                                .map { it.name }
-                                .toTypedArray(),
-                            tag = CATEGORY_PICKER_TAG
-                        )
+                        viewModel.getCategories()
                     }
                 }
 
@@ -208,15 +212,34 @@ class SingleTransactionFragment : BaseFragment<SingleTransactionViewModel>(R.lay
                         setImage(it.icon.drawableRes)
                     }
                     setOnClickListener {
-                        showPickerDialog(
-                            fragmentManager = childFragmentManager,
-                            title = getString(R.string.account),
-                            items = viewModel.startLiveData.value?.accounts?.map { it.name }?.toTypedArray() ?: arrayOf(),
-                            tag = ACCOUNT_PICKER_TAG
-                        )
+                        viewModel.getAccountsToTransfer()
                     }
                 }
             }
+        }
+        viewModel.onAccountsRequestedLiveEvent.observe(viewLifecycleOwner) {
+            showPickerDialog(
+                fragmentManager = childFragmentManager,
+                title = getString(R.string.account),
+                items = it.map { it.name }.toTypedArray(),
+                tag = ACCOUNT_PICKER_TAG
+            )
+        }
+        viewModel.onAccountsToTransferRequestedLiveEvent.observe(viewLifecycleOwner) {
+            showPickerDialog(
+                fragmentManager = childFragmentManager,
+                title = getString(R.string.account),
+                items = it.map { it.name }.toTypedArray(),
+                tag = ACCOUNT_DESTINATION_PICKER_TAG
+            )
+        }
+        viewModel.onCategoriesRequestedLiveEvent.observe(viewLifecycleOwner) {
+            showPickerDialog(
+                fragmentManager = childFragmentManager,
+                title = getString(R.string.category),
+                items = it.map { it.name }.toTypedArray(),
+                tag = CATEGORY_PICKER_TAG
+            )
         }
     }
 
@@ -247,26 +270,26 @@ class SingleTransactionFragment : BaseFragment<SingleTransactionViewModel>(R.lay
     }
 
     private fun onAccountSelected(index: Int) {
-        val account = viewModel.startLiveData.value!!.accounts[index]
+        val account = viewModel.onAccountsRequestedLiveEvent.value!!.message!![index]
         viewModel.selectAccount(account)
     }
 
     private fun onAccountDestinationSelected(index: Int) {
-        val account = viewModel.startLiveData.value!!.accounts[index]
+        val account = viewModel.onAccountsToTransferRequestedLiveEvent.value!!.message!![index]
         viewModel.selectAccountDestination(account)
     }
 
     private fun onCategorySelected(index: Int) {
-        val category = viewModel.availableCategories[index]
+        val category = viewModel.onCategoriesRequestedLiveEvent.value!!.message!![index]
         viewModel.selectCategory(category)
     }
 
-    private fun getTagsAdapter(): TagsAdapter {
-        return binding.tagsRecyclerView.adapter as TagsAdapter
+    private fun getTagsAdapter(): TagsAdapter? {
+        return binding.tagsRecyclerView.adapter as? TagsAdapter
     }
 
-    private fun getTagsAutocompleteAdapter(): TagsAutocompleteAdapter {
-        return binding.tagsAutoCompleteTextView.adapter as TagsAutocompleteAdapter
+    private fun getTagsAutocompleteAdapter(): TagsAutocompleteAdapter? {
+        return binding.tagsAutoCompleteTextView.adapter as? TagsAutocompleteAdapter
     }
 
     private fun getFlexboxLayoutManager(): FlexboxLayoutManager {

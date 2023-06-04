@@ -3,7 +3,7 @@ package com.example.common.domain.models
 import java.io.Serializable
 
 data class Account(
-    val id: String,
+    val id: Long,
     val name: String,
     val icon: AccountIcon,
     val currentBalance: Double,

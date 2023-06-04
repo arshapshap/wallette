@@ -6,5 +6,5 @@ interface FeatureContainer {
 
     fun releaseFeature(key: Class<*>)
 
-    //fun commonApi(): CommonApi
+    fun commonApi(): CommonApi
 }

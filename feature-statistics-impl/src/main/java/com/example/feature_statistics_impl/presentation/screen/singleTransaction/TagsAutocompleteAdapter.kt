@@ -19,7 +19,8 @@ class TagsAutocompleteAdapter(
 
     fun updateSuggestions(newItems: List<Tag>) {
         items = newItems
-        notifyDataSetChanged()
+        clear()
+        addAll(items.map { it.name })
     }
 
     override fun getCount(): Int {
