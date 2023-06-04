@@ -7,6 +7,7 @@ import androidx.core.view.isGone
 import androidx.core.widget.doAfterTextChanged
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.common.di.FeatureUtils
+import com.example.common.domain.models.Tag
 import com.example.common.domain.models.Transaction
 import com.example.common.domain.models.TransactionType
 import com.example.common.presentation.base.BaseFragment
@@ -105,7 +106,7 @@ class SingleTransactionFragment : BaseFragment<SingleTransactionViewModel>(R.lay
         }
 
         with (binding.tagsAutoCompleteTextView) {
-            val adapter = TagsAutocompleteAdapter(requireContext(), listOf())
+            val adapter = TagsAutocompleteAdapter(requireContext(), listOf(Tag(1, "lol", "#FFFF00")))
             setAdapter(adapter)
             setOnItemClickListener { _, _, position, _ ->
                 viewModel.addTag(position)
