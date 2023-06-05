@@ -16,6 +16,7 @@ import dagger.assisted.AssistedInject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.*
+import kotlin.math.absoluteValue
 
 class   SingleTransactionViewModel @AssistedInject constructor(
     @Assisted private val transaction: Transaction?,
@@ -93,7 +94,7 @@ class   SingleTransactionViewModel @AssistedInject constructor(
             return
 
         val editingTransaction = _editingTransactionLiveData.value!!
-        var amount = editingTransaction.amount!!
+        var amount = editingTransaction.amount!!.absoluteValue
         if (editingTransaction.type == TransactionType.Expense)
             amount *= -1
 

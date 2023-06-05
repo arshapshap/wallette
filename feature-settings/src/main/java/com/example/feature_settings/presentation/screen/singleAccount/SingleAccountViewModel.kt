@@ -32,7 +32,6 @@ class SingleAccountViewModel @AssistedInject constructor(
         get() {
             val editingAccount = _editingAccountLiveData.value ?: return false
             return editingAccount.name != ""
-                    && editingAccount.startBalance != null
                     && editingAccount.icon != AccountIcon.Empty
         }
 
@@ -43,6 +42,7 @@ class SingleAccountViewModel @AssistedInject constructor(
                 name = account.name,
                 icon = account.icon,
                 startBalance = account.startBalance,
+                currentBalance = account.currentBalance,
                 currency = account.currency
             )
         viewModelScope.launch {
@@ -67,8 +67,8 @@ class SingleAccountViewModel @AssistedInject constructor(
             id = account?.id ?: 0,
             name = editingAccount.name,
             icon = editingAccount.icon,
-            currentBalance = 0.0,
-            startBalance = editingAccount.startBalance!!,
+            currentBalance = editingAccount.currentBalance,
+            startBalance = editingAccount.startBalance,
             currency = editingAccount.currency
         )
         viewModelScope.launch {
@@ -99,8 +99,14 @@ class SingleAccountViewModel @AssistedInject constructor(
     }
 
     fun editStartBalance(startBalanceString: String) {
-        val startBalance = startBalanceString.toDoubleOrNull()
-        val account = _editingAccountLiveData.value?.copy(startBalance = startBalance) ?: return
+        val startBalance = startBalanceString.toDoubleOrNull() ?: return
+
+        val oldStartBalance = _editingAccountLiveData.value?.startBalance ?: return
+        val currentBalance = _editingAccountLiveData.value?.currentBalance ?: return
+        val account = _editingAccountLiveData.value?.copy(
+            startBalance = startBalance,
+            currentBalance = currentBalance - oldStartBalance + startBalance
+        ) ?: return
         updateAccount(account)
     }
 

@@ -84,8 +84,8 @@ class SingleAccountFragment :
     override fun subscribe() {
         viewModel.startLiveData.observe(viewLifecycleOwner) {
             with (binding) {
-                accountNameEditText.setText(it?.account?.name)
-                startBalanceEditText.setText(it?.account?.startBalance?.toString() ?: "")
+                accountNameEditText.setText(it.account?.name)
+                startBalanceEditText.setText(it.account?.startBalance?.toString() ?: 0.0.toString())
 
                 if (it.canBeDeleted) {
                     deleteImageButton.isVisible = true
@@ -104,6 +104,8 @@ class SingleAccountFragment :
                     getIconsAdapter()?.setSelected(iconIndex)
                     accountIconsRecyclerView.scrollToPosition(iconIndex)
                 }
+
+                currentBalanceEditText.setText(it.currentBalance.toString())
 
                 if (it != null) {
                     currencyLayout.setValue(it.currency.name)

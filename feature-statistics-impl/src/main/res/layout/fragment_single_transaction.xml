@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <ImageButton
@@ -11,13 +11,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
-        android:visibility="invisible"
-        android:padding="5dp"
         android:background="?selectableItemBackgroundBorderless"
+        android:padding="5dp"
         android:src="@drawable/ic_delete"
-        tools:visibility="visible"
+        android:visibility="invisible"
         app:tint="@color/red"
-        tools:ignore="ContentDescription" />
+        tools:ignore="ContentDescription"
+        tools:visibility="visible" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -25,13 +25,14 @@
 
         <TextView
             android:id="@+id/incomeTextView"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:alpha="0.5"
             android:padding="5dp"
             android:text="@string/income"
             android:textFontWeight="400"
             android:textSize="18sp"
-            android:alpha="0.5"
+            android:gravity="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/expenseTextView"
             app:layout_constraintStart_toStartOf="parent"
@@ -39,27 +40,29 @@
 
         <TextView
             android:id="@+id/expenseTextView"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:alpha="0.5"
+            android:padding="5dp"
             android:text="@string/expense"
             android:textFontWeight="400"
             android:textSize="18sp"
-            android:padding="5dp"
-            android:alpha="0.5"
-            app:layout_constraintStart_toEndOf="@id/incomeTextView"
-            app:layout_constraintTop_toTopOf="parent"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/transfer_text_view"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintStart_toEndOf="@id/incomeTextView"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/transfer_text_view"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:alpha="0.5"
             android:padding="5dp"
             android:text="@string/money_transfer"
             android:textFontWeight="400"
             android:textSize="18sp"
-            android:alpha="0.5"
+            android:gravity="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/expenseTextView"
@@ -83,30 +86,26 @@
         android:id="@+id/selectCategoryButton"
         layout="@layout/item_button_with_icon"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        />
+        android:layout_height="wrap_content" />
 
     <include
         android:id="@+id/selectAccountDestinationButton"
         layout="@layout/item_button_with_icon"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
-        />
+        android:visibility="gone" />
 
     <include
         android:id="@+id/selectAccountButton"
         layout="@layout/item_button_with_icon"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-         />
+        android:layout_height="wrap_content" />
 
     <include
         android:id="@+id/selectDateButton"
         layout="@layout/item_button_with_icon"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        />
+        android:layout_height="wrap_content" />
 
     <EditText
         android:id="@+id/description_edit_text"
@@ -114,26 +113,24 @@
         android:layout_height="wrap_content"
         android:hint="@string/description"
         android:importantForAutofill="no"
-        android:inputType="textShortMessage"
-        />
+        android:inputType="textShortMessage" />
 
     <AutoCompleteTextView
         android:id="@+id/tagsAutoCompleteTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/tag"
-        android:inputType="textShortMessage"
         android:completionThreshold="1"
-        />
+        android:hint="@string/tag"
+        android:inputType="textShortMessage" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/tagsRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:clipToPadding="false"
         android:orientation="horizontal"
         android:paddingBottom="@dimen/bottom_margin"
-        android:clipToPadding="false"
         app:layoutManager="com.google.android.flexbox.FlexboxLayoutManager"
-        tools:listitem="@layout/item_tag"/>
+        tools:listitem="@layout/item_tag" />
 
 </androidx.appcompat.widget.LinearLayoutCompat>
