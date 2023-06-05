@@ -20,17 +20,38 @@ class TagRepositoryImpl @Inject constructor(
 
     override suspend fun createTag(tag: Tag) {
         val local = mapper.map(tag)
-        localSource.addTag(local)
+        val id = localSource.addTag(local)
+
+        if (!tokenManager.isAuthorized()) return
+
+        val result = createTagRemote(tag.copy(id = id))
+        if (result.isSuccessful)
+            setSynchronized(tag)
     }
 
     override suspend fun updateTag(tag: Tag) {
         val local = mapper.map(tag)
         localSource.updateTag(local)
+
+        if (!tokenManager.isAuthorized()) return
+
+        val result = updateTagRemote(tag)
+        if (result.isSuccessful)
+            setSynchronized(tag)
     }
 
     override suspend fun deleteTag(tag: Tag) {
         val local = mapper.map(tag)
-        localSource.deleteTag(local)
+        setMustBeDeleted(tag)
+
+        if (!tokenManager.isAuthorized()) {
+            localSource.deleteTag(local)
+            return
+        }
+
+        val result = deleteTagRemote(tag.id)
+        if (result.isSuccessful)
+            localSource.deleteTag(local)
     }
 
     override suspend fun getTags(): List<Tag> {
@@ -38,20 +59,34 @@ class TagRepositoryImpl @Inject constructor(
         return list.map { mapper.map(it) }
     }
 
-    suspend fun createTagRemote(tag: Tag): BasicResult {
+    private suspend fun createTagRemote(tag: Tag): BasicResult {
         val model = mapper.mapToCreatingModel(tag)
         val response = remoteSource.createTag(model)
         return resultMapper.map(response)
     }
 
-    suspend fun updateTagRemote(tag: Tag): BasicResult {
+    private suspend fun updateTagRemote(tag: Tag): BasicResult {
         val model = mapper.mapToEditingModel(tag)
         val response = remoteSource.updateTag(model)
         return resultMapper.map(response)
     }
 
-    suspend fun deleteTagRemote(id: Long): BasicResult {
+    private suspend fun deleteTagRemote(id: Long): BasicResult {
         val response = remoteSource.deleteTagById(id)
         return resultMapper.map(response)
+    }
+
+    private suspend fun setSynchronized(tag: Tag) {
+        val local = mapper.map(tag)
+        localSource.updateTag(
+            local.copy(isSynchronized = true)
+        )
+    }
+
+    private suspend fun setMustBeDeleted(tag: Tag) {
+        val local = mapper.map(tag)
+        localSource.updateTag(
+            local.copy(mustBeDeleted = true)
+        )
     }
 }
