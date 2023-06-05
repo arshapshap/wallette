@@ -60,7 +60,15 @@ class SingleTagViewModel @AssistedInject constructor(
                 interactor.createTag(newTag)
             else
                 interactor.editTag(newTag)
-            router.openTags()
+            router.close()
+        }
+    }
+
+    fun delete() {
+        if  (tag == null) return
+        viewModelScope.launch {
+            interactor.deleteTag(tag)
+            router.close()
         }
     }
 

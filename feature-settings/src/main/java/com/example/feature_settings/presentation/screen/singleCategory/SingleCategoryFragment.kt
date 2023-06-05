@@ -1,5 +1,6 @@
 package com.example.feature_settings.presentation.screen.singleCategory
 
+import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.common.di.FeatureUtils
@@ -15,10 +16,12 @@ import com.example.feature_settings.di.SettingsComponent
 import com.example.feature_settings.di.SettingsFeatureApi
 import com.example.feature_settings.presentation.screen.common.IconsAdapter
 import com.example.common.presentation.extensions.getColorPrimary
+import com.example.common.presentation.floatingButtonInterfaces.FloatingButtonListenersManager
+import com.example.common.presentation.floatingButtonInterfaces.OnFloatingButtonClickListener
 import com.google.android.flexbox.*
 
 class SingleCategoryFragment :
-    BaseFragment<SingleCategoryViewModel>(R.layout.fragment_single_category) {
+    BaseFragment<SingleCategoryViewModel>(R.layout.fragment_single_category), OnFloatingButtonClickListener {
 
     companion object {
 
@@ -34,6 +37,16 @@ class SingleCategoryFragment :
         component.inject(this)
     }
 
+    override fun onStart() {
+        super.onStart()
+        (requireActivity() as? FloatingButtonListenersManager)?.subscribeOnFloatingButtonClick(this)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        (requireActivity() as? FloatingButtonListenersManager)?.setDefaultOnFloatingButtonClickListener()
+    }
+
     @Suppress("DEPRECATION")
     override fun createViewModel(): BaseViewModel {
         return component.singleCategoryViewModel()
@@ -41,16 +54,6 @@ class SingleCategoryFragment :
     }
 
     override fun initViews() {
-        with (binding.saveLayout) {
-            setStrokeVisibility(true)
-            setColor(getColorPrimary())
-            setImage(com.example.common.R.drawable.ic_done)
-            setTitle(R.string.save)
-            setOnClickListener {
-                viewModel.save()
-            }
-        }
-
         with (binding.categoryIconsRecyclerView) {
             adapter = IconsAdapter(colorSelected = getColorPrimary()) {
                 viewModel.selectIcon(it as CategoryIcon)
@@ -85,6 +88,13 @@ class SingleCategoryFragment :
                     expensesRadioButton.isEnabled = false
                     incomesRadioButton.isEnabled = false
                 }
+
+                if (it.canBeDeleted) {
+                    deleteImageButton.isVisible = true
+                    deleteImageButton.setOnClickListener {
+                        viewModel.delete()
+                    }
+                }
             }
         }
         viewModel.editingCategoryLiveData.observe(viewLifecycleOwner) {
@@ -96,6 +106,10 @@ class SingleCategoryFragment :
                 }
             }
         }
+    }
+
+    override fun onFloatingButtonClick() {
+        viewModel.save()
     }
 
     private fun getIconsAdapter()

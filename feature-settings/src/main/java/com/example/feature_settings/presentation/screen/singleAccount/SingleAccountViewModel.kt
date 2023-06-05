@@ -45,12 +45,17 @@ class SingleAccountViewModel @AssistedInject constructor(
                 startBalance = account.startBalance,
                 currency = account.currency
             )
-        _startLiveData.value = StartData(
-            account = account,
-            icons = AccountIcon.values().filter { it.name != "Empty" },
-            availableCurrencies = Currency.values().toList()
-        )
-        _editingAccountLiveData.value = editingAccount
+        viewModelScope.launch {
+            _startLiveData.postValue(
+                StartData(
+                    account = account,
+                    icons = AccountIcon.values().filter { it.name != "Empty" },
+                    availableCurrencies = Currency.values().toList(),
+                    canBeDeleted = account != null && interactor.getAccounts().size > 1
+                )
+            )
+            _editingAccountLiveData.postValue(editingAccount)
+        }
     }
 
     fun save() {
@@ -72,7 +77,15 @@ class SingleAccountViewModel @AssistedInject constructor(
             else
                 interactor.editAccount(newAccount)
         }
-        router.openAccounts()
+        router.close()
+    }
+
+    fun delete() {
+        if  (account == null) return
+        viewModelScope.launch {
+            interactor.deleteAccount(account)
+            router.close()
+        }
     }
 
     fun selectCurrency(currency: Currency) {
@@ -109,6 +122,7 @@ class SingleAccountViewModel @AssistedInject constructor(
     data class StartData(
         val account: Account?,
         val icons: List<AccountIcon>,
-        val availableCurrencies: List<Currency>
+        val availableCurrencies: List<Currency>,
+        val canBeDeleted: Boolean
     )
 }

@@ -1,5 +1,6 @@
 package com.example.feature_settings.presentation.screen.singleAccount
 
+import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.common.di.FeatureUtils
@@ -16,10 +17,12 @@ import com.example.feature_settings.presentation.screen.common.IconsAdapter
 import com.example.common.presentation.dialogs.PickerFragment
 import com.example.common.presentation.dialogs.PickerFragment.Companion.showPickerDialog
 import com.example.common.presentation.extensions.getColorPrimary
+import com.example.common.presentation.floatingButtonInterfaces.FloatingButtonListenersManager
+import com.example.common.presentation.floatingButtonInterfaces.OnFloatingButtonClickListener
 import com.google.android.flexbox.*
 
 class SingleAccountFragment :
-    BaseFragment<SingleAccountViewModel>(R.layout.fragment_single_account), PickerFragment.OnSelectListener {
+    BaseFragment<SingleAccountViewModel>(R.layout.fragment_single_account), PickerFragment.OnSelectListener, OnFloatingButtonClickListener {
 
     companion object {
 
@@ -36,6 +39,16 @@ class SingleAccountFragment :
         component.inject(this)
     }
 
+    override fun onStart() {
+        super.onStart()
+        (requireActivity() as? FloatingButtonListenersManager)?.subscribeOnFloatingButtonClick(this)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        (requireActivity() as? FloatingButtonListenersManager)?.setDefaultOnFloatingButtonClickListener()
+    }
+
     @Suppress("DEPRECATION")
     override fun createViewModel(): BaseViewModel {
         return component.singleAccountViewModel()
@@ -43,16 +56,6 @@ class SingleAccountFragment :
     }
 
     override fun initViews() {
-        with (binding.saveLayout) {
-            setStrokeVisibility(true)
-            setColor(getColorPrimary())
-            setImage(com.example.common.R.drawable.ic_done)
-            setTitle(R.string.save)
-            setOnClickListener {
-                viewModel.save()
-            }
-        }
-
         with (binding.currencyLayout) {
             setStrokeVisibility(false)
             setRightArrowVisible(true)
@@ -83,6 +86,13 @@ class SingleAccountFragment :
             with (binding) {
                 accountNameEditText.setText(it?.account?.name)
                 startBalanceEditText.setText(it?.account?.startBalance?.toString() ?: "")
+
+                if (it.canBeDeleted) {
+                    deleteImageButton.isVisible = true
+                    deleteImageButton.setOnClickListener {
+                        viewModel.delete()
+                    }
+                }
 
                 getIconsAdapter()?.setList(it?.icons ?: listOf())
             }
@@ -115,6 +125,10 @@ class SingleAccountFragment :
             val currency = viewModel.startLiveData.value!!.availableCurrencies[index]
             viewModel.selectCurrency(currency)
         }
+    }
+
+    override fun onFloatingButtonClick() {
+        viewModel.save()
     }
 
     private fun getIconsAdapter()
