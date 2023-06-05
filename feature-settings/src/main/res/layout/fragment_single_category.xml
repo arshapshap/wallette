@@ -35,14 +35,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        >
 
         <RadioButton
             android:id="@+id/expensesRadioButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/expenses"
-            android:textSize="17sp" />
+            android:textSize="17sp"/>
 
         <RadioButton
             android:id="@+id/incomesRadioButton"

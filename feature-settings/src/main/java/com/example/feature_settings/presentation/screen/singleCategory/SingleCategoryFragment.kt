@@ -82,6 +82,8 @@ class SingleCategoryFragment :
                         TransactionType.Income -> categoryTypeRadio.check(R.id.incomesRadioButton)
                         else -> return@let
                     }
+                    expensesRadioButton.isEnabled = false
+                    incomesRadioButton.isEnabled = false
                 }
             }
         }
