@@ -15,15 +15,16 @@ import com.example.common.presentation.base.BaseFragment
 import com.example.common.presentation.base.BaseViewModel
 import com.example.common.presentation.dialogs.DatePickerFragment.Companion.showDatePickerDialog
 import com.example.common.presentation.dialogs.DatePickerFragment.OnSelectDateListener
+import com.example.common.presentation.dialogs.PickerFragment.Companion.showPickerDialog
+import com.example.common.presentation.dialogs.PickerFragment.OnSelectListener
+import com.example.common.presentation.editTextFilters.DecimalDigitsInputFilter
 import com.example.common.presentation.extensions.*
+import com.example.common.presentation.floatingButtonInterfaces.FloatingButtonListenersManager
+import com.example.common.presentation.floatingButtonInterfaces.OnFloatingButtonClickListener
 import com.example.feature_statistics_impl.R
 import com.example.feature_statistics_impl.databinding.FragmentSingleTransactionBinding
 import com.example.feature_statistics_impl.di.StatisticsComponent
 import com.example.feature_statistics_impl.di.StatisticsFeatureApi
-import com.example.common.presentation.dialogs.PickerFragment.Companion.showPickerDialog
-import com.example.common.presentation.dialogs.PickerFragment.OnSelectListener
-import com.example.common.presentation.floatingButtonInterfaces.FloatingButtonListenersManager
-import com.example.common.presentation.floatingButtonInterfaces.OnFloatingButtonClickListener
 import com.example.feature_statistics_impl.presentation.screen.singleTransaction.tagsRecyclerView.TagsAdapter
 import com.google.android.flexbox.*
 import java.util.*
@@ -117,6 +118,7 @@ class SingleTransactionFragment : BaseFragment<SingleTransactionViewModel>(R.lay
         }
 
         with (binding) {
+            amountEditText.filters = arrayOf(DecimalDigitsInputFilter(9, 2))
             amountEditText.doAfterTextChanged {
                 viewModel.editAmount(it.toString())
             }

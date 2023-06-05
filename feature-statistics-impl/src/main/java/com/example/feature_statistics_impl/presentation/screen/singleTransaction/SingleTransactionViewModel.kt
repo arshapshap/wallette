@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.common.domain.models.*
 import com.example.common.domain.models.enums.TransactionType
 import com.example.common.presentation.base.BaseViewModel
+import com.example.common.presentation.extensions.round
 import com.example.common.presentation.liveEvent.LiveEvent
 import com.example.common.presentation.liveEvent.MutableLiveEvent
 import com.example.feature_statistics_impl.domain.StatisticsInteractor
@@ -76,7 +77,7 @@ class   SingleTransactionViewModel @AssistedInject constructor(
                 id = transaction.id,
                 type = transaction.type,
                 date = transaction.date,
-                amount = transaction.amount,
+                amount = transaction.amount.round(2),
                 description = transaction.description,
                 account = transaction.account,
                 accountDestination = transaction.accountDestination,
@@ -103,7 +104,7 @@ class   SingleTransactionViewModel @AssistedInject constructor(
                 id = transaction?.id ?: 0,
                 type = type,
                 date = date,
-                amount = amount,
+                amount = amount.round(2),
                 description = description,
                 account = account!!,
                 accountDestination = if (type == TransactionType.Transfer) accountDestination else null,
@@ -130,7 +131,7 @@ class   SingleTransactionViewModel @AssistedInject constructor(
     }
 
     fun editAmount(amountString: String) {
-        val amount = amountString.toDoubleOrNull()
+        val amount = amountString.toDoubleOrNull()?.round(2)
         val transaction = _editingTransactionLiveData.value?.copy(amount = amount) ?: return
         updateTransaction(transaction)
     }

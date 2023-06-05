@@ -32,7 +32,8 @@
         android:textSize="32sp"
         android:importantForAutofill="no"
         android:gravity="center"
-        android:inputType="textShortMessage"/>
+        android:inputType="textShortMessage"
+        android:imeOptions="actionDone"/>
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
@@ -52,7 +53,8 @@
             android:layout_height="wrap_content"
             android:importantForAutofill="no"
             android:gravity="center"
-            android:inputType="numberDecimal"/>
+            android:inputType="numberDecimal"
+            android:imeOptions="actionDone"/>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 

@@ -80,7 +80,8 @@
         android:inputType="numberDecimal"
         android:textFontWeight="600"
         android:textSize="32sp"
-        tools:text="890 ₽" />
+        tools:text="890 ₽"
+        android:imeOptions="actionDone"/>
 
     <include
         android:id="@+id/selectCategoryButton"
@@ -113,7 +114,8 @@
         android:layout_height="wrap_content"
         android:hint="@string/description"
         android:importantForAutofill="no"
-        android:inputType="textShortMessage" />
+        android:inputType="textShortMessage"
+        android:imeOptions="actionDone"/>
 
     <AutoCompleteTextView
         android:id="@+id/tagsAutoCompleteTextView"

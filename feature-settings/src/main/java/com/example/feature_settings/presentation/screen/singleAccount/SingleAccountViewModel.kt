@@ -7,6 +7,7 @@ import com.example.common.domain.models.Account
 import com.example.common.domain.models.enums.AccountIcon
 import com.example.common.domain.models.enums.Currency
 import com.example.common.presentation.base.BaseViewModel
+import com.example.common.presentation.extensions.round
 import com.example.feature_settings.domain.SettingsInteractor
 import com.example.feature_settings.presentation.SettingsRouter
 import dagger.assisted.Assisted
@@ -67,8 +68,8 @@ class SingleAccountViewModel @AssistedInject constructor(
             id = account?.id ?: 0,
             name = editingAccount.name,
             icon = editingAccount.icon,
-            currentBalance = editingAccount.currentBalance,
-            startBalance = editingAccount.startBalance,
+            currentBalance = editingAccount.currentBalance.round(2),
+            startBalance = editingAccount.startBalance.round(2),
             currency = editingAccount.currency
         )
         viewModelScope.launch {
@@ -104,8 +105,8 @@ class SingleAccountViewModel @AssistedInject constructor(
         val oldStartBalance = _editingAccountLiveData.value?.startBalance ?: return
         val currentBalance = _editingAccountLiveData.value?.currentBalance ?: return
         val account = _editingAccountLiveData.value?.copy(
-            startBalance = startBalance,
-            currentBalance = currentBalance - oldStartBalance + startBalance
+            startBalance = startBalance.round(2),
+            currentBalance = (currentBalance - oldStartBalance + startBalance).round(2)
         ) ?: return
         updateAccount(account)
     }

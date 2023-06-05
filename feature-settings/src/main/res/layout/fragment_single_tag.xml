@@ -32,7 +32,8 @@
         android:textSize="32sp"
         android:importantForAutofill="no"
         android:gravity="center"
-        android:inputType="textShortMessage"/>
+        android:inputType="textShortMessage"
+        android:imeOptions="actionDone"/>
 
     <include
         android:id="@+id/tag_color_layout"

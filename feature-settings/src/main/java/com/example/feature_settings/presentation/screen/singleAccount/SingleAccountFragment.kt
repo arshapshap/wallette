@@ -16,6 +16,7 @@ import com.example.feature_settings.di.SettingsFeatureApi
 import com.example.feature_settings.presentation.screen.common.IconsAdapter
 import com.example.common.presentation.dialogs.PickerFragment
 import com.example.common.presentation.dialogs.PickerFragment.Companion.showPickerDialog
+import com.example.common.presentation.editTextFilters.DecimalDigitsInputFilter
 import com.example.common.presentation.extensions.getColorPrimary
 import com.example.common.presentation.floatingButtonInterfaces.FloatingButtonListenersManager
 import com.example.common.presentation.floatingButtonInterfaces.OnFloatingButtonClickListener
@@ -74,6 +75,7 @@ class SingleAccountFragment :
             accountNameEditText.doAfterTextChanged {
                 viewModel.editName(it.toString())
             }
+            startBalanceEditText.filters = arrayOf(DecimalDigitsInputFilter(9, 2))
             startBalanceEditText.doAfterTextChanged {
                 viewModel.editStartBalance(it.toString())
             }
