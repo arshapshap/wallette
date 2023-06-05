@@ -13,6 +13,7 @@ import com.example.feature_statistics_impl.presentation.StatisticsRouter
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.*
 
@@ -110,7 +111,7 @@ class   SingleTransactionViewModel @AssistedInject constructor(
             )
         }
 
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             if (transaction == null)
                 interactor.createTransaction(newTransaction)
             else
@@ -123,8 +124,8 @@ class   SingleTransactionViewModel @AssistedInject constructor(
         if (transaction == null) return
         viewModelScope.launch {
             interactor.deleteTransaction(transaction)
-            router.close()
         }
+        router.close()
     }
 
     fun editAmount(amountString: String) {
