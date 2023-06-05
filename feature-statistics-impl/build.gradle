@@ -42,6 +42,7 @@ dependencies {
     implementation project(path: ':common')
     implementation project(path: ':data')
 
+    implementation swipeToRefreshDep
     implementation flexboxLayoutDep
     implementation coreKtxDep
     implementation androidDep

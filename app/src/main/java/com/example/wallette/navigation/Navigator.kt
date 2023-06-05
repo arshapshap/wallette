@@ -146,7 +146,7 @@ class Navigator : MainRouter, StatisticsRouter, AuthorizationRouter, SettingsRou
         )
     }
 
-    fun refresh(){
+    override fun refresh(){
         val id = navController?.currentDestination?.id ?: return
         navController?.popBackStack(id,true)
         navController?.navigate(id)

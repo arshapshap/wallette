@@ -41,6 +41,12 @@ class TransactionsFragment : BaseFragment<TransactionsViewModel>(R.layout.fragme
                 viewModel.changeSortingType()
                 listRecyclerView.adapter?.notifyDataSetChanged()
             }
+
+            refreshLayout.setOnRefreshListener {
+                viewModel.refresh()
+
+                refreshLayout.isRefreshing = false
+            }
         }
     }
 

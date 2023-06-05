@@ -38,6 +38,10 @@ class TransactionsViewModel @AssistedInject constructor(
         router.openSingleTransaction(transaction)
     }
 
+    fun refresh() {
+        router.refresh()
+    }
+
     private fun loadData(sortingType: SortingType) {
         viewModelScope.launch {
             val transactionGroups = interactor.getTransactionGroups(sortingType = sortingType)

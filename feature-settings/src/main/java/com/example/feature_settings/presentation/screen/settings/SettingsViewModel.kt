@@ -34,7 +34,7 @@ class SettingsViewModel @AssistedInject constructor(
             language = Language.RU,
             firstDayOfWeek = DayOfWeek.Monday,
             firstDayOfMonth = 1,
-            timePeriod = TimePeriod.Day,
+            timePeriod = TimePeriod.All,
             availableCurrencies = Currency.values().toList(),
             availableLanguages = Language.values().toList(),
             daysOfWeek = DayOfWeek.values().toList(),
