@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.common.di.FeatureUtils
@@ -140,6 +141,11 @@ class SingleTransactionFragment : BaseFragment<SingleTransactionViewModel>(R.lay
                     getTagsAdapter()?.setList(it.tags)
                     amountEditText.setText(it.amount.absoluteValue.toString())
                     descriptionEditText.setText(it.description)
+
+                    deleteImageButton.isVisible = true
+                    deleteImageButton.setOnClickListener {
+                        viewModel.delete()
+                    }
                 } ?: run {
                     expenseTextView.alpha = 1f
                     incomeTextView.setOnClickListener {

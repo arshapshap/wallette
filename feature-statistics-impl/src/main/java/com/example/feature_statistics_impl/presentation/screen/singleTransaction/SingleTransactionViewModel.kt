@@ -119,6 +119,14 @@ class   SingleTransactionViewModel @AssistedInject constructor(
         router.close()
     }
 
+    fun delete() {
+        if (transaction == null) return
+        viewModelScope.launch {
+            interactor.deleteTransaction(transaction)
+            router.close()
+        }
+    }
+
     fun editAmount(amountString: String) {
         val amount = amountString.toDoubleOrNull()
         val transaction = _editingTransactionLiveData.value?.copy(amount = amount) ?: return
