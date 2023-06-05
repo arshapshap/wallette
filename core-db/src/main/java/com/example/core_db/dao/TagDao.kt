@@ -17,4 +17,7 @@ abstract class TagDao {
 
     @Query("SELECT * FROM Tags")
     abstract suspend fun getTags(): List<TagLocal>
+
+    @Query("SELECT * FROM Tags WHERE tag_id=:id")
+    abstract suspend fun getTagById(id: Long): TagLocal
 }

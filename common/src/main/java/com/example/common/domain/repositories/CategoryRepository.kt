@@ -11,4 +11,6 @@ interface CategoryRepository {
     suspend fun deleteCategory(category: Category)
 
     suspend fun getCategories(): List<Category>
+
+    suspend fun checkIsSynchronized(category: Category): Boolean
 }

@@ -47,7 +47,12 @@ class CategoryRepositoryImpl @Inject constructor(
 
     override suspend fun getCategories(): List<Category> {
         val list = localSource.getCategories()
-        return list.map { mapper.map(it) }
+        return list.filter { !it.mustBeDeleted }.map { mapper.map(it) }
+    }
+
+    override suspend fun checkIsSynchronized(category: Category): Boolean {
+        val local = localSource.getCategoryById(category.id)
+        return local.isSynchronized
     }
 
     private suspend fun createCategoryRemote(category: Category): BasicResult {

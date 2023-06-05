@@ -46,6 +46,8 @@ dependencies {
     implementation coreKtxDep
     implementation androidDep
 
+    implementation retrofitDep
+
     implementation roomDep
     implementation roomKtxDep
     kapt roomKaptDep
