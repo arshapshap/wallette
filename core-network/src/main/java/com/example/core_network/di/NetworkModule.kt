@@ -5,8 +5,7 @@ import android.content.SharedPreferences
 import com.example.common.di.scopes.ApplicationScope
 import com.example.core_network.BuildConfig
 import com.example.core_network.data.TokenInterceptor
-import com.example.core_network.data.services.AuthorizationApiService
-import com.example.core_network.data.services.TransactionsApiService
+import com.example.core_network.data.services.*
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -17,9 +16,30 @@ import retrofit2.converter.gson.GsonConverterFactory
 class NetworkModule {
 
     @Provides
+    fun provideAccountsApiService(retrofit: Retrofit): AccountsApiService {
+        return retrofit.create(
+            AccountsApiService::class.java
+        )
+    }
+
+    @Provides
     fun provideAuthorizationApiService(retrofit: Retrofit): AuthorizationApiService {
         return retrofit.create(
             AuthorizationApiService::class.java
+        )
+    }
+
+    @Provides
+    fun provideCategoriesApiService(retrofit: Retrofit): CategoriesApiService {
+        return retrofit.create(
+            CategoriesApiService::class.java
+        )
+    }
+
+    @Provides
+    fun provideTagsApiService(retrofit: Retrofit): TagsApiService {
+        return retrofit.create(
+            TagsApiService::class.java
         )
     }
 
