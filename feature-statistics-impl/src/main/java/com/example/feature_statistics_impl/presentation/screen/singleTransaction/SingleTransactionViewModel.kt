@@ -16,7 +16,7 @@ import dagger.assisted.AssistedInject
 import kotlinx.coroutines.launch
 import java.util.*
 
-class SingleTransactionViewModel @AssistedInject constructor(
+class   SingleTransactionViewModel @AssistedInject constructor(
     @Assisted private val transaction: Transaction?,
     @Assisted private val transactionType: TransactionType?,
     private val interactor: StatisticsInteractor,
@@ -92,13 +92,16 @@ class SingleTransactionViewModel @AssistedInject constructor(
             return
 
         val editingTransaction = _editingTransactionLiveData.value!!
+        var amount = editingTransaction.amount!!
+        if (editingTransaction.type == TransactionType.Expense)
+            amount *= -1
 
         val newTransaction = with (editingTransaction) {
             Transaction(
                 id = transaction?.id ?: 0,
                 type = type,
                 date = date,
-                amount = amount!!,
+                amount = amount,
                 description = description,
                 account = account!!,
                 accountDestination = if (type == TransactionType.Transfer) accountDestination else null,
@@ -117,9 +120,7 @@ class SingleTransactionViewModel @AssistedInject constructor(
     }
 
     fun editAmount(amountString: String) {
-        var amount = amountString.toDoubleOrNull()
-        if (amount != null && _editingTransactionLiveData.value?.type == TransactionType.Expense)
-            amount *= -1
+        val amount = amountString.toDoubleOrNull()
         val transaction = _editingTransactionLiveData.value?.copy(amount = amount) ?: return
         updateTransaction(transaction)
     }
