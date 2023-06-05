@@ -59,11 +59,13 @@ class MainActivity : AppCompatActivity(), OnFloatingButtonClickListener, Floatin
     override fun subscribeOnFloatingButtonClick(listener: OnFloatingButtonClickListener) {
         onFloatingButtonClickListener = listener
         binding.addFloatingButton.applyStyle(R.style.App_Custom_FloatingActionButton_Outlined)
+        binding.addFloatingButton.setImageResource(com.example.common.R.drawable.ic_done)
     }
 
     override fun setDefaultOnFloatingButtonClickListener() {
         onFloatingButtonClickListener = this
         binding.addFloatingButton.applyStyle(R.style.App_Custom_FloatingActionButton)
+        binding.addFloatingButton.setImageResource(com.example.feature_settings.R.drawable.ic_plus)
     }
 
     override fun onFloatingButtonClick() {
