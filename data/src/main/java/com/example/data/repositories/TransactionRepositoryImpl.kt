@@ -22,18 +22,30 @@ class TransactionRepositoryImpl @Inject constructor(
 
     override suspend fun createTransaction(transaction: Transaction) {
         val local = mapper.map(transaction)
-        localSource.addTransaction(local)
+        val id = localSource.addTransaction(local)
+
+        if (!tokenManager.isAuthorized()) return
+
+        createTransactionRemote(transaction.copy(id = id))
     }
 
     override suspend fun updateTransaction(transaction: Transaction) {
         val local = mapper.map(transaction)
         editTags(local.transactionId, transaction.tags)
         localSource.updateTransaction(local)
+
+        if (!tokenManager.isAuthorized()) return
+
+        updateTransactionRemote(transaction)
     }
 
     override suspend fun deleteTransaction(transaction: Transaction) {
         val local = mapper.map(transaction)
         localSource.deleteTransaction(local)
+
+        if (!tokenManager.isAuthorized()) return
+
+        deleteTransactionRemote(transaction.id)
     }
 
     override suspend fun getTransactions(): List<Transaction> {
@@ -41,19 +53,19 @@ class TransactionRepositoryImpl @Inject constructor(
         return list.map { mapper.map(it) }
     }
 
-    suspend fun createTransactionRemote(transaction: Transaction): BasicResult {
+    private suspend fun createTransactionRemote(transaction: Transaction): BasicResult {
         val model = mapper.mapToCreatingModel(transaction)
         val response = remoteSource.createTransaction(model)
         return resultMapper.map(response)
     }
 
-    suspend fun updateTransactionRemote(transaction: Transaction): BasicResult {
+    private suspend fun updateTransactionRemote(transaction: Transaction): BasicResult {
         val model = mapper.mapToEditingModel(transaction)
         val response = remoteSource.updateTransaction(model)
         return resultMapper.map(response)
     }
 
-    suspend fun deleteTransactionRemote(id: Long): BasicResult {
+    private suspend fun deleteTransactionRemote(id: Long): BasicResult {
         val response = remoteSource.deleteTransactionById(id)
         return resultMapper.map(response)
     }
@@ -68,8 +80,7 @@ class TransactionRepositoryImpl @Inject constructor(
                 localSource.addTransactionTag(
                     TransactionTagCrossRef(
                         transactionId = transactionId,
-                        tagId = it.id,
-                        isSynchronized = false
+                        tagId = it.id
                     )
                 )
             }
@@ -79,8 +90,7 @@ class TransactionRepositoryImpl @Inject constructor(
                 localSource.deleteTransactionTag(
                     TransactionTagCrossRef(
                         transactionId = transactionId,
-                        tagId = it,
-                        isSynchronized = false
+                        tagId = it
                     )
                 )
             }

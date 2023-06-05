@@ -14,9 +14,5 @@ data class CategoryLocal(
     @ColumnInfo(name = "icon")
     val icon: String,
     @ColumnInfo(name = "type")
-    val type: String,
-    @ColumnInfo(name = "is_synchronized")
-    val isSynchronized: Boolean,
-    @ColumnInfo(name = "must_be_deleted")
-    val mustBeDeleted: Boolean
+    val type: String
 )

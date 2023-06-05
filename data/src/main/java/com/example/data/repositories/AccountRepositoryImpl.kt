@@ -24,9 +24,7 @@ class AccountRepositoryImpl @Inject constructor(
 
         if (!tokenManager.isAuthorized()) return
 
-        val result = createAccountRemote(account.copy(id = id))
-        if (result.isSuccessful)
-            setSynchronized(account)
+        createAccountRemote(account.copy(id = id))
     }
 
     override suspend fun updateAccount(account: Account) {
@@ -35,23 +33,16 @@ class AccountRepositoryImpl @Inject constructor(
 
         if (!tokenManager.isAuthorized()) return
 
-        val result = updateAccountRemote(account)
-        if (result.isSuccessful)
-            setSynchronized(account)
+        updateAccountRemote(account)
     }
 
     override suspend fun deleteAccount(account: Account) {
         val local = mapper.map(account)
-        setMustBeDeleted(account)
+        localSource.deleteAccount(local)
 
-        if (!tokenManager.isAuthorized()) {
-            localSource.deleteAccount(local)
-            return
-        }
+        if (!tokenManager.isAuthorized()) return
 
-        val result = deleteAccountRemote(account.id)
-        if (result.isSuccessful)
-            localSource.deleteAccount(local)
+        deleteAccountRemote(account.id)
     }
 
     override suspend fun getAccounts(): List<Account> {
@@ -74,19 +65,5 @@ class AccountRepositoryImpl @Inject constructor(
     private suspend fun deleteAccountRemote(id: Long): BasicResult {
         val response = remoteSource.deleteAccountById(id)
         return resultMapper.map(response)
-    }
-
-    private suspend fun setSynchronized(account: Account) {
-        val local = mapper.map(account)
-        localSource.updateAccount(
-            local.copy(isSynchronized = true)
-        )
-    }
-
-    private suspend fun setMustBeDeleted(account: Account) {
-        val local = mapper.map(account)
-        localSource.updateAccount(
-            local.copy(mustBeDeleted = true)
-        )
     }
 }

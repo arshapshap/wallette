@@ -44,9 +44,7 @@ class CategoryMapper @Inject constructor() {
                 categoryId = id,
                 name = name,
                 icon = icon.name,
-                type = type.name,
-                isSynchronized = false,
-                mustBeDeleted = false,
+                type = type.name
             )
         }
     }

@@ -12,9 +12,5 @@ data class TagLocal(
     @ColumnInfo(name = "name")
     val name: String,
     @ColumnInfo(name = "color")
-    val color: String,
-    @ColumnInfo(name = "is_synchronized")
-    val isSynchronized: Boolean,
-    @ColumnInfo(name = "must_be_deleted")
-    val mustBeDeleted: Boolean
+    val color: String
 )

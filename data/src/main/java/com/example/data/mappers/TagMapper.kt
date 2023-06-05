@@ -38,9 +38,7 @@ class TagMapper @Inject constructor() {
             TagLocal(
                 tagId = id,
                 name = name,
-                color = color,
-                isSynchronized = false,
-                mustBeDeleted = false,
+                color = color
             )
         }
     }

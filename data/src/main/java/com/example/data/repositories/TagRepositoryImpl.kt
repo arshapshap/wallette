@@ -24,9 +24,7 @@ class TagRepositoryImpl @Inject constructor(
 
         if (!tokenManager.isAuthorized()) return
 
-        val result = createTagRemote(tag.copy(id = id))
-        if (result.isSuccessful)
-            setSynchronized(tag)
+        createTagRemote(tag.copy(id = id))
     }
 
     override suspend fun updateTag(tag: Tag) {
@@ -35,23 +33,16 @@ class TagRepositoryImpl @Inject constructor(
 
         if (!tokenManager.isAuthorized()) return
 
-        val result = updateTagRemote(tag)
-        if (result.isSuccessful)
-            setSynchronized(tag)
+        updateTagRemote(tag)
     }
 
     override suspend fun deleteTag(tag: Tag) {
         val local = mapper.map(tag)
-        setMustBeDeleted(tag)
+        localSource.deleteTag(local)
 
-        if (!tokenManager.isAuthorized()) {
-            localSource.deleteTag(local)
-            return
-        }
+        if (!tokenManager.isAuthorized()) return
 
-        val result = deleteTagRemote(tag.id)
-        if (result.isSuccessful)
-            localSource.deleteTag(local)
+        deleteTagRemote(tag.id)
     }
 
     override suspend fun getTags(): List<Tag> {
@@ -74,19 +65,5 @@ class TagRepositoryImpl @Inject constructor(
     private suspend fun deleteTagRemote(id: Long): BasicResult {
         val response = remoteSource.deleteTagById(id)
         return resultMapper.map(response)
-    }
-
-    private suspend fun setSynchronized(tag: Tag) {
-        val local = mapper.map(tag)
-        localSource.updateTag(
-            local.copy(isSynchronized = true)
-        )
-    }
-
-    private suspend fun setMustBeDeleted(tag: Tag) {
-        val local = mapper.map(tag)
-        localSource.updateTag(
-            local.copy(mustBeDeleted = true)
-        )
     }
 }

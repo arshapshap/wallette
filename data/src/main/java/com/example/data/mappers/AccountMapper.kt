@@ -52,9 +52,7 @@ class AccountMapper @Inject constructor() {
                 icon = icon.name,
                 currentBalance = currentBalance,
                 startBalance = startBalance,
-                currency = currency.name,
-                isSynchronized = false,
-                mustBeDeleted = false,
+                currency = currency.name
             )
         }
     }

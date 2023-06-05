@@ -61,9 +61,7 @@ class TransactionMapper @Inject constructor(
                 description = description,
                 accountId = account.id,
                 accountDestinationId = accountDestination?.id,
-                categoryId = category?.id,
-                isSynchronized = false,
-                mustBeDeleted = false,
+                categoryId = category?.id
             )
         }
     }

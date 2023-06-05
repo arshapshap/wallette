@@ -24,9 +24,7 @@ class CategoryRepositoryImpl @Inject constructor(
 
         if (!tokenManager.isAuthorized()) return
 
-        val result = createCategoryRemote(category.copy(id = id))
-        if (result.isSuccessful)
-            setSynchronized(category)
+        createCategoryRemote(category.copy(id = id))
     }
 
     override suspend fun updateCategory(category: Category) {
@@ -35,23 +33,16 @@ class CategoryRepositoryImpl @Inject constructor(
 
         if (!tokenManager.isAuthorized()) return
 
-        val result = updateCategoryRemote(category)
-        if (result.isSuccessful)
-            setSynchronized(category)
+        updateCategoryRemote(category)
     }
 
     override suspend fun deleteCategory(category: Category) {
         val local = mapper.map(category)
-        setMustBeDeleted(category)
+        localSource.deleteCategory(local)
 
-        if (!tokenManager.isAuthorized()) {
-            localSource.deleteCategory(local)
-            return
-        }
+        if (!tokenManager.isAuthorized()) return
 
-        val result = deleteCategoryRemote(category.id)
-        if (result.isSuccessful)
-            localSource.deleteCategory(local)
+        deleteCategoryRemote(category.id)
     }
 
     override suspend fun getCategories(): List<Category> {
@@ -74,19 +65,5 @@ class CategoryRepositoryImpl @Inject constructor(
     private suspend fun deleteCategoryRemote(id: Long): BasicResult {
         val response = remoteSource.deleteCategoryById(id)
         return resultMapper.map(response)
-    }
-
-    private suspend fun setSynchronized(category: Category) {
-        val local = mapper.map(category)
-        localSource.updateCategory(
-            local.copy(isSynchronized = true)
-        )
-    }
-
-    private suspend fun setMustBeDeleted(category: Category) {
-        val local = mapper.map(category)
-        localSource.updateCategory(
-            local.copy(mustBeDeleted = true)
-        )
     }
 }

@@ -48,9 +48,5 @@ data class TransactionLocal (
     @ColumnInfo(name = "account_destination_id", index = true)
     val accountDestinationId: Long?,
     @ColumnInfo(name = "category_id", index = true)
-    val categoryId: Long?,
-    @ColumnInfo(name = "is_synchronized")
-    val isSynchronized: Boolean,
-    @ColumnInfo(name = "must_be_deleted")
-    val mustBeDeleted: Boolean
+    val categoryId: Long?
 )
