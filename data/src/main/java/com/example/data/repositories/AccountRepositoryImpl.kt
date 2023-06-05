@@ -42,7 +42,7 @@ class AccountRepositoryImpl @Inject constructor(
 
     override suspend fun deleteAccount(account: Account) {
         val local = mapper.map(account)
-        localSource.updateAccount(local.copy(mustBeDeleted = true))
+        setMustBeDeleted(account)
 
         if (!tokenManager.isAuthorized()) {
             localSource.deleteAccount(local)
@@ -80,6 +80,13 @@ class AccountRepositoryImpl @Inject constructor(
         val local = mapper.map(account)
         localSource.updateAccount(
             local.copy(isSynchronized = true)
+        )
+    }
+
+    private suspend fun setMustBeDeleted(account: Account) {
+        val local = mapper.map(account)
+        localSource.updateAccount(
+            local.copy(mustBeDeleted = true)
         )
     }
 }
