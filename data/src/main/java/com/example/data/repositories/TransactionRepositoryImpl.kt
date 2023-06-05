@@ -23,6 +23,7 @@ class TransactionRepositoryImpl @Inject constructor(
     override suspend fun createTransaction(transaction: Transaction) {
         val local = mapper.map(transaction)
         val id = localSource.addTransaction(local)
+        editTags(id, transaction.tags)
 
         if (!tokenManager.isAuthorized()) return
 
