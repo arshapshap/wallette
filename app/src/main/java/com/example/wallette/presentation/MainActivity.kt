@@ -49,8 +49,6 @@ class MainActivity : AppCompatActivity(), OnFloatingButtonClickListener, Floatin
         binding.bottomNavigationView.setupWithNavController(controller)
         navigator.attachNavController(controller, this)
 
-        navigator.openStatistics()
-
         setDefaultOnFloatingButtonClickListener()
 
         binding.addFloatingButton.setOnClickListener {

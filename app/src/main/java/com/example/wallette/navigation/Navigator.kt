@@ -39,7 +39,7 @@ class Navigator : MainRouter, StatisticsRouter, AuthorizationRouter, SettingsRou
     }
 
     override fun openStatistics() {
-        navController?.navigate(R.id.statisticsFragment)
+        navController?.navigate(R.id.transactionsFragment)
     }
 
     override fun close() {
