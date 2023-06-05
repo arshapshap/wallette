@@ -11,5 +11,5 @@ fun Double.formatAsBalance(currency: Currency, withPlus: Boolean = true): String
 }
 
 fun Double.getColorBySign()
-    = if (this > 0) com.example.common.R.color.green
+    = if (this >= 0) com.example.common.R.color.green
     else com.example.common.R.color.red

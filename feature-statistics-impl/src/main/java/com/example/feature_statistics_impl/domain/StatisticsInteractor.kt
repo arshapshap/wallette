@@ -38,14 +38,30 @@ class StatisticsInteractor @Inject constructor(
 
     suspend fun createTransaction(transaction: Transaction) {
         transactionRepository.createTransaction(transaction)
+
+        val account = transaction.account
+        accountRepository.updateAccount(account.copy(
+            currentBalance = account.currentBalance + transaction.amount
+        ))
     }
 
     suspend fun editTransaction(transaction: Transaction) {
+        val oldAmount = transactionRepository.getTransactionById(transaction.id).amount
         transactionRepository.updateTransaction(transaction)
+
+        val account = transaction.account
+        accountRepository.updateAccount(account.copy(
+            currentBalance = account.currentBalance + transaction.amount - oldAmount
+        ))
     }
 
     suspend fun deleteTransaction(transaction: Transaction) {
         transactionRepository.deleteTransaction(transaction)
+
+        val account = transaction.account
+        accountRepository.updateAccount(account.copy(
+            currentBalance = account.currentBalance - transaction.amount
+        ))
     }
 
     suspend fun getCategories(): List<Category> {

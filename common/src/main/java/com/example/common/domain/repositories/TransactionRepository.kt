@@ -11,4 +11,6 @@ interface TransactionRepository {
     suspend fun deleteTransaction(transaction: Transaction)
 
     suspend fun getTransactions(): List<Transaction>
+
+    suspend fun getTransactionById(id: Long): Transaction
 }

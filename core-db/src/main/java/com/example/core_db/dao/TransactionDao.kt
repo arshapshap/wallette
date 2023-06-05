@@ -28,6 +28,10 @@ abstract class TransactionDao {
     abstract suspend fun getTransactions(): List<FullTransactionLocal>
 
     @Transaction
+    @Query("SELECT * FROM Transactions WHERE transaction_id=:id")
+    abstract fun getTransactionById(id: Long): FullTransactionLocal
+
+    @Transaction
     @Query("SELECT tag_id FROM TransactionTag WHERE transaction_id=:transactionId")
     abstract suspend fun getTags(transactionId: Long): List<Long>
 }

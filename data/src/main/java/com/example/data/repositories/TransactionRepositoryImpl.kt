@@ -54,6 +54,11 @@ class TransactionRepositoryImpl @Inject constructor(
         return list.map { mapper.map(it) }
     }
 
+    override suspend fun getTransactionById(id: Long): Transaction {
+        val local = localSource.getTransactionById(id)
+        return mapper.map(local)
+    }
+
     private suspend fun createTransactionRemote(transaction: Transaction): BasicResult {
         val model = mapper.mapToCreatingModel(transaction)
         val response = remoteSource.createTransaction(model)
