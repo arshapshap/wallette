@@ -12,5 +12,5 @@ data class TagLocal(
     @ColumnInfo(name = "name")
     val name: String,
     @ColumnInfo(name = "color")
-    val color: String,
+    val color: String
 )

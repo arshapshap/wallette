@@ -1,5 +1,7 @@
 package com.example.common.domain.models
 
+import com.example.common.domain.models.enums.CategoryIcon
+import com.example.common.domain.models.enums.TransactionType
 import java.io.Serializable
 
 data class Category(

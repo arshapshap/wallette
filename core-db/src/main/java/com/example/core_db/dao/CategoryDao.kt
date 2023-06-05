@@ -7,7 +7,7 @@ import com.example.core_db.models.entities.CategoryLocal
 abstract class CategoryDao {
 
     @Insert
-    abstract suspend fun addCategory(categoryLocal: CategoryLocal)
+    abstract suspend fun addCategory(categoryLocal: CategoryLocal): Long
 
     @Update
     abstract suspend fun updateCategory(categoryLocal: CategoryLocal)

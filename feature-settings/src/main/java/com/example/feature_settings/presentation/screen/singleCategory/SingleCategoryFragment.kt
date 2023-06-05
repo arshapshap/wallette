@@ -4,8 +4,8 @@ import androidx.core.widget.doAfterTextChanged
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.common.di.FeatureUtils
 import com.example.common.domain.models.Category
-import com.example.common.domain.models.CategoryIcon
-import com.example.common.domain.models.TransactionType
+import com.example.common.domain.models.enums.CategoryIcon
+import com.example.common.domain.models.enums.TransactionType
 import com.example.common.presentation.base.BaseFragment
 import com.example.common.presentation.base.BaseViewModel
 import com.example.common.presentation.extensions.*

@@ -4,6 +4,7 @@ import com.example.common.domain.models.Account
 import com.example.common.domain.models.Category
 import com.example.common.domain.models.Tag
 import com.example.common.domain.repositories.AccountRepository
+import com.example.common.domain.repositories.AuthorizationRepository
 import com.example.common.domain.repositories.CategoryRepository
 import com.example.common.domain.repositories.TagRepository
 import javax.inject.Inject
@@ -11,14 +12,23 @@ import javax.inject.Inject
 class SettingsInteractor @Inject constructor(
     private val accountRepository: AccountRepository,
     private val categoryRepository: CategoryRepository,
-    private val tagRepository: TagRepository
+    private val tagRepository: TagRepository,
+    private val authorizationRepository: AuthorizationRepository
 ) {
+    suspend fun checkIsAuthorized(): Boolean {
+        return authorizationRepository.checkIsAuthorized()
+    }
+
+    suspend fun logout() {
+        return authorizationRepository.logout()
+    }
+
     suspend fun createAccount(account: Account) {
         accountRepository.createAccount(account)
     }
 
     suspend fun editAccount(account: Account) {
-        accountRepository.editAccount(account)
+        accountRepository.updateAccount(account)
     }
 
     suspend fun deleteAccount(account: Account) {
@@ -38,7 +48,7 @@ class SettingsInteractor @Inject constructor(
     }
 
     suspend fun editCategory(category: Category) {
-        categoryRepository.editCategory(category)
+        categoryRepository.updateCategory(category)
     }
 
     suspend fun getCategories(): List<Category> {
@@ -50,7 +60,7 @@ class SettingsInteractor @Inject constructor(
     }
 
     suspend fun editTag(tag: Tag) {
-        tagRepository.editTag(tag)
+        tagRepository.updateTag(tag)
     }
 
     suspend fun deleteTag(tag: Tag) {

@@ -1,5 +1,6 @@
 package com.example.common.domain.models
 
+import com.example.common.domain.models.enums.TransactionType
 import java.io.Serializable
 import java.util.*
 

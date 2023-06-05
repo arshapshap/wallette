@@ -9,7 +9,7 @@ import com.example.core_db.models.entities.TransactionLocal
 abstract class TransactionDao {
 
     @Insert
-    abstract suspend fun addTransaction(transactionLocal: TransactionLocal)
+    abstract suspend fun addTransaction(transactionLocal: TransactionLocal): Long
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     abstract suspend fun addTransactionTag(transactionTagCrossRef: TransactionTagCrossRef)

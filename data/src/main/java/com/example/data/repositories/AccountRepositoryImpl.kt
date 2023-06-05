@@ -1,32 +1,48 @@
 package com.example.data.repositories
 
+import com.example.common.data.TokenManager
 import com.example.common.domain.models.Account
-import com.example.common.domain.models.AccountIcon
-import com.example.common.domain.models.Currency
+import com.example.common.domain.models.network.BasicResult
 import com.example.common.domain.repositories.AccountRepository
 import com.example.core_db.dao.AccountDao
+import com.example.core_network.data.services.AccountsApiService
 import com.example.data.mappers.AccountMapper
+import com.example.data.mappers.BasicResultMapper
 import javax.inject.Inject
-import kotlin.random.Random
 
 class AccountRepositoryImpl @Inject constructor(
     private val localSource: AccountDao,
-    private val mapper: AccountMapper
+    private val remoteSource: AccountsApiService,
+    private val tokenManager: TokenManager,
+    private val mapper: AccountMapper,
+    private val resultMapper: BasicResultMapper
 ): AccountRepository {
 
     override suspend fun createAccount(account: Account) {
         val local = mapper.map(account)
-        localSource.addAccount(local)
+        val id = localSource.addAccount(local)
+
+        if (!tokenManager.isAuthorized()) return
+
+        createAccountRemote(account.copy(id = id))
     }
 
-    override suspend fun editAccount(account: Account) {
+    override suspend fun updateAccount(account: Account) {
         val local = mapper.map(account)
         localSource.updateAccount(local)
+
+        if (!tokenManager.isAuthorized()) return
+
+        updateAccountRemote(account)
     }
 
     override suspend fun deleteAccount(account: Account) {
         val local = mapper.map(account)
         localSource.deleteAccount(local)
+
+        if (!tokenManager.isAuthorized()) return
+
+        deleteAccountRemote(account.id)
     }
 
     override suspend fun getAccounts(): List<Account> {
@@ -34,21 +50,20 @@ class AccountRepositoryImpl @Inject constructor(
         return list.map { mapper.map(it) }
     }
 
-    private fun getRandomAccounts(): List<Account> {
-        val list = arrayListOf<Account>()
-        val rand = Random(1234)
-        for (i in 0..10) {
-            list.add(
-                Account(
-                    id = i.toLong(),
-                    name = "Счёт $i",
-                    icon = AccountIcon.values().filter { it.name != "Empty" }.random(rand),
-                    currentBalance = rand.nextDouble(5000.0),
-                    startBalance = 0.0,
-                    currency = Currency.RUB
-                )
-            )
-        }
-        return list
+    private suspend fun createAccountRemote(account: Account): BasicResult {
+        val model = mapper.mapToCreatingModel(account)
+        val response = remoteSource.createAccount(model)
+        return resultMapper.map(response)
+    }
+
+    private suspend fun updateAccountRemote(account: Account): BasicResult {
+        val model = mapper.mapToEditingModel(account)
+        val response = remoteSource.updateAccount(model)
+        return resultMapper.map(response)
+    }
+
+    private suspend fun deleteAccountRemote(id: Long): BasicResult {
+        val response = remoteSource.deleteAccountById(id)
+        return resultMapper.map(response)
     }
 }

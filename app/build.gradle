@@ -15,8 +15,6 @@ android {
         versionCode rootProject.versionCode
         versionName rootProject.versionName
 
-        buildConfigField("String", "WALLETTE_BASE_URL", WALLETTE_BASE_URL)
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -41,9 +39,9 @@ dependencies {
     implementation project(path: ':feature-settings')
     implementation project(path: ':data')
     implementation project(path: ':core-db')
+    implementation project(path: ':core-network')
     implementation project(path: ':common')
 
-    implementation preferenceDep
     implementation coreKtxDep
     implementation androidDep
     implementation materialDep

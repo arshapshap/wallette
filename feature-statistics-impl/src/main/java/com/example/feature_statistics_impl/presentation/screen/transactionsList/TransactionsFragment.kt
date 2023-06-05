@@ -5,7 +5,7 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.common.di.FeatureUtils
-import com.example.common.domain.models.Currency
+import com.example.common.domain.models.enums.Currency
 import com.example.common.presentation.base.BaseFragment
 import com.example.common.presentation.base.BaseViewModel
 import com.example.feature_statistics_impl.R

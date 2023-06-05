@@ -7,7 +7,7 @@ import com.example.core_db.models.entities.AccountLocal
 abstract class AccountDao {
 
     @Insert
-    abstract suspend fun addAccount(accountLocal: AccountLocal)
+    abstract suspend fun addAccount(accountLocal: AccountLocal): Long
 
     @Update
     abstract suspend fun updateAccount(accountLocal: AccountLocal)

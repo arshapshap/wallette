@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.ColorInt
 import androidx.recyclerview.widget.RecyclerView
-import com.example.common.domain.models.Icon
+import com.example.common.domain.models.enums.Icon
 import com.example.feature_settings.databinding.ItemIconBinding
 
 class IconsAdapter(

@@ -41,7 +41,7 @@ class StatisticsInteractor @Inject constructor(
     }
 
     suspend fun editTransaction(transaction: Transaction) {
-        transactionRepository.editTransaction(transaction)
+        transactionRepository.updateTransaction(transaction)
     }
 
     suspend fun getCategories(): List<Category> {

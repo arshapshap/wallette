@@ -6,7 +6,7 @@ interface TransactionRepository {
 
     suspend fun createTransaction(transaction: Transaction)
 
-    suspend fun editTransaction(transaction: Transaction)
+    suspend fun updateTransaction(transaction: Transaction)
 
     suspend fun deleteTransaction(transaction: Transaction)
 

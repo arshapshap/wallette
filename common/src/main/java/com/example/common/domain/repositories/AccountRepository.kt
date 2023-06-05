@@ -6,7 +6,7 @@ interface AccountRepository {
 
     suspend fun createAccount(account: Account)
 
-    suspend fun editAccount(account: Account)
+    suspend fun updateAccount(account: Account)
 
     suspend fun deleteAccount(account: Account)
 

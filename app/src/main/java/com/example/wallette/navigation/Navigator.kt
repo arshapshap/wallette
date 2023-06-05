@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.NavOptions
 import com.example.common.domain.models.*
+import com.example.common.domain.models.enums.TransactionType
 import com.example.feature_auth.presentation.screen.AuthorizationRouter
 import com.example.feature_settings.presentation.SettingsRouter
 import com.example.feature_settings.presentation.screen.singleAccount.SingleAccountFragment

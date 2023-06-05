@@ -9,7 +9,7 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.common.di.FeatureUtils
 import com.example.common.domain.models.Tag
 import com.example.common.domain.models.Transaction
-import com.example.common.domain.models.TransactionType
+import com.example.common.domain.models.enums.TransactionType
 import com.example.common.presentation.base.BaseFragment
 import com.example.common.presentation.base.BaseViewModel
 import com.example.common.presentation.dialogs.DatePickerFragment.Companion.showDatePickerDialog

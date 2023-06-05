@@ -3,6 +3,7 @@ package com.example.di
 import com.example.common.di.CommonApi
 import com.example.common.di.scopes.ApplicationScope
 import com.example.core_db.di.DbApi
+import com.example.core_network.di.NetworkApi
 import dagger.Component
 
 @Component(
@@ -28,7 +29,8 @@ abstract class DataComponent : DataApi {
     @Component(
         dependencies = [
             CommonApi::class,
-            DbApi::class
+            DbApi::class,
+            NetworkApi::class
         ]
     )
     interface DataDependenciesComponent : DataDependencies
