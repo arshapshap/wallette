@@ -44,6 +44,7 @@ class Navigator : MainRouter, StatisticsRouter, AuthorizationRouter, SettingsRou
 
     override fun close() {
         navController?.popBackStack()
+        refreshCurrentFragment()
     }
 
     override fun openAccounts() {
@@ -143,5 +144,11 @@ class Navigator : MainRouter, StatisticsRouter, AuthorizationRouter, SettingsRou
                 .setLaunchSingleTop(true)
                 .build()
         )
+    }
+
+    private fun refreshCurrentFragment(){
+        val id = navController?.currentDestination?.id ?: return
+        navController?.popBackStack(id,true)
+        navController?.navigate(id)
     }
 }
