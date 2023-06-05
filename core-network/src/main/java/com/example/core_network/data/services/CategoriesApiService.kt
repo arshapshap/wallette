@@ -3,10 +3,7 @@ package com.example.core_network.data.services
 import com.example.core_network.data.models.request.category.CategoryCreatingModel
 import com.example.core_network.data.models.request.category.CategoryEditingModel
 import com.example.core_network.data.models.response.*
-import retrofit2.http.DELETE
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.PUT
+import retrofit2.http.*
 
 interface CategoriesApiService {
 
@@ -14,14 +11,14 @@ interface CategoriesApiService {
     suspend fun getCategories(): ArrayList<CategoryResponse>
 
     @GET("tags/get/:id")
-    suspend fun getCategoryById(id: Long): CategoryResponse
+    suspend fun getCategoryById(@Query("id")  id: Long): CategoryResponse
 
     @POST("tags/create")
-    suspend fun createCategory(model: CategoryCreatingModel): BasicResponse
+    suspend fun createCategory(@Body model: CategoryCreatingModel): BasicResponse
 
     @PUT("tags/update")
-    suspend fun updateCategory(model: CategoryEditingModel): BasicResponse
+    suspend fun updateCategory(@Body model: CategoryEditingModel): BasicResponse
 
     @DELETE("tags/delete/:id")
-    suspend fun deleteCategoryById(id: Long): BasicResponse
+    suspend fun deleteCategoryById(@Query("id") id: Long): BasicResponse
 }

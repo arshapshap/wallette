@@ -17,7 +17,7 @@ class AuthorizationRepositoryImpl @Inject constructor(
 
     override suspend fun login(email: String, password: String): AuthorizationResult {
         val requestModel = LoginRequestModel(
-            login = email, password = password
+            email = email, password = password
         )
         val response = service.authorize(
             model = requestModel
@@ -29,7 +29,7 @@ class AuthorizationRepositoryImpl @Inject constructor(
 
     override suspend fun register(email: String, password: String): AuthorizationResult {
         val requestModel = RegisterRequestModel(
-            login = email, password = password
+            email = email, password = password
         )
         val response = service.register(
             model = requestModel

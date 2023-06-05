@@ -59,6 +59,7 @@ class SettingsViewModel @AssistedInject constructor(
             return
         viewModelScope.launch {
             interactor.logout()
+            _isSynchronized.postValue(false)
         }
     }
 

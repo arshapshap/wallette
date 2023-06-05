@@ -4,10 +4,7 @@ import com.example.core_network.data.models.request.transaction.TransactionCreat
 import com.example.core_network.data.models.request.transaction.TransactionEditingModel
 import com.example.core_network.data.models.response.BasicResponse
 import com.example.core_network.data.models.response.TransactionResponse
-import retrofit2.http.DELETE
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.PUT
+import retrofit2.http.*
 
 interface TransactionsApiService {
 
@@ -15,14 +12,14 @@ interface TransactionsApiService {
     suspend fun getTransactions(): ArrayList<TransactionResponse>
 
     @GET("transactions/get/:id")
-    suspend fun getTransactionById(id: Long): TransactionResponse
+    suspend fun getTransactionById(@Query("id")  id: Long): TransactionResponse
 
     @POST("transactions/create")
-    suspend fun createTransaction(model: TransactionCreatingModel): BasicResponse
+    suspend fun createTransaction(@Body model: TransactionCreatingModel): BasicResponse
 
     @PUT("transactions/update")
-    suspend fun updateTransaction(model: TransactionEditingModel): BasicResponse
+    suspend fun updateTransaction(@Body model: TransactionEditingModel): BasicResponse
 
     @DELETE("transactions/delete/:id")
-    suspend fun deleteTransactionById(id: Long): BasicResponse
+    suspend fun deleteTransactionById(@Query("id")  id: Long): BasicResponse
 }

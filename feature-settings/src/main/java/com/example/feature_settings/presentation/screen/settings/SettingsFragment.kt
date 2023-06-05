@@ -118,7 +118,7 @@ class SettingsFragment : BaseFragment<SettingsViewModel>(R.layout.fragment_setti
                     with (binding.enableSyncLayout) {
                         setColor(getColorPrimary())
                         setStrokeVisibility(true)
-                        setTitle(R.string.disable_synchronization)
+                        setTitle(R.string.synchronization_enabled)
                         setOnClickListener {
                             viewModel.disableSynchronization()
                         }

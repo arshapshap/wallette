@@ -11,10 +11,10 @@ import retrofit2.http.POST
 interface AuthorizationApiService {
 
     @Headers(NetworkConstants.NO_TOKEN_HEADER)
-    @POST("user/authorize")
+    @POST("auth/authorize")
     suspend fun authorize(@Body model: LoginRequestModel): AuthorizationResponse
 
     @Headers(NetworkConstants.NO_TOKEN_HEADER)
-    @POST("user/register")
+    @POST("auth/register")
     suspend fun register(@Body model: RegisterRequestModel): AuthorizationResponse
 }
