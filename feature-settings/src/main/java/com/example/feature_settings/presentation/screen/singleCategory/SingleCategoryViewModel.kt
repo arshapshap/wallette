@@ -80,8 +80,8 @@ class SingleCategoryViewModel @AssistedInject constructor(
         if  (category == null) return
         viewModelScope.launch {
             interactor.deleteCategory(category)
-            router.close()
         }
+        router.close()
     }
 
     fun selectType(type: TransactionType) {

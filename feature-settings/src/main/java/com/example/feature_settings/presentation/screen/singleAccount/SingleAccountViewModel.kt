@@ -85,8 +85,8 @@ class SingleAccountViewModel @AssistedInject constructor(
         if  (account == null) return
         viewModelScope.launch {
             interactor.deleteAccount(account)
-            router.close()
         }
+        router.close()
     }
 
     fun selectCurrency(currency: Currency) {
