@@ -19,7 +19,7 @@ class AccountMapper @Inject constructor() {
                 icon = AccountIcon.valueOf(response.icon ?: "Empty"),
                 currentBalance = response.currentBalance ?: 0.0,
                 startBalance = response.startBalance ?: 0.0,
-                currency = Currency.RUB // TODO: получать валюту с бэка
+                currency = Currency.valueOf(response.currency ?: "RUB")
             )
         } ?: Account(
             id = 0,

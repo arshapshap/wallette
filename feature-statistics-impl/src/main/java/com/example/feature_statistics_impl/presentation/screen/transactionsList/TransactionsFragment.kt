@@ -64,7 +64,6 @@ class TransactionsFragment : BaseFragment<TransactionsViewModel>(R.layout.fragme
                 binding.sortingImageButton.setImageDrawable(AppCompatResources.getDrawable(requireContext(), resId))
 
                 binding.balanceTextView.text = it.balance.formatAsBalance(Currency.RUB)
-                // TODO: сохранять основную валюту в sharedPrefs и подставлять её здесь
                 binding.balanceTextView.setTextColor(
                     ContextCompat.getColor(
                         binding.root.context,

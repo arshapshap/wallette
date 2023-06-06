@@ -37,7 +37,7 @@ class TransactionGroupsViewHolder(
             arrowImageView.rotateArrowWithAnimation(group.isExpanded)
 
             val groupAmount = group.list.sumOf { it.amount }
-            groupAmountTextView.text = groupAmount.formatAsBalance(Currency.RUB) // TODO: откуда брать валюту??
+            groupAmountTextView.text = groupAmount.formatAsBalance(Currency.RUB)
             groupAmountTextView.setTextColor(
                 ContextCompat.getColor(
                     binding.root.context,
