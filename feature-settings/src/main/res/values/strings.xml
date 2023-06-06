@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Fragment names -->
+    <string name="settings_fragment_name">Настройки</string>
+    <string name="accounts_fragment_name">Счета</string>
+    <string name="categories_fragment_name">Категории</string>
+    <string name="tags_fragment_name">Метки</string>
+    <string name="single_account_fragment_name">Счёт</string>
+    <string name="single_category_fragment_name">Категория</string>
+    <string name="single_tag_fragment_name">Метка</string>
+
+    <!-- Languages -->
+    <string name="language_ru">Русский</string>
+    <string name="language_en">English</string>
+
+    <!-- Days of week -->
+    <string name="monday">Понедельник</string>
+    <string name="tuesday">Вторник</string>
+    <string name="wednesday">Среда</string>
+    <string name="thursday">Четверг</string>
+    <string name="friday">Пятница</string>
+    <string name="saturday">Суббота</string>
+    <string name="sunday">Воскресенье</string>
+
+    <!-- Time periods -->
+    <string name="day">День</string>
+    <string name="week">Неделя</string>
+    <string name="month">Месяц</string>
+    <string name="year">Год</string>
+    <string name="all">Все</string>
+
+    <!-- Other -->
+    <string name="category_name">Название категории</string>
+    <string name="account_name">Название счета</string>
+    <string name="enable_synchronization">Включить синхронизацию</string>
+    <string name="main_currency">Основная валюта</string>
+    <string name="language">Язык</string>
+    <string name="first_day_of_week">Начало недели</string>
+    <string name="first_day_of_month">Начало месяца</string>
+    <string name="time_period">Выбор периода</string>
+    <string name="add_account">Добавить счёт</string>
+    <string name="transfer_money">Добавить перевод</string>
+    <string name="add_category">Добавить категорию</string>
+    <string name="incomes">Доходы</string>
+    <string name="expenses">Расходы</string>
+    <string name="add_tag">Добавить метку</string>
+    <string name="synchronization_enabled">Синхронизация включена</string>
+    <string name="start_balance">Начальный баланс</string>
+    <string name="currency">Валюта</string>
+    <string name="save">Сохранить</string>
+    <string name="tag_color">Цвет метки</string>
+    <string name="tag_name">Название метки</string>
+    <string name="current_balance">Текущий баланс</string>
+</resources>

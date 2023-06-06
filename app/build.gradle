@@ -16,6 +16,7 @@ android {
         versionName rootProject.versionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        signingConfig signingConfigs.debug
     }
 
     buildTypes {
@@ -34,6 +35,12 @@ android {
 
 dependencies {
 
+    implementation project(path: ':feature-statistics-impl')
+    implementation project(path: ':feature-auth')
+    implementation project(path: ':feature-settings')
+    implementation project(path: ':data')
+    implementation project(path: ':core-db')
+    implementation project(path: ':core-network')
     implementation project(path: ':common')
 
     implementation coreKtxDep
@@ -43,6 +50,8 @@ dependencies {
     implementation navigationFragmentDep
     implementation navigationUiDep
     implementation lifecycleViewModelDep
+    implementation retrofitDep
+    implementation gsonConverterDep
     implementation daggerDep
     implementation daggerAndroidDep
     kapt daggerKaptDep

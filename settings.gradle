@@ -16,3 +16,9 @@ dependencyResolutionManagement {
 rootProject.name = "Wallette"
 include ':app'
 include ':common'
+include ':feature-statistics-impl'
+include ':feature-auth'
+include ':feature-settings'
+include ':core-db'
+include ':data'
+include ':core-network'

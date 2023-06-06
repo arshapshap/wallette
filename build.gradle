@@ -22,7 +22,16 @@ buildscript {
         vbDelegateVersion = '1.5.6'
         navControllerVersion = '2.5.3'
         androidChartDep = 'v3.1.0'
+        preferenceVersion = '1.2.0'
+        flexboxLayoutVersion = '3.0.0'
+        colorPickerVersion = '1.0.2'
+        swipeToRefreshVersion = '1.1.0'
+        gsonVersion = '2.8.8'
 
+        gsonDep = "com.google.code.gson:gson:$gsonVersion"
+        swipeToRefreshDep = "androidx.swiperefreshlayout:swiperefreshlayout:$swipeToRefreshVersion"
+        colorPickerDep = "io.github.vadiole:colorpicker:$colorPickerVersion"
+        flexboxLayoutDep = "com.google.android.flexbox:flexbox:$flexboxLayoutVersion"
         coreKtxDep = "androidx.core:core-ktx:$coreKtxVersion"
         androidDep = "androidx.appcompat:appcompat:$supportVersion"
         recyclerViewDep = "androidx.recyclerview:recyclerview:$recyclerViewVersion"
@@ -46,6 +55,7 @@ buildscript {
         navigationFragmentDep = "androidx.navigation:navigation-fragment:$navControllerVersion"
         navigationUiDep = "androidx.navigation:navigation-ui:$navControllerVersion"
         androidChartDep = "com.github.PhilJay:MPAndroidChart:$androidChartDep"
+        preferenceDep = "androidx.preference:preference:$preferenceVersion"
     }
 }
 

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <ImageButton
+        android:id="@+id/deleteImageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:visibility="invisible"
+        android:padding="5dp"
+        android:background="?selectableItemBackgroundBorderless"
+        android:src="@drawable/ic_delete"
+        tools:visibility="visible"
+        app:tint="@color/red"
+        tools:ignore="ContentDescription" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settings_element_height" />
+
+    <EditText
+        android:id="@+id/tagNameEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/tag_name"
+        android:textFontWeight="600"
+        android:textSize="32sp"
+        android:importantForAutofill="no"
+        android:gravity="center"
+        android:inputType="textShortMessage"
+        android:imeOptions="actionDone"/>
+
+    <include
+        android:id="@+id/tag_color_layout"
+        layout="@layout/item_button_with_icon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</androidx.appcompat.widget.LinearLayoutCompat>

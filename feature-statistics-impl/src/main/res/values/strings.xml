@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="statistics_fragment_name">Отчёт</string>
+    <string name="transactions_fragment_name">Отчёт</string>
+    <string name="single_transaction_fragment_name">Отчёт</string>
+    <string name="no_category">Без категории</string>
+    <string name="no_tags">Без меток</string>
+    <string name="income">Доход</string>
+    <string name="expense">Расход</string>
+    <string name="money_transfer">Перевод</string>
+    <string name="category">Категория</string>
+    <string name="date">Дата</string>
+    <string name="tag">Метка</string>
+    <string name="description">Описание</string>
+    <string name="account">Счет</string>
+    <string name="save">Сохранить</string>
+    <string name="edit">Изменить</string>
+    <string name="delete">Удалить</string>
+    <string name="transaction_amount">Сумма</string>
+    <string name="account_destination">Счёт: куда</string>
+    <string name="account_source">Счёт: откуда</string>
+</resources>
