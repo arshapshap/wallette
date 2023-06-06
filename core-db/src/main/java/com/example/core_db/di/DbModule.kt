@@ -3,10 +3,7 @@ package com.example.core_db.di
 import android.content.Context
 import com.example.common.di.scopes.ApplicationScope
 import com.example.core_db.AppDatabase
-import com.example.core_db.dao.AccountDao
-import com.example.core_db.dao.CategoryDao
-import com.example.core_db.dao.TagDao
-import com.example.core_db.dao.TransactionDao
+import com.example.core_db.dao.*
 import dagger.Module
 import dagger.Provides
 
@@ -41,5 +38,11 @@ class DbModule {
     @ApplicationScope
     fun provideTransactionDao(appDatabase: AppDatabase): TransactionDao {
         return appDatabase.transactionDao()
+    }
+
+    @Provides
+    @ApplicationScope
+    fun provideSyncRequestDao(appDatabase: AppDatabase): SyncRequestDao {
+        return appDatabase.syncRequestsDao()
     }
 }

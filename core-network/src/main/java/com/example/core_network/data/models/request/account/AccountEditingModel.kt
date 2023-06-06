@@ -4,15 +4,15 @@ import com.google.gson.annotations.SerializedName
 
 data class AccountEditingModel(
     @SerializedName("id")
-    val id: Long?,
+    val id: String,
     @SerializedName("name")
-    val name: String?,
+    val name: String,
     @SerializedName("iconUrl")
-    val icon: String?,
+    val icon: String,
     @SerializedName("currentBalance")
-    val currentBalance: Double?,
+    val currentBalance: Double,
     @SerializedName("startBalance")
-    val startBalance: Double?,
+    val startBalance: Double,
     @SerializedName("currency")
-    val currency: String?,
+    val currency: String,
 )

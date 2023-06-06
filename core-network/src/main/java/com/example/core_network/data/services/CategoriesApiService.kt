@@ -7,18 +7,18 @@ import retrofit2.http.*
 
 interface CategoriesApiService {
 
-    @GET("tags/get")
+    @GET("categories/get")
     suspend fun getCategories(): ArrayList<CategoryResponse>
 
-    @GET("tags/get/:id")
+    @GET("categories/get/:id")
     suspend fun getCategoryById(@Query("id")  id: Long): CategoryResponse
 
-    @POST("tags/create")
+    @POST("categories/create")
     suspend fun createCategory(@Body model: CategoryCreatingModel): BasicResponse
 
-    @PUT("tags/update")
+    @PUT("categories/update")
     suspend fun updateCategory(@Body model: CategoryEditingModel): BasicResponse
 
-    @DELETE("tags/delete/:id")
+    @DELETE("categories/delete/:id")
     suspend fun deleteCategoryById(@Query("id") id: Long): BasicResponse
 }

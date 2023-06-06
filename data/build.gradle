@@ -46,6 +46,10 @@ dependencies {
     implementation coreKtxDep
     implementation androidDep
 
+    implementation retrofitDep
+
+    implementation gsonDep
+
     implementation roomDep
     implementation roomKtxDep
     kapt roomKaptDep

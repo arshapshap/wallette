@@ -69,7 +69,7 @@ class TransactionMapper @Inject constructor(
     fun mapToCreatingModel(transaction: Transaction): TransactionCreatingModel {
         return with (transaction) {
             TransactionCreatingModel(
-                id = id,
+                id = id.toString(),
                 type = type.name,
                 date = date.toIsoString(),
                 amount = amount,
@@ -85,7 +85,7 @@ class TransactionMapper @Inject constructor(
     fun mapToEditingModel(transaction: Transaction): TransactionEditingModel {
         return with (transaction) {
             TransactionEditingModel(
-                id = id,
+                id = id.toString(),
                 date = date.toIsoString(),
                 amount = amount,
                 description = description,

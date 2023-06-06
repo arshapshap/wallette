@@ -46,7 +46,7 @@ class TagMapper @Inject constructor() {
     fun mapToCreatingModel(tag: Tag): TagCreatingModel {
         return with (tag) {
             TagCreatingModel(
-                id = id,
+                id = id.toString(),
                 name = name,
                 color = color
             )
@@ -56,7 +56,7 @@ class TagMapper @Inject constructor() {
     fun mapToEditingModel(tag: Tag): TagEditingModel {
         return with (tag) {
             TagEditingModel(
-                id = id,
+                id = id.toString(),
                 name = name,
                 color = color
             )

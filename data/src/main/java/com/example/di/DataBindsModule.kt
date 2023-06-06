@@ -1,7 +1,12 @@
 package com.example.di
 
 import com.example.common.domain.repositories.*
+import com.example.data.managers.interfaces.*
 import com.example.data.repositories.*
+import com.example.data.repositories.remote.AccountRemoteRepositoryImpl
+import com.example.data.repositories.remote.CategoryRemoteRepositoryImpl
+import com.example.data.repositories.remote.TagRemoteRepositoryImpl
+import com.example.data.repositories.remote.TransactionRemoteRepositoryImpl
 import dagger.Binds
 import dagger.Module
 
@@ -22,4 +27,16 @@ interface DataBindsModule {
 
     @Binds
     fun bindTransactionsRepository(repository: TransactionRepositoryImpl): TransactionRepository
+
+    @Binds
+    fun bindAccountsRemoteRepository(repositoryImpl: AccountRemoteRepositoryImpl): AccountRemoteRepository
+
+    @Binds
+    fun bindCategoriesRemoteRepository(repositoryImpl: CategoryRemoteRepositoryImpl): CategoryRemoteRepository
+
+    @Binds
+    fun bindTagsRemoteRepository(repositoryImpl: TagRemoteRepositoryImpl): TagRemoteRepository
+
+    @Binds
+    fun bindTransactionsRemoteRepository(repository: TransactionRemoteRepositoryImpl): TransactionRemoteRepository
 }

@@ -5,7 +5,7 @@ import java.util.*
 
 data class TransactionCreatingModel(
     @SerializedName("id")
-    val id: Long,
+    val id: String,
     @SerializedName("type")
     val type: String,
     @SerializedName("date")

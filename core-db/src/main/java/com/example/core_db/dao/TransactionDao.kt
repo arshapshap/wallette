@@ -33,5 +33,5 @@ abstract class TransactionDao {
 
     @Transaction
     @Query("SELECT tag_id FROM TransactionTag WHERE transaction_id=:transactionId")
-    abstract suspend fun getTags(transactionId: Long): List<Long>
+    abstract suspend fun getTagsByTransactionId(transactionId: Long): List<Long>
 }

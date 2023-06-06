@@ -2,20 +2,18 @@ package com.example.data.repositories
 
 import com.example.common.data.TokenManager
 import com.example.common.domain.models.Account
-import com.example.common.domain.models.network.BasicResult
 import com.example.common.domain.repositories.AccountRepository
 import com.example.core_db.dao.AccountDao
-import com.example.core_network.data.services.AccountsApiService
+import com.example.data.managers.SyncQueueManager
+import com.example.data.managers.enums.RequestType
 import com.example.data.mappers.AccountMapper
-import com.example.data.mappers.BasicResultMapper
 import javax.inject.Inject
 
 class AccountRepositoryImpl @Inject constructor(
     private val localSource: AccountDao,
-    private val remoteSource: AccountsApiService,
     private val tokenManager: TokenManager,
-    private val mapper: AccountMapper,
-    private val resultMapper: BasicResultMapper
+    private val syncQueueManager: SyncQueueManager,
+    private val mapper: AccountMapper
 ): AccountRepository {
 
     override suspend fun createAccount(account: Account) {
@@ -24,7 +22,8 @@ class AccountRepositoryImpl @Inject constructor(
 
         if (!tokenManager.isAuthorized()) return
 
-        createAccountRemote(account.copy(id = id))
+        syncQueueManager.addRequest(RequestType.Create, account.copy(id = id))
+        syncQueueManager.trySynchronize()
     }
 
     override suspend fun updateAccount(account: Account) {
@@ -33,7 +32,8 @@ class AccountRepositoryImpl @Inject constructor(
 
         if (!tokenManager.isAuthorized()) return
 
-        updateAccountRemote(account)
+        syncQueueManager.addRequest(RequestType.Update, account)
+        syncQueueManager.trySynchronize()
     }
 
     override suspend fun deleteAccount(account: Account) {
@@ -42,28 +42,12 @@ class AccountRepositoryImpl @Inject constructor(
 
         if (!tokenManager.isAuthorized()) return
 
-        deleteAccountRemote(account.id)
+        syncQueueManager.addRequest(RequestType.Delete, account)
+        syncQueueManager.trySynchronize()
     }
 
     override suspend fun getAccounts(): List<Account> {
         val list = localSource.getAccounts()
         return list.map { mapper.map(it) }
-    }
-
-    private suspend fun createAccountRemote(account: Account): BasicResult {
-        val model = mapper.mapToCreatingModel(account)
-        val response = remoteSource.createAccount(model)
-        return resultMapper.map(response)
-    }
-
-    private suspend fun updateAccountRemote(account: Account): BasicResult {
-        val model = mapper.mapToEditingModel(account)
-        val response = remoteSource.updateAccount(model)
-        return resultMapper.map(response)
-    }
-
-    private suspend fun deleteAccountRemote(id: Long): BasicResult {
-        val response = remoteSource.deleteAccountById(id)
-        return resultMapper.map(response)
     }
 }

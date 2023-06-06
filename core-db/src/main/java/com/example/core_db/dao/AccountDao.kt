@@ -17,4 +17,7 @@ abstract class AccountDao {
 
     @Query("SELECT * FROM Accounts")
     abstract suspend fun getAccounts(): List<AccountLocal>
+
+    @Query("SELECT * FROM Accounts WHERE account_id=:id")
+    abstract suspend fun getAccountById(id: Long): AccountLocal
 }
