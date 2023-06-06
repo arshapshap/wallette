@@ -8,18 +8,18 @@ import retrofit2.http.*
 
 interface TransactionsApiService {
 
-    @GET("transactions/get")
+    @GET("transaction/get")
     suspend fun getTransactions(): ArrayList<TransactionResponse>
 
-    @GET("transactions/get/:id")
+    @GET("transaction/get/:id")
     suspend fun getTransactionById(@Query("id")  id: Long): TransactionResponse
 
-    @POST("transactions/create")
+    @POST("transaction/create")
     suspend fun createTransaction(@Body model: TransactionCreatingModel): BasicResponse
 
-    @PUT("transactions/update")
+    @PUT("transaction/update")
     suspend fun updateTransaction(@Body model: TransactionEditingModel): BasicResponse
 
-    @DELETE("transactions/delete/:id")
+    @DELETE("transaction/delete/:id")
     suspend fun deleteTransactionById(@Query("id")  id: Long): BasicResponse
 }

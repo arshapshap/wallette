@@ -52,7 +52,7 @@ class CategoryMapper @Inject constructor() {
     fun mapToCreatingModel(category: Category): CategoryCreatingModel {
         return with (category) {
             CategoryCreatingModel(
-                id = id,
+                id = id.toString(),
                 name = name,
                 icon = icon.name,
                 type = type.name
@@ -63,7 +63,7 @@ class CategoryMapper @Inject constructor() {
     fun mapToEditingModel(category: Category): CategoryEditingModel {
         return with (category) {
             CategoryEditingModel(
-                id = id,
+                id = id.toString(),
                 name = name,
                 icon = icon.name
             )

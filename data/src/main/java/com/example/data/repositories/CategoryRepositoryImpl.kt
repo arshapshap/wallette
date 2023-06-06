@@ -2,20 +2,18 @@ package com.example.data.repositories
 
 import com.example.common.data.TokenManager
 import com.example.common.domain.models.Category
-import com.example.common.domain.models.network.BasicResult
 import com.example.common.domain.repositories.CategoryRepository
 import com.example.core_db.dao.CategoryDao
-import com.example.core_network.data.services.CategoriesApiService
-import com.example.data.mappers.BasicResultMapper
+import com.example.data.managers.SyncQueueManager
+import com.example.data.managers.enums.RequestType
 import com.example.data.mappers.CategoryMapper
 import javax.inject.Inject
 
 class CategoryRepositoryImpl @Inject constructor(
     private val localSource: CategoryDao,
-    private val remoteSource: CategoriesApiService,
     private val tokenManager: TokenManager,
-    private val mapper: CategoryMapper,
-    private val resultMapper: BasicResultMapper
+    private val syncQueueManager: SyncQueueManager,
+    private val mapper: CategoryMapper
 ): CategoryRepository {
 
     override suspend fun createCategory(category: Category) {
@@ -24,7 +22,8 @@ class CategoryRepositoryImpl @Inject constructor(
 
         if (!tokenManager.isAuthorized()) return
 
-        createCategoryRemote(category.copy(id = id))
+        syncQueueManager.addRequest(RequestType.Create, category.copy(id = id))
+        syncQueueManager.trySynchronize()
     }
 
     override suspend fun updateCategory(category: Category) {
@@ -33,7 +32,8 @@ class CategoryRepositoryImpl @Inject constructor(
 
         if (!tokenManager.isAuthorized()) return
 
-        updateCategoryRemote(category)
+        syncQueueManager.addRequest(RequestType.Update, category)
+        syncQueueManager.trySynchronize()
     }
 
     override suspend fun deleteCategory(category: Category) {
@@ -42,28 +42,12 @@ class CategoryRepositoryImpl @Inject constructor(
 
         if (!tokenManager.isAuthorized()) return
 
-        deleteCategoryRemote(category.id)
+        syncQueueManager.addRequest(RequestType.Delete, category)
+        syncQueueManager.trySynchronize()
     }
 
     override suspend fun getCategories(): List<Category> {
         val list = localSource.getCategories()
         return list.map { mapper.map(it) }
-    }
-
-    private suspend fun createCategoryRemote(category: Category): BasicResult {
-        val model = mapper.mapToCreatingModel(category)
-        val response = remoteSource.createCategory(model)
-        return resultMapper.map(response)
-    }
-
-    private suspend fun updateCategoryRemote(category: Category): BasicResult {
-        val model = mapper.mapToEditingModel(category)
-        val response = remoteSource.updateCategory(model)
-        return resultMapper.map(response)
-    }
-
-    private suspend fun deleteCategoryRemote(id: Long): BasicResult {
-        val response = remoteSource.deleteCategoryById(id)
-        return resultMapper.map(response)
     }
 }

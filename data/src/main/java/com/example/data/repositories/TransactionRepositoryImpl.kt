@@ -3,21 +3,19 @@ package com.example.data.repositories
 import com.example.common.data.TokenManager
 import com.example.common.domain.models.Tag
 import com.example.common.domain.models.Transaction
-import com.example.common.domain.models.network.BasicResult
 import com.example.common.domain.repositories.TransactionRepository
 import com.example.core_db.dao.TransactionDao
 import com.example.core_db.models.TransactionTagCrossRef
-import com.example.core_network.data.services.TransactionsApiService
-import com.example.data.mappers.BasicResultMapper
+import com.example.data.managers.SyncQueueManager
+import com.example.data.managers.enums.RequestType
 import com.example.data.mappers.TransactionMapper
 import javax.inject.Inject
 
 class TransactionRepositoryImpl @Inject constructor(
     private val localSource: TransactionDao,
-    private val remoteSource: TransactionsApiService,
     private val tokenManager: TokenManager,
-    private val mapper: TransactionMapper,
-    private val resultMapper: BasicResultMapper
+    private val syncQueueManager: SyncQueueManager,
+    private val mapper: TransactionMapper
 ) : TransactionRepository {
 
     override suspend fun createTransaction(transaction: Transaction) {
@@ -27,7 +25,8 @@ class TransactionRepositoryImpl @Inject constructor(
 
         if (!tokenManager.isAuthorized()) return
 
-        createTransactionRemote(transaction.copy(id = id))
+        syncQueueManager.addRequest(RequestType.Create, transaction.copy(id = id))
+        syncQueueManager.trySynchronize()
     }
 
     override suspend fun updateTransaction(transaction: Transaction) {
@@ -37,7 +36,8 @@ class TransactionRepositoryImpl @Inject constructor(
 
         if (!tokenManager.isAuthorized()) return
 
-        updateTransactionRemote(transaction)
+        syncQueueManager.addRequest(RequestType.Update, transaction)
+        syncQueueManager.trySynchronize()
     }
 
     override suspend fun deleteTransaction(transaction: Transaction) {
@@ -46,7 +46,8 @@ class TransactionRepositoryImpl @Inject constructor(
 
         if (!tokenManager.isAuthorized()) return
 
-        deleteTransactionRemote(transaction.id)
+        syncQueueManager.addRequest(RequestType.Delete, transaction)
+        syncQueueManager.trySynchronize()
     }
 
     override suspend fun getTransactions(): List<Transaction> {
@@ -57,23 +58,6 @@ class TransactionRepositoryImpl @Inject constructor(
     override suspend fun getTransactionById(id: Long): Transaction {
         val local = localSource.getTransactionById(id)
         return mapper.map(local)
-    }
-
-    private suspend fun createTransactionRemote(transaction: Transaction): BasicResult {
-        val model = mapper.mapToCreatingModel(transaction)
-        val response = remoteSource.createTransaction(model)
-        return resultMapper.map(response)
-    }
-
-    private suspend fun updateTransactionRemote(transaction: Transaction): BasicResult {
-        val model = mapper.mapToEditingModel(transaction)
-        val response = remoteSource.updateTransaction(model)
-        return resultMapper.map(response)
-    }
-
-    private suspend fun deleteTransactionRemote(id: Long): BasicResult {
-        val response = remoteSource.deleteTransactionById(id)
-        return resultMapper.map(response)
     }
 
     private suspend fun editTags(transactionId: Long, newTags: List<Tag>) {

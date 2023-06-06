@@ -48,6 +48,8 @@ dependencies {
 
     implementation retrofitDep
 
+    implementation gsonDep
+
     implementation roomDep
     implementation roomKtxDep
     kapt roomKaptDep

@@ -2,20 +2,18 @@ package com.example.data.repositories
 
 import com.example.common.data.TokenManager
 import com.example.common.domain.models.Tag
-import com.example.common.domain.models.network.BasicResult
 import com.example.common.domain.repositories.TagRepository
 import com.example.core_db.dao.TagDao
-import com.example.core_network.data.services.TagsApiService
-import com.example.data.mappers.BasicResultMapper
+import com.example.data.managers.SyncQueueManager
+import com.example.data.managers.enums.RequestType
 import com.example.data.mappers.TagMapper
 import javax.inject.Inject
 
 class TagRepositoryImpl @Inject constructor(
     private val localSource: TagDao,
-    private val remoteSource: TagsApiService,
     private val tokenManager: TokenManager,
-    private val mapper: TagMapper,
-    private val resultMapper: BasicResultMapper
+    private val syncQueueManager: SyncQueueManager,
+    private val mapper: TagMapper
 ): TagRepository {
 
     override suspend fun createTag(tag: Tag) {
@@ -24,7 +22,8 @@ class TagRepositoryImpl @Inject constructor(
 
         if (!tokenManager.isAuthorized()) return
 
-        createTagRemote(tag.copy(id = id))
+        syncQueueManager.addRequest(RequestType.Create, tag.copy(id = id))
+        syncQueueManager.trySynchronize()
     }
 
     override suspend fun updateTag(tag: Tag) {
@@ -33,7 +32,8 @@ class TagRepositoryImpl @Inject constructor(
 
         if (!tokenManager.isAuthorized()) return
 
-        updateTagRemote(tag)
+        syncQueueManager.addRequest(RequestType.Update, tag)
+        syncQueueManager.trySynchronize()
     }
 
     override suspend fun deleteTag(tag: Tag) {
@@ -42,28 +42,12 @@ class TagRepositoryImpl @Inject constructor(
 
         if (!tokenManager.isAuthorized()) return
 
-        deleteTagRemote(tag.id)
+        syncQueueManager.addRequest(RequestType.Delete, tag)
+        syncQueueManager.trySynchronize()
     }
 
     override suspend fun getTags(): List<Tag> {
         val list = localSource.getTags()
         return list.map { mapper.map(it) }
-    }
-
-    private suspend fun createTagRemote(tag: Tag): BasicResult {
-        val model = mapper.mapToCreatingModel(tag)
-        val response = remoteSource.createTag(model)
-        return resultMapper.map(response)
-    }
-
-    private suspend fun updateTagRemote(tag: Tag): BasicResult {
-        val model = mapper.mapToEditingModel(tag)
-        val response = remoteSource.updateTag(model)
-        return resultMapper.map(response)
-    }
-
-    private suspend fun deleteTagRemote(id: Long): BasicResult {
-        val response = remoteSource.deleteTagById(id)
-        return resultMapper.map(response)
     }
 }

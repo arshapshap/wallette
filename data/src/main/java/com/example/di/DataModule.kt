@@ -2,15 +2,18 @@ package com.example.di
 
 import com.example.common.di.scopes.ApplicationScope
 import com.example.core_db.AppDatabase
-import com.example.core_db.dao.AccountDao
-import com.example.core_db.dao.CategoryDao
-import com.example.core_db.dao.TagDao
-import com.example.core_db.dao.TransactionDao
+import com.example.core_db.dao.*
+import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
 
 @Module
 class DataModule {
+
+    @Provides
+    @ApplicationScope
+    fun provideGson(): Gson
+        = Gson()
 
     @Provides
     @ApplicationScope
@@ -31,4 +34,9 @@ class DataModule {
     @ApplicationScope
     fun provideTransactionDao(appDatabase: AppDatabase): TransactionDao
             = appDatabase.transactionDao()
+
+    @Provides
+    @ApplicationScope
+    fun provideSyncRequestDao(appDatabase: AppDatabase): SyncRequestDao
+            = appDatabase.syncRequestsDao()
 }

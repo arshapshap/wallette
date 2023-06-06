@@ -9,10 +9,12 @@ data class SyncRequest(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "request_id")
     val id: Long,
-    @ColumnInfo(name = "type")
-    val type: String,
+    @ColumnInfo(name = "request_type")
+    val requestType: String,
+    @ColumnInfo(name = "entity_type")
+    val entityType: String,
     @ColumnInfo(name = "entity_id")
     val entityId: Long,
     @ColumnInfo(name = "entity")
-    val entity: String
+    val entityJson: String
 )

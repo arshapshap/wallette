@@ -60,7 +60,7 @@ class AccountMapper @Inject constructor() {
     fun mapToCreatingModel(account: Account): AccountCreatingModel {
         return with (account) {
             AccountCreatingModel(
-                id = id,
+                id = id.toString(),
                 name = name,
                 icon = icon.name,
                 startBalance = startBalance,
@@ -72,7 +72,7 @@ class AccountMapper @Inject constructor() {
     fun mapToEditingModel(account: Account): AccountEditingModel {
         return with (account) {
             AccountEditingModel(
-                id = id,
+                id = id.toString(),
                 name = name,
                 icon = icon.name,
                 currentBalance = currentBalance,

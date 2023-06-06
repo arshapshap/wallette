@@ -4,13 +4,13 @@ import com.google.gson.annotations.SerializedName
 
 data class AccountCreatingModel(
     @SerializedName("id")
-    val id: Long?,
+    val id: String,
     @SerializedName("name")
-    val name: String?,
-    @SerializedName("iconUrl")
-    val icon: String?,
+    val name: String,
+    @SerializedName("icon")
+    val icon: String,
     @SerializedName("startBalance")
-    val startBalance: Double?,
+    val startBalance: Double,
     @SerializedName("currency")
-    val currency: String?,
+    val currency: String,
 )
