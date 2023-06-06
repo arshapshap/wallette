@@ -4,10 +4,8 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.core_db.dao.AccountDao
-import com.example.core_db.dao.CategoryDao
-import com.example.core_db.dao.TagDao
-import com.example.core_db.dao.TransactionDao
+import com.example.core_db.dao.*
+import com.example.core_db.models.SyncRequest
 import com.example.core_db.models.TransactionTagCrossRef
 import com.example.core_db.models.entities.AccountLocal
 import com.example.core_db.models.entities.CategoryLocal
@@ -21,7 +19,8 @@ import com.example.core_db.models.entities.TransactionLocal
         CategoryLocal::class,
         TagLocal::class,
         TransactionLocal::class,
-        TransactionTagCrossRef::class
+        TransactionTagCrossRef::class,
+        SyncRequest::class
     ])
 abstract class AppDatabase : RoomDatabase() {
 
@@ -47,4 +46,6 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun tagDao(): TagDao
 
     abstract fun transactionDao(): TransactionDao
+
+    abstract fun syncRequestsDao(): SyncRequestDao
 }
