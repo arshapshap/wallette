@@ -11,6 +11,4 @@ interface TagRepository {
     suspend fun deleteTag(tag: Tag)
 
     suspend fun getTags(): List<Tag>
-
-    suspend fun checkIsSynchronized(tag: Tag): Boolean
 }

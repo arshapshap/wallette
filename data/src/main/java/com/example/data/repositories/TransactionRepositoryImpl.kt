@@ -77,7 +77,7 @@ class TransactionRepositoryImpl @Inject constructor(
     }
 
     private suspend fun editTags(transactionId: Long, newTags: List<Tag>) {
-        val currentTags = localSource.getTags(transactionId)
+        val currentTags = localSource.getTagsByTransactionId(transactionId)
         newTags
             .filter {
                 it.id !in currentTags

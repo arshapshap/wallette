@@ -1,7 +1,6 @@
 package com.example.data.repositories
 
 import com.example.common.data.TokenManager
-import com.example.common.domain.exceptions.WrongTokenException
 import com.example.common.domain.models.Account
 import com.example.common.domain.models.network.BasicResult
 import com.example.common.domain.repositories.AccountRepository
@@ -9,7 +8,6 @@ import com.example.core_db.dao.AccountDao
 import com.example.core_network.data.services.AccountsApiService
 import com.example.data.mappers.AccountMapper
 import com.example.data.mappers.BasicResultMapper
-import retrofit2.HttpException
 import javax.inject.Inject
 
 class AccountRepositoryImpl @Inject constructor(
@@ -49,29 +47,7 @@ class AccountRepositoryImpl @Inject constructor(
 
     override suspend fun getAccounts(): List<Account> {
         val list = localSource.getAccounts()
-        return list.filter { !it.mustBeDeleted }.map { mapper.map(it) }
-    }
-
-    override suspend fun synchronize(account: Account): Boolean {
-        val local = localSource.getAccountById(account.id)
-        if (local.isSynchronized) return true
-
-        kotlin.runCatching {
-            remoteSource.getAccountById(account.id)
-            val result = updateAccountRemote(account)
-            return result.isSuccessful
-        }.onFailure {
-            if (it is HttpException && it.code() == 404) {
-                val result = createAccountRemote(account)
-                return result.isSuccessful
-            }
-            if (it is HttpException && it.code() == 401) {
-                throw WrongTokenException()
-            }
-            throw it
-        }
-
-        return false
+        return list.map { mapper.map(it) }
     }
 
     private suspend fun createAccountRemote(account: Account): BasicResult {

@@ -11,6 +11,4 @@ interface AccountRepository {
     suspend fun deleteAccount(account: Account)
 
     suspend fun getAccounts(): List<Account>
-
-    suspend fun synchronize(account: Account): Boolean
 }

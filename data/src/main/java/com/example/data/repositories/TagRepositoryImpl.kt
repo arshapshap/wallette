@@ -47,12 +47,7 @@ class TagRepositoryImpl @Inject constructor(
 
     override suspend fun getTags(): List<Tag> {
         val list = localSource.getTags()
-        return list.filter { !it.mustBeDeleted }.map { mapper.map(it) }
-    }
-
-    override suspend fun checkIsSynchronized(tag: Tag): Boolean {
-        val local = localSource.getTagById(tag.id)
-        return local.isSynchronized
+        return list.map { mapper.map(it) }
     }
 
     private suspend fun createTagRemote(tag: Tag): BasicResult {
