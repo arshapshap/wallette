@@ -7,7 +7,7 @@ import com.example.core_db.models.SyncRequest
 abstract class SyncRequestDao {
 
     @Insert
-    abstract suspend fun addRequest(syncRequestDao: SyncRequestDao): Long
+    abstract suspend fun addRequest(syncRequest: SyncRequest): Long
 
     @Delete
     abstract suspend fun deleteRequest(syncRequest: SyncRequest)
