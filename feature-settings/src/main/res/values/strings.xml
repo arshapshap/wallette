@@ -44,10 +44,11 @@
     <string name="incomes">Доходы</string>
     <string name="expenses">Расходы</string>
     <string name="add_tag">Добавить метку</string>
-    <string name="disable_synchronization">Выключить синхронизацию</string>
+    <string name="synchronization_enabled">Синхронизация включена</string>
     <string name="start_balance">Начальный баланс</string>
     <string name="currency">Валюта</string>
     <string name="save">Сохранить</string>
     <string name="tag_color">Цвет метки</string>
     <string name="tag_name">Название метки</string>
+    <string name="current_balance">Текущий баланс</string>
 </resources>

@@ -9,23 +9,24 @@ import androidx.core.view.WindowCompat
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
-import com.example.common.data.TokenManager
 import com.example.common.di.findComponentDependencies
+import com.example.common.presentation.floatingButtonInterfaces.FloatingButtonListenersManager
+import com.example.common.presentation.floatingButtonInterfaces.OnFloatingButtonClickListener
 import com.example.wallette.R
 import com.example.wallette.databinding.ActivityMainBinding
 import com.example.wallette.di.main.MainComponent
 import com.example.wallette.navigation.Navigator
+import com.example.wallette.presentation.extensions.applyStyle
 import javax.inject.Inject
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), OnFloatingButtonClickListener, FloatingButtonListenersManager {
 
     private lateinit var binding: ActivityMainBinding
 
     @Inject
     lateinit var navigator: Navigator
 
-    @Inject
-    lateinit var tokenManager: TokenManager
+    private lateinit var onFloatingButtonClickListener: OnFloatingButtonClickListener
 
     private fun inject() {
         MainComponent
@@ -48,11 +49,27 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNavigationView.setupWithNavController(controller)
         navigator.attachNavController(controller, this)
 
-//        if (checkIfAuthorized())
-//            navigator.openStatistics()
-//        else
-//            navigator.openLoginPage()
-        navigator.openStatistics()
+        setDefaultOnFloatingButtonClickListener()
+
+        binding.addFloatingButton.setOnClickListener {
+            onFloatingButtonClickListener.onFloatingButtonClick()
+        }
+    }
+
+    override fun subscribeOnFloatingButtonClick(listener: OnFloatingButtonClickListener) {
+        onFloatingButtonClickListener = listener
+        binding.addFloatingButton.applyStyle(R.style.App_Custom_FloatingActionButton_Outlined)
+        binding.addFloatingButton.setImageResource(com.example.common.R.drawable.ic_done)
+    }
+
+    override fun setDefaultOnFloatingButtonClickListener() {
+        onFloatingButtonClickListener = this
+        binding.addFloatingButton.applyStyle(R.style.App_Custom_FloatingActionButton)
+        binding.addFloatingButton.setImageResource(com.example.feature_settings.R.drawable.ic_plus)
+    }
+
+    override fun onFloatingButtonClick() {
+        navigator.openSingleTransaction(null)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -65,10 +82,6 @@ class MainActivity : AppCompatActivity() {
             //R.id.action_settings -> true
             else -> super.onOptionsItemSelected(item)
         }
-    }
-
-    private fun checkIfAuthorized(): Boolean {
-        return !tokenManager.getAuthorizationToken().isNullOrEmpty()
     }
 
     private fun hideNavBars(controller: NavController) {

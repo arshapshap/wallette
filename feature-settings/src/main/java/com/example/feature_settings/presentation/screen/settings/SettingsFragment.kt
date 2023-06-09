@@ -4,18 +4,17 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.common.di.FeatureUtils
 import com.example.common.presentation.base.BaseFragment
 import com.example.common.presentation.base.BaseViewModel
+import com.example.common.presentation.extensions.*
 import com.example.feature_settings.R
 import com.example.feature_settings.databinding.FragmentSettingsBinding
 import com.example.feature_settings.di.SettingsComponent
 import com.example.feature_settings.di.SettingsFeatureApi
-import com.example.feature_settings.presentation.screen.settings.dialogs.PickerDialogFragment
-import com.example.feature_settings.presentation.screen.settings.dialogs.PickerDialogFragment.Companion.PickerType
-import com.example.feature_settings.presentation.screen.settings.dialogs.PickerDialogFragment.Companion.showPickerDialog
-import com.example.feature_settings.presentation.utils.*
+import com.example.common.presentation.dialogs.PickerFragment
+import com.example.common.presentation.dialogs.PickerFragment.Companion.showPickerDialog
 
 
 class SettingsFragment : BaseFragment<SettingsViewModel>(R.layout.fragment_settings),
-    PickerDialogFragment.SelectDialogListener {
+    PickerFragment.OnSelectListener {
 
     private val binding by viewBinding(FragmentSettingsBinding::bind)
     private val component: SettingsComponent by lazy {
@@ -42,8 +41,9 @@ class SettingsFragment : BaseFragment<SettingsViewModel>(R.layout.fragment_setti
         }
 
         with (binding.accountsLayout) {
+            setStrokeVisibility(false)
             setRightArrowVisible(true)
-            setImage(R.drawable.ic_account)
+            setImage(com.example.common.R.drawable.ic_account)
             setTitle(R.string.accounts_fragment_name)
             setOnClickListener {
                 viewModel.openAccounts()
@@ -51,8 +51,9 @@ class SettingsFragment : BaseFragment<SettingsViewModel>(R.layout.fragment_setti
         }
 
         with (binding.categoriesLayout) {
+            setStrokeVisibility(false)
             setRightArrowVisible(true)
-            setImage(R.drawable.ic_category)
+            setImage(com.example.common.R.drawable.ic_category)
             setTitle(R.string.categories_fragment_name)
             setOnClickListener {
                 viewModel.openCategories()
@@ -60,8 +61,9 @@ class SettingsFragment : BaseFragment<SettingsViewModel>(R.layout.fragment_setti
         }
 
         with (binding.tagsLayout) {
+            setStrokeVisibility(false)
             setRightArrowVisible(true)
-            setImage(R.drawable.ic_tag)
+            setImage(com.example.common.R.drawable.ic_tag)
             setTitle(R.string.tags_fragment_name)
             setOnClickListener {
                 viewModel.openTags()
@@ -69,30 +71,35 @@ class SettingsFragment : BaseFragment<SettingsViewModel>(R.layout.fragment_setti
         }
 
         with (binding.currencyLayout) {
+            setStrokeVisibility(false)
             setRightArrowVisible(true)
             setImage(R.drawable.ic_currency)
             setTitle(R.string.main_currency)
         }
 
         with (binding.languageLayout) {
+            setStrokeVisibility(false)
             setRightArrowVisible(true)
             setImage(R.drawable.ic_language)
             setTitle(R.string.language)
         }
 
         with (binding.firstDayOfWeekLayout) {
+            setStrokeVisibility(false)
             setRightArrowVisible(true)
             setImage(R.drawable.ic_calendar_today)
             setTitle(R.string.first_day_of_week)
         }
 
         with (binding.firstDayOfMonthLayout) {
+            setStrokeVisibility(false)
             setRightArrowVisible(true)
             setImage(R.drawable.ic_calendar_month)
             setTitle(R.string.first_day_of_month)
         }
 
         with (binding.timePeriodLayout) {
+            setStrokeVisibility(false)
             setRightArrowVisible(true)
             setImage(R.drawable.ic_calendar_note)
             setTitle(R.string.time_period)
@@ -111,7 +118,7 @@ class SettingsFragment : BaseFragment<SettingsViewModel>(R.layout.fragment_setti
                     with (binding.enableSyncLayout) {
                         setColor(getColorPrimary())
                         setStrokeVisibility(true)
-                        setTitle(R.string.disable_synchronization)
+                        setTitle(R.string.synchronization_enabled)
                         setOnClickListener {
                             viewModel.disableSynchronization()
                         }
@@ -135,7 +142,7 @@ class SettingsFragment : BaseFragment<SettingsViewModel>(R.layout.fragment_setti
                             fragmentManager = childFragmentManager,
                             title = getString(R.string.main_currency),
                             items = it.availableCurrencies.map { it.name }.toTypedArray(),
-                            pickerType = PickerType.Currency
+                            tag = CURRENCY_PICKER_TAG
                         )
                     }
                 }
@@ -147,7 +154,7 @@ class SettingsFragment : BaseFragment<SettingsViewModel>(R.layout.fragment_setti
                             fragmentManager = childFragmentManager,
                             title = getString(R.string.language),
                             items = it.availableLanguages.map { getString(it.stringRes) }.toTypedArray(),
-                            pickerType = PickerType.Language
+                            tag = LANGUAGE_PICKER_TAG
                         )
                     }
                 }
@@ -159,7 +166,7 @@ class SettingsFragment : BaseFragment<SettingsViewModel>(R.layout.fragment_setti
                             fragmentManager = childFragmentManager,
                             title = getString(R.string.first_day_of_week),
                             items = it.daysOfWeek.map { getString(it.stringRes) }.toTypedArray(),
-                            pickerType = PickerType.FirstDayOfWeek
+                            tag = FIRST_DAY_OF_WEEK_PICKER_TAG
                         )
                     }
                 }
@@ -171,7 +178,7 @@ class SettingsFragment : BaseFragment<SettingsViewModel>(R.layout.fragment_setti
                             fragmentManager = childFragmentManager,
                             title = getString(R.string.first_day_of_month),
                             items = it.daysOfMonth.map { it.toString() }.toTypedArray(),
-                            pickerType = PickerType.FirstDayOfMonth
+                            tag = FIRST_DAY_OF_MONTH_PICKER_TAG
                         )
                     }
                 }
@@ -183,7 +190,7 @@ class SettingsFragment : BaseFragment<SettingsViewModel>(R.layout.fragment_setti
                             fragmentManager = childFragmentManager,
                             title = getString(R.string.time_period),
                             items = it.availableTimePeriods.map { getString(it.stringRes) }.toTypedArray(),
-                            pickerType = PickerType.TimePeriod
+                            tag = TIME_PERIOD_PICKER_TAG
                         )
                     }
                 }
@@ -191,13 +198,14 @@ class SettingsFragment : BaseFragment<SettingsViewModel>(R.layout.fragment_setti
         }
     }
 
-    override fun onSelected(index: Int, pickerType: PickerType) {
-        when (pickerType) {
-            PickerType.Currency -> onCurrencySelected(index)
-            PickerType.Language -> onLanguageSelected(index)
-            PickerType.FirstDayOfWeek -> onFirstDayOfWeekSelected(index)
-            PickerType.FirstDayOfMonth -> onFirstDayOfMonthSelected(index)
-            PickerType.TimePeriod -> onTimePeriodSelected(index)
+    override fun onSelect(tag: String?, index: Int) {
+        when (tag) {
+            CURRENCY_PICKER_TAG -> onCurrencySelected(index)
+            LANGUAGE_PICKER_TAG -> onLanguageSelected(index)
+            FIRST_DAY_OF_WEEK_PICKER_TAG -> onFirstDayOfWeekSelected(index)
+            FIRST_DAY_OF_MONTH_PICKER_TAG -> onFirstDayOfMonthSelected(index)
+            TIME_PERIOD_PICKER_TAG -> onTimePeriodSelected(index)
+            else -> return
         }
     }
 
@@ -224,5 +232,14 @@ class SettingsFragment : BaseFragment<SettingsViewModel>(R.layout.fragment_setti
     private fun onTimePeriodSelected(index: Int) {
         val timePeriod = viewModel.settingsLiveData.value!!.availableTimePeriods[index]
         viewModel.selectTimePeriod(timePeriod)
+    }
+
+    companion object {
+
+        private const val CURRENCY_PICKER_TAG = "currency"
+        private const val LANGUAGE_PICKER_TAG = "language"
+        private const val FIRST_DAY_OF_WEEK_PICKER_TAG = "first_day_of_week"
+        private const val FIRST_DAY_OF_MONTH_PICKER_TAG = "first_day_of_month"
+        private const val TIME_PERIOD_PICKER_TAG = "time_period"
     }
 }

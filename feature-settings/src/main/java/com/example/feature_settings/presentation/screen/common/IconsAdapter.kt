@@ -6,8 +6,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.ColorInt
 import androidx.recyclerview.widget.RecyclerView
-import com.example.common.domain.models.Icon
-import com.example.feature_settings.databinding.ItemSelectingIconBinding
+import com.example.common.domain.models.enums.Icon
+import com.example.feature_settings.databinding.ItemIconBinding
 
 class IconsAdapter(
     @ColorInt private val colorSelected: Int,
@@ -47,12 +47,12 @@ class IconsAdapter(
         )
     }
 
-    private fun getBinding(parent: ViewGroup): ItemSelectingIconBinding
-            = ItemSelectingIconBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+    private fun getBinding(parent: ViewGroup): ItemIconBinding
+            = ItemIconBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 
 
     class IconsViewHolder(
-        private val binding: ItemSelectingIconBinding,
+        private val binding: ItemIconBinding,
         private val onClick: (Icon) -> Unit,
         @ColorInt private val colorSelected: Int
     ) : RecyclerView.ViewHolder(binding.root) {

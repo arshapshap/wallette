@@ -35,9 +35,10 @@ class RegisterViewModel @AssistedInject constructor(
             )
             handleServerResult(result) { errorMessage ->
                 when (errorMessage) {
-                    "Login is taken" -> _errorFromResourceLiveData.postValue(R.string.email_is_taken)
-                    "Password is too short" -> _errorFromResourceLiveData.postValue(R.string.too_short_password)
-                    else -> _errorLiveData.postValue(result.errorMessage)
+                    "Username '$email' is already taken." -> _errorFromResourceLiveData.postValue(R.string.email_is_taken)
+                    "Passwords must be at least 8 characters." -> _errorFromResourceLiveData.postValue(R.string.too_short_password)
+                    "Wrong email format" -> _errorFromResourceLiveData.postValue(R.string.wrong_email_format)
+                    else -> _errorFromResourceLiveData.postValue(R.string.error)
                 }
             }
         }

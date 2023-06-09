@@ -6,13 +6,14 @@ import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.core.view.isGone
 import androidx.recyclerview.widget.RecyclerView
-import com.example.common.domain.models.CategoryIcon
-import com.example.common.domain.models.Currency
+import com.example.common.domain.models.enums.CategoryIcon
+import com.example.common.domain.models.enums.Currency
+import com.example.common.domain.models.Transaction
 import com.example.feature_statistics_impl.R
 import com.example.feature_statistics_impl.databinding.ItemGroupBinding
 import com.example.feature_statistics_impl.presentation.screen.transactionsList.SortingType
-import com.example.feature_statistics_impl.presentation.screen.transactionsList.extensions.getString
 import com.example.common.presentation.extensions.formatAsBalance
+import com.example.common.presentation.extensions.formatToString
 import com.example.common.presentation.extensions.getColorBySign
 import com.example.feature_statistics_impl.presentation.screen.transactionsList.groupsRecyclerView.transactionGroups.TransactionGroup
 import com.example.feature_statistics_impl.presentation.screen.transactionsList.groupsRecyclerView.transactionGroups.TransactionGroupByCategory
@@ -22,7 +23,7 @@ import com.example.feature_statistics_impl.presentation.screen.transactionsList.
 
 class TransactionGroupsViewHolder(
     private val binding: ItemGroupBinding,
-    private val onTransactionClick: (String) -> Unit
+    private val onTransactionClick: (Transaction) -> Unit
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun onBind(group: TransactionGroup, sortingType: SortingType, notifyItemChanged: () -> Unit) {
@@ -36,7 +37,7 @@ class TransactionGroupsViewHolder(
             arrowImageView.rotateArrowWithAnimation(group.isExpanded)
 
             val groupAmount = group.list.sumOf { it.amount }
-            groupAmountTextView.text = groupAmount.formatAsBalance(Currency.RUB) // TODO: откуда брать валюту??
+            groupAmountTextView.text = groupAmount.formatAsBalance(Currency.RUB)
             groupAmountTextView.setTextColor(
                 ContextCompat.getColor(
                     binding.root.context,
@@ -67,7 +68,7 @@ class TransactionGroupsViewHolder(
     private fun bindByDate(group: TransactionGroupByDate) {
         with (binding) {
             dateTextView.isGone = false
-            dateTextView.text = group.date.getString()
+            dateTextView.text = group.date.formatToString()
         }
     }
 

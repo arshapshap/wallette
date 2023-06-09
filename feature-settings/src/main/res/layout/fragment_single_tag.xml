@@ -2,17 +2,22 @@
 <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/top_margin" />
-
-    <include
-        android:id="@+id/save_layout"
-        layout="@layout/item_settings_element"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+    <ImageButton
+        android:id="@+id/deleteImageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:visibility="invisible"
+        android:padding="5dp"
+        android:background="?selectableItemBackgroundBorderless"
+        android:src="@drawable/ic_delete"
+        tools:visibility="visible"
+        app:tint="@color/red"
+        tools:ignore="ContentDescription" />
 
     <Space
         android:layout_width="match_parent"
@@ -23,12 +28,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/tag_name"
+        android:textFontWeight="600"
+        android:textSize="32sp"
         android:importantForAutofill="no"
-        android:inputType="textShortMessage"/>
+        android:gravity="center"
+        android:inputType="textShortMessage"
+        android:imeOptions="actionDone"/>
 
     <include
         android:id="@+id/tag_color_layout"
-        layout="@layout/item_settings_element"
+        layout="@layout/item_button_with_icon"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

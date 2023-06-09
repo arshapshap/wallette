@@ -1,13 +1,11 @@
 package com.example.feature_auth.domain
 
-import com.example.common.data.TokenManager
-import com.example.feature_auth.domain.models.AuthorizationResult
-import com.example.feature_auth.domain.repositories.AuthorizationRepository
+import com.example.common.domain.models.network.AuthorizationResult
+import com.example.common.domain.repositories.AuthorizationRepository
 import javax.inject.Inject
 
 class AuthorizationInteractor @Inject constructor(
-    private val repository: AuthorizationRepository,
-    private val tokenManager: TokenManager
+    private val repository: AuthorizationRepository
 ) {
 
     suspend fun login(email: String, password: String): AuthorizationResult {
@@ -16,9 +14,5 @@ class AuthorizationInteractor @Inject constructor(
 
     suspend fun register(email: String, password: String): AuthorizationResult {
         return repository.register(email, password)
-    }
-
-    fun saveToken(token: String) {
-        tokenManager.saveAuthorizationToken(token)
     }
 }

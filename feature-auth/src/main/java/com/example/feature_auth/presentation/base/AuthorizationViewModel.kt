@@ -4,7 +4,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.common.presentation.base.BaseViewModel
 import com.example.feature_auth.R
 import com.example.feature_auth.domain.AuthorizationInteractor
-import com.example.feature_auth.domain.models.AuthorizationResult
+import com.example.common.domain.models.network.AuthorizationResult
 import com.example.feature_auth.presentation.screen.AuthorizationRouter
 import kotlinx.coroutines.launch
 import java.net.UnknownHostException
@@ -15,12 +15,11 @@ abstract class AuthorizationViewModel(
 ) : BaseViewModel() {
 
     protected fun handleServerResult(result: AuthorizationResult, exceptionHandler: (String) -> Unit) {
-        if (result.isSuccessful) {
-            interactor.saveToken(result.token)
-            router.openStatistics()
+        viewModelScope.launch {
+            if (result.isSuccessful)
+                router.openStatistics()
+            else exceptionHandler.invoke(result.errorMessage)
         }
-        else
-            exceptionHandler.invoke(result.errorMessage)
     }
 
     protected fun tryAuthorize(request: suspend () -> Unit) {

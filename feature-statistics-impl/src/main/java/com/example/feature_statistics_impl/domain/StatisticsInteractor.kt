@@ -1,8 +1,14 @@
 package com.example.feature_statistics_impl.domain
 
+import com.example.common.domain.models.Account
+import com.example.common.domain.models.Category
 import com.example.common.domain.models.Tag
 import com.example.common.domain.models.Transaction
-import com.example.feature_statistics_impl.domain.repositories.TransactionsRepository
+import com.example.common.domain.repositories.AccountRepository
+import com.example.common.domain.repositories.CategoryRepository
+import com.example.common.domain.repositories.TagRepository
+import com.example.common.domain.repositories.TransactionRepository
+import com.example.common.presentation.extensions.roundToDay
 import com.example.feature_statistics_impl.presentation.screen.transactionsList.SortingType
 import com.example.feature_statistics_impl.presentation.screen.transactionsList.groupsRecyclerView.transactionGroups.TransactionGroup
 import com.example.feature_statistics_impl.presentation.screen.transactionsList.groupsRecyclerView.transactionGroups.TransactionGroupByCategory
@@ -13,18 +19,61 @@ import javax.inject.Inject
 import kotlin.math.absoluteValue
 
 class StatisticsInteractor @Inject constructor(
-    private val repository: TransactionsRepository
+    private val accountRepository: AccountRepository,
+    private val categoryRepository: CategoryRepository,
+    private val tagRepository: TagRepository,
+    private val transactionRepository: TransactionRepository,
 ) {
 
     suspend fun getTransactionGroups(sortingType: SortingType): List<TransactionGroup> {
-        val transactions = repository.getTransactions()
+        val transactions = transactionRepository.getTransactions()
+
         val groups = when (sortingType) {
             SortingType.ByDate -> getGroupsByDate(transactions)
             SortingType.ByCategory -> getGroupsByCategory(transactions)
             SortingType.ByTag -> getGroupsByTag(transactions)
         }
-
         return groups
+    }
+
+    suspend fun createTransaction(transaction: Transaction) {
+        transactionRepository.createTransaction(transaction)
+
+        val account = transaction.account
+        accountRepository.updateAccount(account.copy(
+            currentBalance = account.currentBalance + transaction.amount
+        ))
+    }
+
+    suspend fun editTransaction(transaction: Transaction) {
+        val oldAmount = transactionRepository.getTransactionById(transaction.id).amount
+        transactionRepository.updateTransaction(transaction)
+
+        val account = transaction.account
+        accountRepository.updateAccount(account.copy(
+            currentBalance = account.currentBalance + transaction.amount - oldAmount
+        ))
+    }
+
+    suspend fun deleteTransaction(transaction: Transaction) {
+        transactionRepository.deleteTransaction(transaction)
+
+        val account = transaction.account
+        accountRepository.updateAccount(account.copy(
+            currentBalance = account.currentBalance - transaction.amount
+        ))
+    }
+
+    suspend fun getCategories(): List<Category> {
+        return categoryRepository.getCategories()
+    }
+
+    suspend fun getAccounts(): List<Account> {
+        return accountRepository.getAccounts()
+    }
+
+    suspend fun getTags(): List<Tag> {
+        return tagRepository.getTags()
     }
 
     private fun getGroupsByDate(transactions: List<Transaction>): List<TransactionGroupByDate> {
@@ -65,6 +114,7 @@ class StatisticsInteractor @Inject constructor(
                 groups[null]!!.add(transaction)
         }
         return groups
+            .filter { it.value.isNotEmpty() }
             .map {
                 TransactionGroupByTag(
                     tag = it.key,
@@ -79,9 +129,5 @@ class StatisticsInteractor @Inject constructor(
         return this
             .sortedWith(compareBy<Transaction> { it.amount < 0 }
                 .thenByDescending { it.amount.absoluteValue })
-    }
-
-    private fun Date.roundToDay(): Date {
-        return Date((this.time / (1000*60*60)) * 1000*60*60)
     }
 }

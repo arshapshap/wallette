@@ -9,6 +9,7 @@ abstract class FeatureApiHolder(
 
     private var mFeatureApi: Any? = null
 
+    @Suppress("UNCHECKED_CAST")
     fun <T> getFeatureApi(): T {
         mFeatureLocker.lock()
         if (mFeatureApi == null) {
@@ -25,16 +26,12 @@ abstract class FeatureApiHolder(
         mFeatureLocker.unlock()
     }
 
-//    fun commonApi(): CommonApi {
-//        return mFeatureContainer.commonApi()
-//    }
+    fun commonApi(): CommonApi {
+        return mFeatureContainer.commonApi()
+    }
 
     protected fun <T> getFeature(key: Class<T>): T {
         return mFeatureContainer.getFeature<T>(key) ?: throw RuntimeException()
-    }
-
-    protected fun releaseFeature(key: Class<*>) {
-        mFeatureContainer.releaseFeature(key)
     }
 
     protected abstract fun initializeDependencies(): Any

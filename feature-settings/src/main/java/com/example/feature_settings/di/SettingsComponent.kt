@@ -1,7 +1,7 @@
 package com.example.feature_settings.di
 
-import com.example.common.data.TokenManager
 import com.example.common.di.scopes.SettingsScope
+import com.example.di.DataApi
 import com.example.feature_settings.presentation.SettingsRouter
 import com.example.feature_settings.presentation.screen.accounts.AccountsFragment
 import com.example.feature_settings.presentation.screen.accounts.AccountsViewModel
@@ -22,7 +22,9 @@ import dagger.Component
 
 @SettingsScope
 @Component(
-    modules = [SettingsBindsModule::class]
+    dependencies = [
+        SettingsDependencies::class
+    ]
 )
 interface SettingsComponent : SettingsFeatureApi {
 
@@ -30,12 +32,18 @@ interface SettingsComponent : SettingsFeatureApi {
     interface Builder {
         fun build(): SettingsComponent
 
-        @BindsInstance
-        fun router(router: SettingsRouter): Builder
+        fun withDependencies(deps: SettingsDependencies): Builder
 
         @BindsInstance
-        fun tokenManager(tokenManager: TokenManager): Builder
+        fun router(router: SettingsRouter): Builder
     }
+
+    @Component(
+        dependencies = [
+            DataApi::class
+        ]
+    )
+    interface SettingsDependenciesComponent : SettingsDependencies
 
     fun inject(fragment: SettingsFragment)
 
