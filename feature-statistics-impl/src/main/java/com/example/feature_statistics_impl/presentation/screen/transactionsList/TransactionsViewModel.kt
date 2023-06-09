@@ -3,7 +3,6 @@ package com.example.feature_statistics_impl.presentation.screen.transactionsList
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.common.domain.models.Transaction
 import com.example.common.presentation.base.BaseViewModel
 import com.example.feature_statistics_impl.presentation.StatisticsRouter
 import com.example.feature_statistics_impl.domain.StatisticsInteractor
@@ -34,12 +33,8 @@ class TransactionsViewModel @AssistedInject constructor(
         loadData(nextType)
     }
 
-    fun openTransaction(transaction: Transaction) {
-        router.openSingleTransaction(transaction)
-    }
-
-    fun refresh() {
-        router.refresh()
+    fun openTransaction(id: String) {
+        router.openTransaction(id)
     }
 
     private fun loadData(sortingType: SortingType) {
@@ -68,4 +63,5 @@ class TransactionsViewModel @AssistedInject constructor(
         val sortingType: SortingType = SortingType.ByDate,
         val groups: List<TransactionGroup> = listOf()
     )
+
 }

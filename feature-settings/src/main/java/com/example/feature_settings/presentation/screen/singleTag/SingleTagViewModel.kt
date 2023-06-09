@@ -50,26 +50,25 @@ class SingleTagViewModel @AssistedInject constructor(
             return
 
         val editingTag = _editingTagLiveData.value!!
-        val newTag = Tag(
-            id = tag?.id ?: 0,
-            name = editingTag.name,
-            color = convertColorIntToHexString(editingTag.color!!)
-        )
         viewModelScope.launch {
             if (tag == null)
-                interactor.createTag(newTag)
+                interactor.createTag(
+                    Tag(
+                        id = "",
+                        name = editingTag.name,
+                        color = convertColorIntToHexString(editingTag.color!!)
+                    )
+                )
             else
-                interactor.editTag(newTag)
+                interactor.editTag(
+                    Tag(
+                        id = tag.id,
+                        name = editingTag.name,
+                        color = convertColorIntToHexString(editingTag.color!!)
+                    )
+                )
+            router.openTags()
         }
-        router.close()
-    }
-
-    fun delete() {
-        if  (tag == null) return
-        viewModelScope.launch {
-            interactor.deleteTag(tag)
-        }
-        router.close()
     }
 
     fun selectColor(@ColorInt color: Int) {

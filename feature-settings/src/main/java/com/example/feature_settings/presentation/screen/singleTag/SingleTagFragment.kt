@@ -2,26 +2,23 @@ package com.example.feature_settings.presentation.screen.singleTag
 
 import android.graphics.Color
 import androidx.annotation.ColorInt
-import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.common.di.FeatureUtils
 import com.example.common.domain.models.Tag
 import com.example.common.presentation.base.BaseFragment
 import com.example.common.presentation.base.BaseViewModel
-import com.example.common.presentation.extensions.*
-import com.example.common.presentation.floatingButtonInterfaces.FloatingButtonListenersManager
-import com.example.common.presentation.floatingButtonInterfaces.OnFloatingButtonClickListener
 import com.example.feature_settings.R
 import com.example.feature_settings.databinding.FragmentSingleTagBinding
 import com.example.feature_settings.di.SettingsComponent
 import com.example.feature_settings.di.SettingsFeatureApi
+import com.example.feature_settings.presentation.utils.*
 import com.google.android.flexbox.*
 import vadiole.colorpicker.ColorModel
 import vadiole.colorpicker.ColorPickerDialog
 
 class SingleTagFragment :
-    BaseFragment<SingleTagViewModel>(R.layout.fragment_single_tag), OnFloatingButtonClickListener {
+    BaseFragment<SingleTagViewModel>(R.layout.fragment_single_tag) {
 
     companion object {
 
@@ -37,16 +34,6 @@ class SingleTagFragment :
         component.inject(this)
     }
 
-    override fun onStart() {
-        super.onStart()
-        (requireActivity() as? FloatingButtonListenersManager)?.subscribeOnFloatingButtonClick(this)
-    }
-
-    override fun onStop() {
-        super.onStop()
-        (requireActivity() as? FloatingButtonListenersManager)?.setDefaultOnFloatingButtonClickListener()
-    }
-
     @Suppress("DEPRECATION")
     override fun createViewModel(): BaseViewModel {
         return component.singleTagViewModel()
@@ -54,6 +41,16 @@ class SingleTagFragment :
     }
 
     override fun initViews() {
+        with (binding.saveLayout) {
+            setStrokeVisibility(true)
+            setColor(getColorPrimary())
+            setImage(R.drawable.ic_done)
+            setTitle(R.string.save)
+            setOnClickListener {
+                viewModel.save()
+            }
+        }
+
         with (binding.tagColorLayout) {
             setStrokeVisibility(true)
             setRightArrowVisible(true)
@@ -75,11 +72,6 @@ class SingleTagFragment :
         viewModel.startTagLiveData.observe(viewLifecycleOwner) {
             it?.name?.let {
                 binding.tagNameEditText.setText(it)
-
-                binding.deleteImageButton.isVisible = true
-                binding.deleteImageButton.setOnClickListener {
-                    viewModel.delete()
-                }
             }
         }
 
@@ -93,10 +85,6 @@ class SingleTagFragment :
                 }
             }
         }
-    }
-
-    override fun onFloatingButtonClick() {
-        viewModel.save()
     }
 
     private fun openColorPickerDialog(@ColorInt currentColor: Int? = null, onSelect: (Int) -> Unit) {

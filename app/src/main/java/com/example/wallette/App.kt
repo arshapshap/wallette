@@ -1,7 +1,6 @@
 package com.example.wallette
 
 import android.app.Application
-import com.example.common.di.CommonApi
 import com.example.common.di.ComponentDependenciesProvider
 import com.example.common.di.FeatureContainer
 import com.example.common.di.HasComponentDependencies
@@ -32,9 +31,5 @@ class App : Application(), FeatureContainer, HasComponentDependencies {
 
     override fun releaseFeature(key: Class<*>) {
         featureHolderManager.releaseFeature(key)
-    }
-
-    override fun commonApi(): CommonApi {
-        return appComponent
     }
 }

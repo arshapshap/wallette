@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/transactionsFragment">
+    app:startDestination="@id/statisticsFragment">
 
     <fragment
         android:id="@+id/statisticsFragment"
@@ -15,7 +15,7 @@
     <fragment
         android:id="@+id/transactionsFragment"
         android:name="com.example.feature_statistics_impl.presentation.screen.transactionsList.TransactionsFragment"
-        android:label="@string/transactions_fragment_name"
+        android:label="@string/statistics_fragment_name"
         tools:layout="@layout/fragment_transactions_list">
     </fragment>
 
@@ -78,10 +78,4 @@
         android:name="com.example.feature_settings.presentation.screen.singleTag.SingleTagFragment"
         android:label="@string/single_tag_fragment_name"
         tools:layout="@layout/fragment_single_tag"/>
-
-    <fragment
-        android:id="@+id/singleTransactionFragment"
-        android:name="com.example.feature_statistics_impl.presentation.screen.singleTransaction.SingleTransactionFragment"
-        android:label="@string/single_transaction_fragment_name"
-        tools:layout="@layout/fragment_single_transaction"/>
 </navigation>

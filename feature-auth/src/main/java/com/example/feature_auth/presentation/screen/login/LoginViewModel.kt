@@ -32,8 +32,7 @@ class LoginViewModel @AssistedInject constructor(
             handleServerResult(result) { errorMessage ->
                 when (errorMessage) {
                     "Incorrect login or password" -> _errorFromResourceLiveData.postValue(R.string.incorrect_login_or_password)
-                    "Such a user doesn't exist" -> _errorFromResourceLiveData.postValue(R.string.not_existent_user)
-                    else -> _errorFromResourceLiveData.postValue(R.string.error)
+                    else -> _errorLiveData.postValue(result.errorMessage)
                 }
             }
         }

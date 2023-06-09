@@ -2,6 +2,4 @@
 <resources>
     <dimen name="bottom_margin">200dp</dimen>
     <dimen name="top_margin">16dp</dimen>
-    <dimen name="button_with_icon_height">55dp</dimen>
-    <dimen name="button_icon_size">30dp</dimen>
 </resources>

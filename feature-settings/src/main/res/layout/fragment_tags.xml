@@ -17,7 +17,7 @@
 
         <include
             android:id="@+id/add_tag_layout"
-            layout="@layout/item_button_with_icon"
+            layout="@layout/item_settings_element"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
@@ -33,7 +33,7 @@
             android:paddingBottom="@dimen/bottom_margin"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:itemCount="15"
-            tools:listitem="@layout/item_button_with_icon" />
+            tools:listitem="@layout/item_tag" />
 
 
     </androidx.appcompat.widget.LinearLayoutCompat>

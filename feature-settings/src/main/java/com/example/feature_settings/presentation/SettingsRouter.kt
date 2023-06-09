@@ -21,6 +21,4 @@ interface SettingsRouter {
     fun openTransferCreating()
 
     fun openLoginPage()
-
-    fun close()
 }

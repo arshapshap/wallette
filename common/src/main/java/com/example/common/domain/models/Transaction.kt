@@ -1,11 +1,9 @@
 package com.example.common.domain.models
 
-import com.example.common.domain.models.enums.TransactionType
-import java.io.Serializable
 import java.util.*
 
 data class Transaction(
-    val id: Long,
+    val id: String,
     val type: TransactionType,
     val date: Date,
     val amount: Double,
@@ -13,5 +11,7 @@ data class Transaction(
     val account: Account,
     val accountDestination: Account?,
     val category: Category?,
+    val transactionGroup: Transaction?,
+    val isTransactionGroup: Boolean,
     val tags: List<Tag>
-) : Serializable
+)

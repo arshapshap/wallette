@@ -2,22 +2,20 @@ package com.example.feature_settings.presentation.screen.settings
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
-import com.example.common.domain.models.enums.Currency
+import com.example.common.data.TokenManager
+import com.example.common.domain.models.Currency
 import com.example.common.presentation.base.BaseViewModel
-import com.example.feature_settings.domain.SettingsInteractor
 import com.example.feature_settings.domain.models.DayOfWeek
 import com.example.feature_settings.domain.models.Language
 import com.example.feature_settings.domain.models.TimePeriod
 import com.example.feature_settings.presentation.SettingsRouter
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
-import kotlinx.coroutines.launch
 import kotlin.Int
 
 class SettingsViewModel @AssistedInject constructor(
     private val router: SettingsRouter,
-    private val interactor: SettingsInteractor
+    private val tokenManager: TokenManager
 ) : BaseViewModel() {
 
     private val _settingsLiveData = MutableLiveData<Settings>()
@@ -34,7 +32,7 @@ class SettingsViewModel @AssistedInject constructor(
             language = Language.RU,
             firstDayOfWeek = DayOfWeek.Monday,
             firstDayOfMonth = 1,
-            timePeriod = TimePeriod.All,
+            timePeriod = TimePeriod.Day,
             availableCurrencies = Currency.values().toList(),
             availableLanguages = Language.values().toList(),
             daysOfWeek = DayOfWeek.values().toList(),
@@ -43,9 +41,8 @@ class SettingsViewModel @AssistedInject constructor(
         )
         _settingsLiveData.postValue(settings)
 
-        viewModelScope.launch {
-            _isSynchronized.postValue(interactor.checkIsAuthorized())
-        }
+        val token = tokenManager.getAuthorizationToken()
+        _isSynchronized.value = token != null
     }
 
     fun enableSynchronization() {
@@ -57,10 +54,7 @@ class SettingsViewModel @AssistedInject constructor(
     fun disableSynchronization() {
         if (_isSynchronized.value == false)
             return
-        viewModelScope.launch {
-            interactor.logout()
-            _isSynchronized.postValue(false)
-        }
+        tokenManager.deleteToken()
     }
 
     fun openCategories() {

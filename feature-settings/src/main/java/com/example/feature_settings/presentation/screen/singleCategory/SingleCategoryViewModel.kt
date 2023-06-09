@@ -3,9 +3,7 @@ package com.example.feature_settings.presentation.screen.singleCategory
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.common.domain.models.Category
-import com.example.common.domain.models.enums.CategoryIcon
-import com.example.common.domain.models.enums.TransactionType
+import com.example.common.domain.models.*
 import com.example.common.presentation.base.BaseViewModel
 import com.example.feature_settings.domain.SettingsInteractor
 import com.example.feature_settings.presentation.SettingsRouter
@@ -44,44 +42,39 @@ class SingleCategoryViewModel @AssistedInject constructor(
                 icon = category.icon,
                 type = category.type
             )
-        viewModelScope.launch {
-            _startLiveData.postValue(
-                StartData(
-                    category = category,
-                    icons = CategoryIcon.values().filter { it.name != "Empty" },
-                    canBeDeleted = category != null
-                            && interactor.getCategories().filter { it.type == category.type }.size > 1
-                )
-            )
-            _editingCategoryLiveData.postValue(editingCategory)
-        }
+        _startLiveData.value = StartData(
+            category = category,
+            icons = CategoryIcon.values().filter { it.name != "Empty" }
+        )
+        _editingCategoryLiveData.value = editingCategory
     }
 
     fun save() {
-        if (!isDataValid) return
+        if (!isDataValid)
+            return
 
         val editingCategory = _editingCategoryLiveData.value!!
-        val newCategory = Category(
-            id = category?.id ?: 0,
-            name = editingCategory.name,
-            icon = editingCategory.icon,
-            type = editingCategory.type!!
-        )
         viewModelScope.launch {
             if (category == null)
-                interactor.createCategory(newCategory)
+                interactor.createCategory(
+                    Category(
+                        id = "",
+                        name = editingCategory.name,
+                        icon = editingCategory.icon,
+                        type = editingCategory.type!!
+                    )
+                )
             else
-                interactor.editCategory(newCategory)
+                interactor.editCategory(
+                    Category(
+                        id = category.id,
+                        name = editingCategory.name,
+                        icon = editingCategory.icon,
+                        type = editingCategory.type!!
+                    )
+                )
+            router.openCategories()
         }
-        router.close()
-    }
-
-    fun delete() {
-        if  (category == null) return
-        viewModelScope.launch {
-            interactor.deleteCategory(category)
-        }
-        router.close()
     }
 
     fun selectType(type: TransactionType) {
@@ -111,7 +104,6 @@ class SingleCategoryViewModel @AssistedInject constructor(
 
     data class StartData(
         val category: Category?,
-        val icons: List<CategoryIcon>,
-        val canBeDeleted: Boolean
+        val icons: List<CategoryIcon>
     )
 }

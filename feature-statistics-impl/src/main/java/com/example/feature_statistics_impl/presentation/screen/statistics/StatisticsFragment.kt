@@ -39,5 +39,6 @@ class StatisticsFragment : BaseFragment<StatisticsViewModel>(R.layout.fragment_s
     }
 
     override fun subscribe() {
+        //TODO("Not yet implemented")
     }
 }

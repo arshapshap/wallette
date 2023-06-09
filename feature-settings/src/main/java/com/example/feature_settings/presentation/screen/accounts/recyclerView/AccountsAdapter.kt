@@ -4,9 +4,10 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.common.databinding.ItemButtonWithIconBinding
 import com.example.common.domain.models.Account
-import com.example.common.presentation.extensions.*
+import com.example.common.presentation.extensions.formatAsBalance
+import com.example.feature_settings.databinding.ItemSettingsElementBinding
+import com.example.feature_settings.presentation.utils.*
 
 class AccountsAdapter(
     private val onItemClick: (Account) -> Unit
@@ -33,11 +34,11 @@ class AccountsAdapter(
         holder.onBind(list[position])
     }
 
-    private fun getBinding(parent: ViewGroup): ItemButtonWithIconBinding
-        = ItemButtonWithIconBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+    private fun getBinding(parent: ViewGroup): ItemSettingsElementBinding
+        = ItemSettingsElementBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 
     class AccountsViewHolder(
-        private val binding: ItemButtonWithIconBinding,
+        private val binding: ItemSettingsElementBinding,
         private val onClick: (Account) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
 

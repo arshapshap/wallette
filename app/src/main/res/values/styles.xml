@@ -6,15 +6,10 @@
     </style>
 
     <style name="App.Custom.FloatingActionButton" parent="ShapeAppearanceOverlay.Material3.FloatingActionButton">
-        <item name="fabCustomSize">100dp</item>
-        <item name="maxImageSize">40dp</item>
+        <item name="fabCustomSize">80dp</item>
+        <item name="maxImageSize">30dp</item>
         <item name="backgroundTint">?attr/colorPrimary</item>
         <item name="tint">?attr/colorOnPrimary</item>
-    </style>
-
-    <style name="App.Custom.FloatingActionButton.Outlined" parent="App.Custom.FloatingActionButton">
-        <item name="backgroundTint">?attr/colorOnPrimary</item>
-        <item name="tint">?attr/colorPrimary</item>
     </style>
 
     <style name="App.Custom.BottomAppBar" parent="ThemeOverlay.Material3.BottomAppBar">

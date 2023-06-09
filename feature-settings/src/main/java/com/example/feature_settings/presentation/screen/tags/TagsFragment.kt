@@ -4,12 +4,12 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.common.di.FeatureUtils
 import com.example.common.presentation.base.BaseFragment
 import com.example.common.presentation.base.BaseViewModel
-import com.example.common.presentation.extensions.*
 import com.example.feature_settings.R
 import com.example.feature_settings.databinding.FragmentTagsBinding
 import com.example.feature_settings.di.SettingsComponent
 import com.example.feature_settings.di.SettingsFeatureApi
 import com.example.feature_settings.presentation.screen.tags.recyclerView.TagsAdapter
+import com.example.feature_settings.presentation.utils.*
 
 class TagsFragment : BaseFragment<TagsViewModel>(R.layout.fragment_tags) {
 

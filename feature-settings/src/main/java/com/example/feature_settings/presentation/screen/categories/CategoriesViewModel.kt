@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.common.domain.models.Category
-import com.example.common.domain.models.enums.TransactionType
+import com.example.common.domain.models.TransactionType
 import com.example.common.presentation.base.BaseViewModel
 import com.example.feature_settings.domain.SettingsInteractor
 import com.example.feature_settings.presentation.SettingsRouter

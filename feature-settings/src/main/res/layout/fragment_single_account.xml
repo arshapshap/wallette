@@ -3,21 +3,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <ImageButton
-        android:id="@+id/deleteImageButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:visibility="invisible"
-        android:padding="5dp"
-        android:background="?selectableItemBackgroundBorderless"
-        android:src="@drawable/ic_delete"
-        tools:visibility="visible"
-        app:tint="@color/red"
-        tools:ignore="ContentDescription" />
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/top_margin" />
+
+    <include
+        android:id="@+id/save_layout"
+        layout="@layout/item_settings_element"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
     <Space
         android:layout_width="match_parent"
@@ -28,62 +24,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/account_name"
-        android:textFontWeight="600"
-        android:textSize="32sp"
         android:importantForAutofill="no"
-        android:gravity="center"
-        android:inputType="textShortMessage"
-        android:imeOptions="actionDone"/>
+        android:inputType="textShortMessage"/>
 
-    <androidx.appcompat.widget.LinearLayoutCompat
+    <EditText
+        android:id="@+id/start_balance_edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="@string/start_balance"/>
-
-        <EditText
-            android:id="@+id/start_balance_edit_text"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:importantForAutofill="no"
-            android:gravity="center"
-            android:inputType="numberDecimal"
-            android:imeOptions="actionDone"/>
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
-
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="@string/current_balance"/>
-
-        <EditText
-            android:id="@+id/current_balance_edit_text"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:importantForAutofill="no"
-            android:gravity="center"
-            android:inputType="numberDecimal"
-            android:enabled="false"/>
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
+        android:hint="@string/start_balance"
+        android:importantForAutofill="no"
+        android:inputType="numberDecimal" />
 
     <include
         android:id="@+id/currency_layout"
-        layout="@layout/item_button_with_icon"
+        layout="@layout/item_settings_element"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
@@ -94,6 +48,6 @@
         android:clipToPadding="false"
         android:paddingBottom="@dimen/bottom_margin"
         tools:itemCount="25"
-        tools:listitem="@layout/item_icon" />
+        tools:listitem="@layout/item_selecting_icon" />
 
 </androidx.appcompat.widget.LinearLayoutCompat>

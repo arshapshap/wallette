@@ -15,6 +15,4 @@
     <string name="empty_fields">Все поля должны быть заполнены</string>
     <string name="network_unavailable">Сеть недоступна. Проверьте подключение</string>
     <string name="error">Произошла ошибка</string>
-    <string name="not_existent_user">Такого пользователя не существует</string>
-    <string name="wrong_email_format">Неверный формат почты</string>
 </resources>

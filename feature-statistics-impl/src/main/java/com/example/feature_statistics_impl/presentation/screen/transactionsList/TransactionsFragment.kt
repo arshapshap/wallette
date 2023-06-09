@@ -5,7 +5,7 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.common.di.FeatureUtils
-import com.example.common.domain.models.enums.Currency
+import com.example.common.domain.models.Currency
 import com.example.common.presentation.base.BaseFragment
 import com.example.common.presentation.base.BaseViewModel
 import com.example.feature_statistics_impl.R
@@ -34,18 +34,13 @@ class TransactionsFragment : BaseFragment<TransactionsViewModel>(R.layout.fragme
     override fun initViews() {
         with (binding) {
             listRecyclerView.adapter = TransactionGroupsAdapter {
+                //Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
                 viewModel.openTransaction(it)
             }
 
             sortingImageButton.setOnClickListener {
                 viewModel.changeSortingType()
                 listRecyclerView.adapter?.notifyDataSetChanged()
-            }
-
-            refreshLayout.setOnRefreshListener {
-                viewModel.refresh()
-
-                refreshLayout.isRefreshing = false
             }
         }
     }
@@ -64,6 +59,7 @@ class TransactionsFragment : BaseFragment<TransactionsViewModel>(R.layout.fragme
                 binding.sortingImageButton.setImageDrawable(AppCompatResources.getDrawable(requireContext(), resId))
 
                 binding.balanceTextView.text = it.balance.formatAsBalance(Currency.RUB)
+                // TODO: сохранять основную валюту в sharedPrefs и подставлять её здесь
                 binding.balanceTextView.setTextColor(
                     ContextCompat.getColor(
                         binding.root.context,
