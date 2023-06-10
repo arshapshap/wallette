@@ -7,7 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.common.domain.models.Tag
 import com.example.common.presentation.base.BaseViewModel
-import com.example.feature_settings.domain.SettingsInteractor
+import com.example.feature_settings.domain.SettingsTagsInteractor
 import com.example.feature_settings.presentation.SettingsRouter
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 
 class SingleTagViewModel @AssistedInject constructor(
     @Assisted private val tag: Tag?,
-    private val interactor: SettingsInteractor,
+    private val interactor: SettingsTagsInteractor,
     private val router: SettingsRouter
 ) : BaseViewModel() {
 

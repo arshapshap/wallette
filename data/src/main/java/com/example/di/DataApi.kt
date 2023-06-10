@@ -1,5 +1,6 @@
 package com.example.di
 
+import com.example.common.data.SettingsManager
 import com.example.common.domain.repositories.*
 
 interface DataApi {
@@ -13,4 +14,6 @@ interface DataApi {
     fun provideTagsRepository(): TagRepository
 
     fun provideTransactionsRepository(): TransactionRepository
+
+    fun provideSettingsManager(): SettingsManager
 }

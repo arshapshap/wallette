@@ -7,7 +7,7 @@ import com.example.common.domain.models.Category
 import com.example.common.domain.models.enums.CategoryIcon
 import com.example.common.domain.models.enums.TransactionType
 import com.example.common.presentation.base.BaseViewModel
-import com.example.feature_settings.domain.SettingsInteractor
+import com.example.feature_settings.domain.SettingsCategoriesInteractor
 import com.example.feature_settings.presentation.SettingsRouter
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 
 class SingleCategoryViewModel @AssistedInject constructor(
     @Assisted private val category: Category?,
-    private val interactor: SettingsInteractor,
+    private val interactor: SettingsCategoriesInteractor,
     private val router: SettingsRouter
 ) : BaseViewModel() {
 

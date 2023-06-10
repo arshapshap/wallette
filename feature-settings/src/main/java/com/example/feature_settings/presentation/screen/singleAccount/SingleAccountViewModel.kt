@@ -8,7 +8,7 @@ import com.example.common.domain.models.enums.AccountIcon
 import com.example.common.domain.models.enums.Currency
 import com.example.common.presentation.base.BaseViewModel
 import com.example.common.presentation.extensions.round
-import com.example.feature_settings.domain.SettingsInteractor
+import com.example.feature_settings.domain.SettingsAccountsInteractor
 import com.example.feature_settings.presentation.SettingsRouter
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
 
 class SingleAccountViewModel @AssistedInject constructor(
     @Assisted private val account: Account?,
-    private val interactor: SettingsInteractor,
+    private val interactor: SettingsAccountsInteractor,
     private val router: SettingsRouter
 ) : BaseViewModel() {
 

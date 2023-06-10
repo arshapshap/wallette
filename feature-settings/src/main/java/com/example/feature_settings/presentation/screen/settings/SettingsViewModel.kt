@@ -30,11 +30,11 @@ class SettingsViewModel @AssistedInject constructor(
 
     init {
         val settings = Settings(
-            currency = Currency.RUB,
-            language = Language.RU,
-            firstDayOfWeek = DayOfWeek.Monday,
-            firstDayOfMonth = 1,
-            timePeriod = TimePeriod.All,
+            currency = interactor.getMainCurrency(),
+            language = interactor.getLanguage(),
+            firstDayOfWeek = interactor.getFirstDayOfWeek(),
+            firstDayOfMonth = interactor.getFirstDayOfMonth(),
+            timePeriod = interactor.getViewedTimePeriod(),
             availableCurrencies = Currency.values().toList(),
             availableLanguages = Language.values().toList(),
             daysOfWeek = DayOfWeek.values().toList(),
@@ -76,6 +76,9 @@ class SettingsViewModel @AssistedInject constructor(
     }
 
     fun selectCurrency(currency: Currency) {
+        viewModelScope.launch {
+            interactor.setMainCurrency(currency)
+        }
         _settingsLiveData.postValue(
             _settingsLiveData.value?.copy(
                 currency = currency
@@ -84,6 +87,9 @@ class SettingsViewModel @AssistedInject constructor(
     }
 
     fun selectLanguage(language: Language) {
+        viewModelScope.launch {
+            interactor.setLanguage(language)
+        }
         _settingsLiveData.postValue(
             _settingsLiveData.value?.copy(
                 language = language
@@ -92,6 +98,9 @@ class SettingsViewModel @AssistedInject constructor(
     }
 
     fun selectFirstDayOfWeek(firstDayOfWeek: DayOfWeek) {
+        viewModelScope.launch {
+            interactor.setFirstDayOfWeek(firstDayOfWeek)
+        }
         _settingsLiveData.postValue(
             _settingsLiveData.value?.copy(
                 firstDayOfWeek = firstDayOfWeek
@@ -100,6 +109,9 @@ class SettingsViewModel @AssistedInject constructor(
     }
 
     fun selectFirstDayOfMonth(firstDayOfMonth: Int) {
+        viewModelScope.launch {
+            interactor.setFirstDayOfMonth(firstDayOfMonth)
+        }
         _settingsLiveData.postValue(
             _settingsLiveData.value?.copy(
                 firstDayOfMonth = firstDayOfMonth
@@ -108,6 +120,9 @@ class SettingsViewModel @AssistedInject constructor(
     }
 
     fun selectTimePeriod(timePeriod: TimePeriod) {
+        viewModelScope.launch {
+            interactor.setViewedTimePeriod(timePeriod)
+        }
         _settingsLiveData.postValue(
             _settingsLiveData.value?.copy(
                 timePeriod = timePeriod

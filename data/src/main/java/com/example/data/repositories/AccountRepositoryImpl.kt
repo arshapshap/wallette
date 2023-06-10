@@ -50,4 +50,9 @@ class AccountRepositoryImpl @Inject constructor(
         val list = localSource.getAccounts()
         return list.map { mapper.map(it) }
     }
+
+    override suspend fun getAccountById(id: Long): Account {
+        val local = localSource.getAccountById(id)
+        return mapper.map(local)
+    }
 }
