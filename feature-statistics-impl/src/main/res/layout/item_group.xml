@@ -6,16 +6,16 @@
     android:layout_height="wrap_content">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:paddingVertical="5dp"
         android:id="@+id/groupHeaderLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingVertical="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/line_1"
+            android:id="@+id/line_left"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -25,37 +25,38 @@
             android:id="@+id/arrowImageView"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/header_height"
+            android:rotation="90"
             android:src="@drawable/purple_arrow_up"
-            app:layout_constraintEnd_toStartOf="@+id/line_1"
+            app:layout_constraintEnd_toStartOf="@+id/line_left"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:rotation="90"/>
+            tools:ignore="ContentDescription" />
 
         <TextView
             android:id="@+id/dateTextView"
+            style="@style/GroupName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/GroupName"
             app:layout_constraintBottom_toBottomOf="@+id/arrowImageView"
-            app:layout_constraintStart_toStartOf="@+id/line_1"
+            app:layout_constraintStart_toStartOf="@+id/line_left"
             app:layout_constraintTop_toTopOf="@+id/arrowImageView"
             tools:text="3 марта"
-            tools:visibility="gone"/>
+            tools:visibility="gone" />
 
         <TextView
             android:id="@+id/tagTextView"
+            style="@style/GroupName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/bg_tag"
             android:paddingHorizontal="15dp"
             android:paddingVertical="10dp"
             android:visibility="gone"
-            style="@style/GroupName"
             app:layout_constraintBottom_toBottomOf="@+id/arrowImageView"
-            app:layout_constraintStart_toStartOf="@+id/line_1"
+            app:layout_constraintStart_toStartOf="@+id/line_left"
             app:layout_constraintTop_toTopOf="@+id/arrowImageView"
             tools:backgroundTint="#00FF00"
-            tools:text="Работа"/>
+            tools:text="Работа" />
 
         <ImageView
             android:id="@+id/categoryIconImageView"
@@ -65,18 +66,19 @@
             android:padding="10dp"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@id/arrowImageView"
-            app:layout_constraintStart_toEndOf="@id/line_1"
+            app:layout_constraintStart_toEndOf="@id/line_left"
             app:layout_constraintTop_toTopOf="@id/arrowImageView"
+            tools:ignore="ContentDescription"
             tools:src="@drawable/ic_payments"
             tools:visibility="visible" />
 
         <TextView
             android:id="@+id/categoryTextView"
+            style="@style/GroupName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:visibility="gone"
-            style="@style/GroupName"
             app:layout_constraintBottom_toBottomOf="@id/arrowImageView"
             app:layout_constraintStart_toEndOf="@id/categoryIconImageView"
             app:layout_constraintTop_toTopOf="@id/arrowImageView"
@@ -85,9 +87,9 @@
 
         <TextView
             android:id="@+id/groupAmountTextView"
+            style="@style/GroupName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/GroupName"
             app:layout_constraintBottom_toBottomOf="@id/arrowImageView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/arrowImageView"

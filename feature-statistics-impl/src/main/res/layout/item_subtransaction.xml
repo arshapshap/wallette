@@ -7,14 +7,21 @@
     android:paddingVertical="5dp">
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/line_1"
+        android:id="@+id/line_left"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.1" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/line_2"
+        android:id="@+id/line_middle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.4" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/line_right"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.7"
         android:layout_width="wrap_content"
@@ -22,26 +29,29 @@
 
     <TextView
         android:id="@+id/titleTextView"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textColor="@color/black"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/line_middle"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="@id/line_2"
-        app:layout_constraintStart_toStartOf="@+id/line_1"
+        app:layout_constraintRight_toRightOf="@id/line_right"
+        app:layout_constraintStart_toStartOf="@+id/line_left"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Продукты" />
 
     <TextView
         android:id="@+id/commentTextView"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textColor="@color/grey"
         android:textSize="12sp"
+        android:gravity="end"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/line_2"
-        app:layout_constraintLeft_toLeftOf="@+id/line_1"
+        app:layout_constraintEnd_toStartOf="@+id/line_right"
+        app:layout_constraintLeft_toLeftOf="@+id/line_left"
+        app:layout_constraintStart_toStartOf="@+id/line_middle"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Молоко" />
 
