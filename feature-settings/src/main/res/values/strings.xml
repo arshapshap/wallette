@@ -9,26 +9,6 @@
     <string name="single_category_fragment_name">Категория</string>
     <string name="single_tag_fragment_name">Метка</string>
 
-    <!-- Languages -->
-    <string name="language_ru">Русский</string>
-    <string name="language_en">English</string>
-
-    <!-- Days of week -->
-    <string name="monday">Понедельник</string>
-    <string name="tuesday">Вторник</string>
-    <string name="wednesday">Среда</string>
-    <string name="thursday">Четверг</string>
-    <string name="friday">Пятница</string>
-    <string name="saturday">Суббота</string>
-    <string name="sunday">Воскресенье</string>
-
-    <!-- Time periods -->
-    <string name="day">День</string>
-    <string name="week">Неделя</string>
-    <string name="month">Месяц</string>
-    <string name="year">Год</string>
-    <string name="all">Все</string>
-
     <!-- Other -->
     <string name="category_name">Название категории</string>
     <string name="account_name">Название счета</string>

@@ -6,9 +6,9 @@ import androidx.lifecycle.viewModelScope
 import com.example.common.domain.models.enums.Currency
 import com.example.common.presentation.base.BaseViewModel
 import com.example.feature_settings.domain.SettingsInteractor
-import com.example.feature_settings.domain.models.DayOfWeek
-import com.example.feature_settings.domain.models.Language
-import com.example.feature_settings.domain.models.TimePeriod
+import com.example.common.domain.models.enums.DayOfWeek
+import com.example.common.domain.models.enums.Language
+import com.example.common.domain.models.enums.TimePeriod
 import com.example.feature_settings.presentation.SettingsRouter
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject

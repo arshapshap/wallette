@@ -1,7 +1,7 @@
-package com.example.feature_settings.domain.models
+package com.example.common.domain.models.enums
 
 import androidx.annotation.StringRes
-import com.example.feature_settings.R
+import com.example.common.R
 
 enum class TimePeriod(@StringRes val stringRes: Int) {
     Day(R.string.day),

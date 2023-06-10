@@ -17,7 +17,7 @@ class DecimalDigitsInputFilter(digitsBeforeZero: Int, digitsAfterZero: Int) : In
     override fun filter(
         source: CharSequence?, start: Int, end: Int, dest: Spanned?, dstart: Int, dend: Int
     ): CharSequence? {
-        val matcher: Matcher = mPattern.matcher(dest)
+        val matcher: Matcher = mPattern.matcher(dest.toString())
         return if (!matcher.matches()) "" else null
     }
 }

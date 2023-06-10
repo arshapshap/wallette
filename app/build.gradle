@@ -43,6 +43,7 @@ dependencies {
     implementation project(path: ':core-network')
     implementation project(path: ':common')
 
+    implementation preferenceDep
     implementation coreKtxDep
     implementation androidDep
     implementation materialDep
