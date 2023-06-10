@@ -13,7 +13,7 @@
             android:layout_height="@dimen/top_margin"/>
 
         <include
-            android:id="@+id/enable_sync_layout"
+            android:id="@+id/enableSyncButton"
             layout="@layout/item_button_with_icon"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
@@ -25,19 +25,19 @@
             android:layout_marginVertical="5dp" />
 
         <include
-            android:id="@+id/accounts_layout"
+            android:id="@+id/go_to_accounts_button"
             layout="@layout/item_button_with_icon"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
         <include
-            android:id="@+id/categories_layout"
+            android:id="@+id/go_to_categories_button"
             layout="@layout/item_button_with_icon"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
         <include
-            android:id="@+id/tags_layout"
+            android:id="@+id/go_to_tags_button"
             layout="@layout/item_button_with_icon"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
@@ -49,31 +49,37 @@
             android:layout_marginVertical="5dp" />
 
         <include
-            android:id="@+id/currency_layout"
+            android:id="@+id/select_main_currency_button"
             layout="@layout/item_button_with_icon"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
         <include
-            android:id="@+id/language_layout"
+            android:id="@+id/select_language_button"
             layout="@layout/item_button_with_icon"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
         <include
-            android:id="@+id/first_day_of_week_layout"
+            android:id="@+id/select_first_day_of_week_button"
             layout="@layout/item_button_with_icon"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
         <include
-            android:id="@+id/first_day_of_month_layout"
+            android:id="@+id/select_first_day_of_month_button"
             layout="@layout/item_button_with_icon"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
         <include
-            android:id="@+id/time_period_layout"
+            android:id="@+id/select_time_period_button"
+            layout="@layout/item_button_with_icon"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <include
+            android:id="@+id/select_viewed_account_button"
             layout="@layout/item_button_with_icon"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />

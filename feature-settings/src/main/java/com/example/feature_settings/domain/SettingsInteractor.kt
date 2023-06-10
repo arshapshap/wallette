@@ -44,7 +44,7 @@ class SettingsInteractor @Inject constructor(
         settingsManager.setViewedTimePeriod(timePeriod)
     }
 
-    fun setViewedAccount(account: Account) {
+    fun setViewedAccount(account: Account?) {
         settingsManager.setViewedAccount(account)
     }
 
@@ -59,7 +59,9 @@ class SettingsInteractor @Inject constructor(
     fun getViewedTimePeriod(): TimePeriod = settingsManager.getViewedTimePeriod() ?: TimePeriod.All
 
     suspend fun getViewedAccount(): Account? {
-        val accountId = settingsManager.getViewedAccountId() ?: return null
+        val accountId = settingsManager.getViewedAccountId()
+        if (accountId == 0L)
+            return null
         return accountRepository.getAccountById(accountId)
     }
 }

@@ -57,7 +57,7 @@ class SingleAccountFragment :
     }
 
     override fun initViews() {
-        with (binding.currencyLayout) {
+        with (binding.selectCurrencyButton) {
             setStrokeVisibility(false)
             setRightArrowVisible(true)
             setImage(R.drawable.ic_currency)
@@ -110,8 +110,8 @@ class SingleAccountFragment :
                 currentBalanceEditText.setText(it.currentBalance.toString())
 
                 if (it != null) {
-                    currencyLayout.setValue(it.currency.name)
-                    currencyLayout.setOnClickListener {
+                    selectCurrencyButton.setValue(it.currency.name)
+                    selectCurrencyButton.setOnClickListener {
                         showPickerDialog(
                             fragmentManager = childFragmentManager,
                             title = getString(R.string.currency),

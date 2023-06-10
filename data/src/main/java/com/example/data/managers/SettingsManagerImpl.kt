@@ -42,8 +42,11 @@ class SettingsManagerImpl @Inject constructor(
         sharedPrefs.edit().putString(TIME_PERIOD_KEY, timePeriod.name).apply()
     }
 
-    override fun setViewedAccount(account: Account) {
-        sharedPrefs.edit().putLong(ACCOUNT_ID_KEY, account.id).apply()
+    override fun setViewedAccount(account: Account?) {
+        if (account == null)
+            sharedPrefs.edit().remove(ACCOUNT_ID_KEY).apply()
+        else
+            sharedPrefs.edit().putLong(ACCOUNT_ID_KEY, account.id).apply()
     }
 
     override fun getMainCurrency(): Currency? {
@@ -71,7 +74,7 @@ class SettingsManagerImpl @Inject constructor(
     }
 
     override fun getViewedAccountId(): Long {
-        return sharedPrefs.getLong(FIRST_DAY_OF_MONTH_KEY, 0)
+        return sharedPrefs.getLong(ACCOUNT_ID_KEY, 0L)
     }
 
 }

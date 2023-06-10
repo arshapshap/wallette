@@ -18,5 +18,7 @@
     <string name="week">Неделя</string>
     <string name="month">Месяц</string>
     <string name="year">Год</string>
+
+    <!-- Common -->
     <string name="all">Все</string>
 </resources>

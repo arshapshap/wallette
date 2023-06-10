@@ -31,4 +31,6 @@
     <string name="tag_color">Цвет метки</string>
     <string name="tag_name">Название метки</string>
     <string name="current_balance">Текущий баланс</string>
+    <string name="viewed_account">Счёт</string>
+    <string name="all_accounts">Все счета</string>
 </resources>

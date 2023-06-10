@@ -18,7 +18,7 @@ interface SettingsManager {
 
     fun setViewedTimePeriod(timePeriod: TimePeriod)
 
-    fun setViewedAccount(account: Account)
+    fun setViewedAccount(account: Account?)
 
     fun getMainCurrency(): Currency?
 
@@ -30,5 +30,5 @@ interface SettingsManager {
 
     fun getViewedTimePeriod(): TimePeriod?
 
-    fun getViewedAccountId(): Long?
+    fun getViewedAccountId(): Long
 }
