@@ -43,8 +43,6 @@ dependencies {
 
     implementation project(path: ':common')
 
-    implementation preferenceDep
-
     implementation coreKtxDep
     implementation androidDep
 

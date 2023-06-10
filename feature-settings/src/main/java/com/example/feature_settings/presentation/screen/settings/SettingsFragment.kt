@@ -4,13 +4,13 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.common.di.FeatureUtils
 import com.example.common.presentation.base.BaseFragment
 import com.example.common.presentation.base.BaseViewModel
+import com.example.common.presentation.dialogs.PickerFragment
+import com.example.common.presentation.dialogs.PickerFragment.Companion.showPickerDialog
 import com.example.common.presentation.extensions.*
 import com.example.feature_settings.R
 import com.example.feature_settings.databinding.FragmentSettingsBinding
 import com.example.feature_settings.di.SettingsComponent
 import com.example.feature_settings.di.SettingsFeatureApi
-import com.example.common.presentation.dialogs.PickerFragment
-import com.example.common.presentation.dialogs.PickerFragment.Companion.showPickerDialog
 
 
 class SettingsFragment : BaseFragment<SettingsViewModel>(R.layout.fragment_settings),
@@ -30,7 +30,7 @@ class SettingsFragment : BaseFragment<SettingsViewModel>(R.layout.fragment_setti
     }
 
     override fun initViews() {
-        with (binding.enableSyncLayout) {
+        with (binding.enableSyncButton) {
             setColor(getColorOnPrimary())
             setFillColor(getColorPrimary())
             setImage(R.drawable.ic_sync)
@@ -40,7 +40,7 @@ class SettingsFragment : BaseFragment<SettingsViewModel>(R.layout.fragment_setti
             }
         }
 
-        with (binding.accountsLayout) {
+        with (binding.goToAccountsButton) {
             setStrokeVisibility(false)
             setRightArrowVisible(true)
             setImage(com.example.common.R.drawable.ic_account)
@@ -50,7 +50,7 @@ class SettingsFragment : BaseFragment<SettingsViewModel>(R.layout.fragment_setti
             }
         }
 
-        with (binding.categoriesLayout) {
+        with (binding.goToCategoriesButton) {
             setStrokeVisibility(false)
             setRightArrowVisible(true)
             setImage(com.example.common.R.drawable.ic_category)
@@ -60,7 +60,7 @@ class SettingsFragment : BaseFragment<SettingsViewModel>(R.layout.fragment_setti
             }
         }
 
-        with (binding.tagsLayout) {
+        with (binding.goToTagsButton) {
             setStrokeVisibility(false)
             setRightArrowVisible(true)
             setImage(com.example.common.R.drawable.ic_tag)
@@ -70,52 +70,59 @@ class SettingsFragment : BaseFragment<SettingsViewModel>(R.layout.fragment_setti
             }
         }
 
-        with (binding.currencyLayout) {
+        with (binding.selectMainCurrencyButton) {
             setStrokeVisibility(false)
             setRightArrowVisible(true)
             setImage(R.drawable.ic_currency)
             setTitle(R.string.main_currency)
         }
 
-        with (binding.languageLayout) {
+        with (binding.selectLanguageButton) {
             setStrokeVisibility(false)
             setRightArrowVisible(true)
             setImage(R.drawable.ic_language)
             setTitle(R.string.language)
         }
 
-        with (binding.firstDayOfWeekLayout) {
+        with (binding.selectFirstDayOfWeekButton) {
             setStrokeVisibility(false)
             setRightArrowVisible(true)
             setImage(R.drawable.ic_calendar_today)
             setTitle(R.string.first_day_of_week)
         }
 
-        with (binding.firstDayOfMonthLayout) {
+        with (binding.selectFirstDayOfMonthButton) {
             setStrokeVisibility(false)
             setRightArrowVisible(true)
             setImage(R.drawable.ic_calendar_month)
             setTitle(R.string.first_day_of_month)
         }
 
-        with (binding.timePeriodLayout) {
+        with (binding.selectTimePeriodButton) {
             setStrokeVisibility(false)
             setRightArrowVisible(true)
             setImage(R.drawable.ic_calendar_note)
             setTitle(R.string.time_period)
+        }
+
+        with (binding.selectViewedAccountButton) {
+            setStrokeVisibility(false)
+            setRightArrowVisible(true)
+            setImage(com.example.common.R.drawable.ic_account)
+            setTitle(R.string.viewed_account)
         }
     }
 
     override fun subscribe() {
         with (viewModel) {
             isSynchronized.observe(viewLifecycleOwner) {
-                with (binding.enableSyncLayout) {
+                with (binding.enableSyncButton) {
                     invalidate()
                     setImage(R.drawable.ic_sync)
                 }
 
                 if (it)
-                    with (binding.enableSyncLayout) {
+                    with (binding.enableSyncButton) {
                         setColor(getColorPrimary())
                         setStrokeVisibility(true)
                         setTitle(R.string.synchronization_enabled)
@@ -124,7 +131,7 @@ class SettingsFragment : BaseFragment<SettingsViewModel>(R.layout.fragment_setti
                         }
                     }
                 else
-                    with (binding.enableSyncLayout) {
+                    with (binding.enableSyncButton) {
                         setColor(getColorOnPrimary())
                         setFillColor(getColorPrimary())
                         setTitle(R.string.enable_synchronization)
@@ -135,7 +142,7 @@ class SettingsFragment : BaseFragment<SettingsViewModel>(R.layout.fragment_setti
             }
 
             settingsLiveData.observe(viewLifecycleOwner) {
-                with (binding.currencyLayout) {
+                with (binding.selectMainCurrencyButton) {
                     setValue(it.currency.name)
                     setOnClickListener {
                         showPickerDialog(
@@ -147,7 +154,7 @@ class SettingsFragment : BaseFragment<SettingsViewModel>(R.layout.fragment_setti
                     }
                 }
 
-                with (binding.languageLayout) {
+                with (binding.selectLanguageButton) {
                     setValue(it.language.stringRes)
                     setOnClickListener {
                         showPickerDialog(
@@ -159,7 +166,7 @@ class SettingsFragment : BaseFragment<SettingsViewModel>(R.layout.fragment_setti
                     }
                 }
 
-                with (binding.firstDayOfWeekLayout) {
+                with (binding.selectFirstDayOfWeekButton) {
                     setValue(it.firstDayOfWeek.stringRes)
                     setOnClickListener {
                         showPickerDialog(
@@ -171,7 +178,7 @@ class SettingsFragment : BaseFragment<SettingsViewModel>(R.layout.fragment_setti
                     }
                 }
 
-                with (binding.firstDayOfMonthLayout) {
+                with (binding.selectFirstDayOfMonthButton) {
                     setValue(it.firstDayOfMonth.toString())
                     setOnClickListener {
                         showPickerDialog(
@@ -183,7 +190,7 @@ class SettingsFragment : BaseFragment<SettingsViewModel>(R.layout.fragment_setti
                     }
                 }
 
-                with (binding.timePeriodLayout) {
+                with (binding.selectTimePeriodButton) {
                     setValue(it.timePeriod.stringRes)
                     setOnClickListener {
                         showPickerDialog(
@@ -191,6 +198,27 @@ class SettingsFragment : BaseFragment<SettingsViewModel>(R.layout.fragment_setti
                             title = getString(R.string.time_period),
                             items = it.availableTimePeriods.map { getString(it.stringRes) }.toTypedArray(),
                             tag = TIME_PERIOD_PICKER_TAG
+                        )
+                    }
+                }
+
+                with (binding.selectViewedAccountButton) {
+                    if (it.viewedAccount == null) {
+                        setValue(R.string.all_accounts)
+                        setImage(com.example.common.R.drawable.ic_account)
+                    } else {
+                        setValue(it.viewedAccount.name)
+                        setImage(it.viewedAccount.icon.drawableRes)
+                    }
+                    setOnClickListener {
+                        showPickerDialog(
+                            fragmentManager = childFragmentManager,
+                            title = getString(R.string.viewed_account),
+                            items = it.accounts
+                                .map { it.name }
+                                .plus( getString(R.string.all_accounts) )
+                                .toTypedArray(),
+                            tag = VIEWED_ACCOUNT_PICKER_TAG
                         )
                     }
                 }
@@ -205,6 +233,7 @@ class SettingsFragment : BaseFragment<SettingsViewModel>(R.layout.fragment_setti
             FIRST_DAY_OF_WEEK_PICKER_TAG -> onFirstDayOfWeekSelected(index)
             FIRST_DAY_OF_MONTH_PICKER_TAG -> onFirstDayOfMonthSelected(index)
             TIME_PERIOD_PICKER_TAG -> onTimePeriodSelected(index)
+            VIEWED_ACCOUNT_PICKER_TAG -> onViewedAccountSelected(index)
             else -> return
         }
     }
@@ -234,6 +263,15 @@ class SettingsFragment : BaseFragment<SettingsViewModel>(R.layout.fragment_setti
         viewModel.selectTimePeriod(timePeriod)
     }
 
+    private fun onViewedAccountSelected(index: Int) {
+        val account =
+            if (index >= viewModel.settingsLiveData.value!!.accounts.count())
+                null
+            else
+                viewModel.settingsLiveData.value!!.accounts[index]
+        viewModel.selectViewedAccount(account)
+    }
+
     companion object {
 
         private const val CURRENCY_PICKER_TAG = "currency"
@@ -241,5 +279,6 @@ class SettingsFragment : BaseFragment<SettingsViewModel>(R.layout.fragment_setti
         private const val FIRST_DAY_OF_WEEK_PICKER_TAG = "first_day_of_week"
         private const val FIRST_DAY_OF_MONTH_PICKER_TAG = "first_day_of_month"
         private const val TIME_PERIOD_PICKER_TAG = "time_period"
+        private const val VIEWED_ACCOUNT_PICKER_TAG = "viewed_account"
     }
 }

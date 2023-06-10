@@ -5,14 +5,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.common.domain.models.Tag
 import com.example.common.presentation.base.BaseViewModel
-import com.example.feature_settings.domain.SettingsInteractor
+import com.example.feature_settings.domain.SettingsTagsInteractor
 import com.example.feature_settings.presentation.SettingsRouter
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.launch
 
 class TagsViewModel @AssistedInject constructor(
-    private val interactor: SettingsInteractor,
+    private val interactor: SettingsTagsInteractor,
     private val router: SettingsRouter
 ) : BaseViewModel() {
 

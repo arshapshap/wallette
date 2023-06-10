@@ -6,14 +6,14 @@ import androidx.lifecycle.viewModelScope
 import com.example.common.domain.models.Category
 import com.example.common.domain.models.enums.TransactionType
 import com.example.common.presentation.base.BaseViewModel
-import com.example.feature_settings.domain.SettingsInteractor
+import com.example.feature_settings.domain.SettingsCategoriesInteractor
 import com.example.feature_settings.presentation.SettingsRouter
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.launch
 
 class CategoriesViewModel @AssistedInject constructor(
-    private val interactor: SettingsInteractor,
+    private val interactor: SettingsCategoriesInteractor,
     private val router: SettingsRouter
 ) : BaseViewModel() {
 

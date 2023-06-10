@@ -1,19 +1,19 @@
 package com.example.feature_settings.domain
 
+import com.example.common.data.SettingsManager
 import com.example.common.domain.models.Account
-import com.example.common.domain.models.Category
-import com.example.common.domain.models.Tag
+import com.example.common.domain.models.enums.Currency
+import com.example.common.domain.models.enums.DayOfWeek
+import com.example.common.domain.models.enums.Language
+import com.example.common.domain.models.enums.TimePeriod
 import com.example.common.domain.repositories.AccountRepository
 import com.example.common.domain.repositories.AuthorizationRepository
-import com.example.common.domain.repositories.CategoryRepository
-import com.example.common.domain.repositories.TagRepository
 import javax.inject.Inject
 
 class SettingsInteractor @Inject constructor(
+    private val authorizationRepository: AuthorizationRepository,
     private val accountRepository: AccountRepository,
-    private val categoryRepository: CategoryRepository,
-    private val tagRepository: TagRepository,
-    private val authorizationRepository: AuthorizationRepository
+    private val settingsManager: SettingsManager
 ) {
     suspend fun checkIsAuthorized(): Boolean {
         return authorizationRepository.checkIsAuthorized()
@@ -23,51 +23,45 @@ class SettingsInteractor @Inject constructor(
         return authorizationRepository.logout()
     }
 
-    suspend fun createAccount(account: Account) {
-        accountRepository.createAccount(account)
+    fun setMainCurrency(currency: Currency) {
+        settingsManager.setMainCurrency(currency)
     }
 
-    suspend fun editAccount(account: Account) {
-        accountRepository.updateAccount(account)
+    fun setLanguage(language: Language) {
+        settingsManager.setLanguage(language)
     }
 
-    suspend fun deleteAccount(account: Account) {
-        accountRepository.deleteAccount(account)
+    fun setFirstDayOfWeek(dayOfWeek: DayOfWeek) {
+        settingsManager.setFirstDayOfWeek(dayOfWeek)
     }
 
-    suspend fun getAccounts(): List<Account> {
-        return accountRepository.getAccounts()
+    fun setFirstDayOfMonth(day: Int) {
+        if (day < 1 || day > 31) throw IllegalArgumentException("Day of month must be between 1 and 31")
+        settingsManager.setFirstDayOfMonth(day)
     }
 
-    suspend fun createCategory(category: Category) {
-        categoryRepository.createCategory(category)
+    fun setViewedTimePeriod(timePeriod: TimePeriod) {
+        settingsManager.setViewedTimePeriod(timePeriod)
     }
 
-    suspend fun deleteCategory(category: Category) {
-        categoryRepository.deleteCategory(category)
+    fun setViewedAccount(account: Account?) {
+        settingsManager.setViewedAccount(account)
     }
 
-    suspend fun editCategory(category: Category) {
-        categoryRepository.updateCategory(category)
-    }
+    fun getMainCurrency(): Currency = settingsManager.getMainCurrency() ?: Currency.RUB // TODO: дефолтные значения
 
-    suspend fun getCategories(): List<Category> {
-        return categoryRepository.getCategories()
-    }
+    fun getLanguage(): Language = settingsManager.getLanguage() ?: Language.RU
 
-    suspend fun createTag(tag: Tag) {
-        tagRepository.createTag(tag)
-    }
+    fun getFirstDayOfWeek(): DayOfWeek = settingsManager.getFirstDayOfWeek() ?: DayOfWeek.Monday
 
-    suspend fun editTag(tag: Tag) {
-        tagRepository.updateTag(tag)
-    }
+    fun getFirstDayOfMonth(): Int = settingsManager.getFirstDayOfMonth() ?: 1
 
-    suspend fun deleteTag(tag: Tag) {
-        tagRepository.deleteTag(tag)
-    }
+    fun getViewedTimePeriod(): TimePeriod = settingsManager.getViewedTimePeriod() ?: TimePeriod.All
 
-    suspend fun getTags(): List<Tag> {
-        return tagRepository.getTags()
+    suspend fun getViewedAccount(): Account? {
+        val accountId = settingsManager.getViewedAccountId()
+        if (accountId == 0L)
+            return null
+        return accountRepository.getAccountById(accountId)
     }
 }

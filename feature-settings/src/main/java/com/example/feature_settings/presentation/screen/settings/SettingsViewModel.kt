@@ -3,12 +3,14 @@ package com.example.feature_settings.presentation.screen.settings
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.example.common.domain.models.Account
 import com.example.common.domain.models.enums.Currency
 import com.example.common.presentation.base.BaseViewModel
 import com.example.feature_settings.domain.SettingsInteractor
-import com.example.feature_settings.domain.models.DayOfWeek
-import com.example.feature_settings.domain.models.Language
-import com.example.feature_settings.domain.models.TimePeriod
+import com.example.common.domain.models.enums.DayOfWeek
+import com.example.common.domain.models.enums.Language
+import com.example.common.domain.models.enums.TimePeriod
+import com.example.feature_settings.domain.SettingsAccountsInteractor
 import com.example.feature_settings.presentation.SettingsRouter
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
@@ -17,7 +19,8 @@ import kotlin.Int
 
 class SettingsViewModel @AssistedInject constructor(
     private val router: SettingsRouter,
-    private val interactor: SettingsInteractor
+    private val interactor: SettingsInteractor,
+    private val accountsInteractor: SettingsAccountsInteractor
 ) : BaseViewModel() {
 
     private val _settingsLiveData = MutableLiveData<Settings>()
@@ -29,21 +32,22 @@ class SettingsViewModel @AssistedInject constructor(
         get() = _isSynchronized
 
     init {
-        val settings = Settings(
-            currency = Currency.RUB,
-            language = Language.RU,
-            firstDayOfWeek = DayOfWeek.Monday,
-            firstDayOfMonth = 1,
-            timePeriod = TimePeriod.All,
-            availableCurrencies = Currency.values().toList(),
-            availableLanguages = Language.values().toList(),
-            daysOfWeek = DayOfWeek.values().toList(),
-            daysOfMonth = (1..31).toList(),
-            availableTimePeriods = TimePeriod.values().toList()
-        )
-        _settingsLiveData.postValue(settings)
-
         viewModelScope.launch {
+            val settings = Settings(
+                currency = interactor.getMainCurrency(),
+                language = interactor.getLanguage(),
+                firstDayOfWeek = interactor.getFirstDayOfWeek(),
+                firstDayOfMonth = interactor.getFirstDayOfMonth(),
+                timePeriod = interactor.getViewedTimePeriod(),
+                viewedAccount = interactor.getViewedAccount(),
+                accounts = accountsInteractor.getAccounts(),
+                availableCurrencies = Currency.values().toList(),
+                availableLanguages = Language.values().toList(),
+                daysOfWeek = DayOfWeek.values().toList(),
+                daysOfMonth = (1..31).toList(),
+                availableTimePeriods = TimePeriod.values().toList()
+            )
+            _settingsLiveData.postValue(settings)
             _isSynchronized.postValue(interactor.checkIsAuthorized())
         }
     }
@@ -76,6 +80,9 @@ class SettingsViewModel @AssistedInject constructor(
     }
 
     fun selectCurrency(currency: Currency) {
+        viewModelScope.launch {
+            interactor.setMainCurrency(currency)
+        }
         _settingsLiveData.postValue(
             _settingsLiveData.value?.copy(
                 currency = currency
@@ -84,6 +91,9 @@ class SettingsViewModel @AssistedInject constructor(
     }
 
     fun selectLanguage(language: Language) {
+        viewModelScope.launch {
+            interactor.setLanguage(language)
+        }
         _settingsLiveData.postValue(
             _settingsLiveData.value?.copy(
                 language = language
@@ -92,6 +102,9 @@ class SettingsViewModel @AssistedInject constructor(
     }
 
     fun selectFirstDayOfWeek(firstDayOfWeek: DayOfWeek) {
+        viewModelScope.launch {
+            interactor.setFirstDayOfWeek(firstDayOfWeek)
+        }
         _settingsLiveData.postValue(
             _settingsLiveData.value?.copy(
                 firstDayOfWeek = firstDayOfWeek
@@ -100,6 +113,9 @@ class SettingsViewModel @AssistedInject constructor(
     }
 
     fun selectFirstDayOfMonth(firstDayOfMonth: Int) {
+        viewModelScope.launch {
+            interactor.setFirstDayOfMonth(firstDayOfMonth)
+        }
         _settingsLiveData.postValue(
             _settingsLiveData.value?.copy(
                 firstDayOfMonth = firstDayOfMonth
@@ -108,9 +124,23 @@ class SettingsViewModel @AssistedInject constructor(
     }
 
     fun selectTimePeriod(timePeriod: TimePeriod) {
+        viewModelScope.launch {
+            interactor.setViewedTimePeriod(timePeriod)
+        }
         _settingsLiveData.postValue(
             _settingsLiveData.value?.copy(
                 timePeriod = timePeriod
+            )
+        )
+    }
+
+    fun selectViewedAccount(account: Account?) {
+        viewModelScope.launch {
+            interactor.setViewedAccount(account)
+        }
+        _settingsLiveData.postValue(
+            _settingsLiveData.value?.copy(
+                viewedAccount = account
             )
         )
     }
@@ -127,6 +157,8 @@ class SettingsViewModel @AssistedInject constructor(
         val firstDayOfWeek: DayOfWeek,
         val firstDayOfMonth: Int,
         val timePeriod: TimePeriod,
+        val viewedAccount: Account?,
+        val accounts: List<Account>,
         val availableCurrencies: List<Currency>,
         val availableLanguages: List<Language>,
         val daysOfWeek: List<DayOfWeek>,

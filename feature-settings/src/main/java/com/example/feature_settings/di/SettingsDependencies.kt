@@ -1,5 +1,6 @@
 package com.example.feature_settings.di
 
+import com.example.common.data.SettingsManager
 import com.example.common.domain.repositories.AccountRepository
 import com.example.common.domain.repositories.AuthorizationRepository
 import com.example.common.domain.repositories.CategoryRepository
@@ -14,4 +15,6 @@ interface SettingsDependencies {
     fun tagsRepository(): TagRepository
 
     fun authorizationRepository(): AuthorizationRepository
+
+    fun settingsManager(): SettingsManager
 }

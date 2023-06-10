@@ -12,6 +12,7 @@ abstract class BaseFragment<T: BaseViewModel>(@LayoutRes contentLayoutId: Int) :
     private val _viewModel : BaseViewModel by lazyViewModel {
         createViewModel()
     }
+    @Suppress("UNCHECKED_CAST")
     protected val viewModel by lazy {
         _viewModel as T
     }

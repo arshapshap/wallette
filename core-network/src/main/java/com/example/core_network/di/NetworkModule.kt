@@ -1,7 +1,5 @@
 package com.example.core_network.di
 
-import android.content.Context
-import android.content.SharedPreferences
 import com.example.common.di.scopes.ApplicationScope
 import com.example.core_network.BuildConfig
 import com.example.core_network.data.TokenInterceptor
@@ -63,9 +61,4 @@ class NetworkModule {
             .addInterceptor(interceptor)
             .build()
     }
-
-    @ApplicationScope
-    @Provides
-    fun provideSharedPreferences(context: Context): SharedPreferences
-            = androidx.preference.PreferenceManager.getDefaultSharedPreferences(context)
 }

@@ -1,6 +1,8 @@
 package com.example.di
 
+import com.example.common.data.SettingsManager
 import com.example.common.domain.repositories.*
+import com.example.data.managers.SettingsManagerImpl
 import com.example.data.managers.interfaces.*
 import com.example.data.repositories.*
 import com.example.data.repositories.remote.AccountRemoteRepositoryImpl
@@ -12,6 +14,9 @@ import dagger.Module
 
 @Module
 interface DataBindsModule {
+
+    @Binds
+    fun bindSettingsManager(settingsManagerImpl: SettingsManagerImpl): SettingsManager
 
     @Binds
     fun bindAccountsRepository(repositoryImpl: AccountRepositoryImpl): AccountRepository
