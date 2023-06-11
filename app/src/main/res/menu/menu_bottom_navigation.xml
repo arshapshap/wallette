@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/transactionsFragment"
+        android:id="@+id/statistics"
         android:icon="@drawable/ic_pie_chart"
-        android:title="@string/statistics_fragment_name" />
+        android:title="@string/statistics_fragment_name"/>
     <item
         android:id="@+id/empty"
         android:title=""
@@ -13,7 +13,7 @@
         android:icon="@drawable/ic_monitoring"
         android:title="План" />-->
     <item
-        android:id="@+id/settingsFragment"
+        android:id="@+id/settings"
         android:icon="@drawable/ic_settings"
         android:title="@string/settings_fragment_name" />
 </menu>
