@@ -189,7 +189,7 @@ class SingleTransactionFragment : BaseFragment<SingleTransactionViewModel>(R.lay
                 }
 
                 with(selectDateButton) {
-                    setValue(it.date.formatToString())
+                    setValue(it.date.formatDayToString())
                     setOnClickListener {
                         showDatePickerDialog(
                             fragmentManager = childFragmentManager,

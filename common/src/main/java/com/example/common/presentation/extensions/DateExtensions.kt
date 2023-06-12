@@ -3,18 +3,40 @@ package com.example.common.presentation.extensions
 import java.text.SimpleDateFormat
 import java.util.*
 
-fun Date.formatToString(): String {
+fun Date.formatDayToString(): String {
     val currentYear = Calendar.getInstance().get(Calendar.YEAR)
 
     val calendar = Calendar.getInstance()
     calendar.time = this
-    val groupYear = calendar.get(Calendar.YEAR)
+    val year = calendar.get(Calendar.YEAR)
 
     val outputDateFormatter =
-        if (currentYear == groupYear)
+        if (currentYear == year)
             SimpleDateFormat("dd MMM", Locale.getDefault())
         else
             SimpleDateFormat("dd MMM, yyyy", Locale.getDefault())
+
+    return outputDateFormatter.format(this)
+}
+
+fun Date.formatMonthToString(): String {
+    val currentYear = Calendar.getInstance().get(Calendar.YEAR)
+
+    val calendar = Calendar.getInstance()
+    calendar.time = this
+    val year = calendar.get(Calendar.YEAR)
+
+    val outputDateFormatter =
+        if (currentYear == year)
+            SimpleDateFormat("LLLL", Locale.getDefault())
+        else
+            SimpleDateFormat("LLLL, yyyy", Locale.getDefault())
+
+    return outputDateFormatter.format(this)
+}
+
+fun Date.formatYearToString(): String {
+    val outputDateFormatter = SimpleDateFormat("yyyy", Locale.getDefault())
 
     return outputDateFormatter.format(this)
 }

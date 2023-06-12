@@ -4,7 +4,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.common.domain.models.Transaction
 import com.example.common.presentation.extensions.formatAsBalance
-import com.example.common.presentation.extensions.formatToString
+import com.example.common.presentation.extensions.formatDayToString
 import com.example.common.presentation.extensions.getColorBySign
 import com.example.feature_statistics_impl.R
 import com.example.feature_statistics_impl.databinding.ItemExpandableTransactionBinding
@@ -19,7 +19,7 @@ class TransactionsViewHolder(
     fun onBind(transaction: Transaction) {
         with (binding) {
             if (sortingType == SortingType.ByCategory)
-                nameTextView.text = transaction.date.formatToString()
+                nameTextView.text = transaction.date.formatDayToString()
             else
                 nameTextView.text = transaction.category?.name ?: binding.root.context.getString(R.string.no_category)
             groupCommentTextView.text = transaction.description
