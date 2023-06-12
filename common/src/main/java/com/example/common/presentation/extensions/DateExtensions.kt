@@ -32,7 +32,7 @@ fun Date.formatMonthToString(): String {
         else
             SimpleDateFormat("LLLL, yyyy", Locale.getDefault())
 
-    return outputDateFormatter.format(this)
+    return outputDateFormatter.format(this).replaceFirstChar(Char::titlecase)
 }
 
 fun Date.formatYearToString(): String {

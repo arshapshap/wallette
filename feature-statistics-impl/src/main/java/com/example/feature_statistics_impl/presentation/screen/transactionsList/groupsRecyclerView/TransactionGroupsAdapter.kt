@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.common.domain.models.Transaction
 import com.example.feature_statistics_impl.databinding.ItemGroupBinding
 import com.example.feature_statistics_impl.presentation.screen.transactionsList.SortingType
-import com.example.feature_statistics_impl.presentation.screen.transactionsList.groupsRecyclerView.transactionGroups.TransactionGroup
+import com.example.feature_statistics_impl.domain.models.TransactionGroup
 
 class TransactionGroupsAdapter(
     private val onTransactionClick: (Transaction) -> Unit

@@ -49,32 +49,34 @@ class SettingsManagerImpl @Inject constructor(
             sharedPrefs.edit().putLong(ACCOUNT_ID_KEY, account.id).apply()
     }
 
-    override fun getMainCurrency(): Currency? {
-        val currencyName = sharedPrefs.getString(MAIN_CURRENCY_KEY, null) ?: return null
+    override fun getMainCurrency(): Currency {
+        val currencyName = sharedPrefs.getString(MAIN_CURRENCY_KEY, Currency.RUB.name)!!
         return Currency.valueOf(currencyName)
     }
 
-    override fun getLanguage(): Language? {
-        val languageName = sharedPrefs.getString(LANGUAGE_KEY, null) ?: return null
+    override fun getLanguage(): Language {
+        val languageName = sharedPrefs.getString(LANGUAGE_KEY, Language.RU.name)!!
         return Language.valueOf(languageName)
     }
 
-    override fun getFirstDayOfWeek(): DayOfWeek? {
-        val dayOfWeekName = sharedPrefs.getString(FIRST_DAY_OF_WEEK_KEY, null) ?: return null
+    override fun getFirstDayOfWeek(): DayOfWeek {
+        val dayOfWeekName = sharedPrefs.getString(FIRST_DAY_OF_WEEK_KEY, DayOfWeek.Monday.name)!!
         return DayOfWeek.valueOf(dayOfWeekName)
     }
 
     override fun getFirstDayOfMonth(): Int {
-        return sharedPrefs.getInt(FIRST_DAY_OF_MONTH_KEY, 0)
+        return sharedPrefs.getInt(FIRST_DAY_OF_MONTH_KEY, 1)
     }
 
-    override fun getViewedTimePeriod(): TimePeriod? {
-        val timePeriod = sharedPrefs.getString(TIME_PERIOD_KEY, null) ?: return null
+    override fun getViewedTimePeriod(): TimePeriod {
+        val timePeriod = sharedPrefs.getString(TIME_PERIOD_KEY, TimePeriod.All.name)!!
         return TimePeriod.valueOf(timePeriod)
     }
 
-    override fun getViewedAccountId(): Long {
-        return sharedPrefs.getLong(ACCOUNT_ID_KEY, 0L)
+    override fun getViewedAccountId(): Long? {
+        val id = sharedPrefs.getLong(ACCOUNT_ID_KEY, 0L)
+        if (id == 0L) return null
+        return id
     }
 
 }

@@ -5,15 +5,15 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.common.domain.models.Transaction
 import com.example.common.presentation.base.BaseViewModel
+import com.example.feature_statistics_impl.domain.TransactionsInteractor
+import com.example.feature_statistics_impl.domain.models.TransactionGroup
 import com.example.feature_statistics_impl.presentation.StatisticsRouter
-import com.example.feature_statistics_impl.domain.StatisticsInteractor
-import com.example.feature_statistics_impl.presentation.screen.transactionsList.groupsRecyclerView.transactionGroups.TransactionGroup
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.launch
 
 class TransactionsViewModel @AssistedInject constructor(
-    private val interactor: StatisticsInteractor,
+    private val interactor: TransactionsInteractor,
     private val router: StatisticsRouter
 ) : BaseViewModel() {
 

@@ -20,15 +20,15 @@ interface SettingsManager {
 
     fun setViewedAccount(account: Account?)
 
-    fun getMainCurrency(): Currency?
+    fun getMainCurrency(): Currency
 
-    fun getLanguage(): Language?
+    fun getLanguage(): Language
 
-    fun getFirstDayOfWeek(): DayOfWeek?
+    fun getFirstDayOfWeek(): DayOfWeek
 
-    fun getFirstDayOfMonth(): Int?
+    fun getFirstDayOfMonth(): Int
 
-    fun getViewedTimePeriod(): TimePeriod?
+    fun getViewedTimePeriod(): TimePeriod
 
-    fun getViewedAccountId(): Long
+    fun getViewedAccountId(): Long?
 }

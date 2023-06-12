@@ -48,20 +48,18 @@ class SettingsInteractor @Inject constructor(
         settingsManager.setViewedAccount(account)
     }
 
-    fun getMainCurrency(): Currency = settingsManager.getMainCurrency() ?: Currency.RUB // TODO: дефолтные значения
+    fun getMainCurrency(): Currency = settingsManager.getMainCurrency()
 
-    fun getLanguage(): Language = settingsManager.getLanguage() ?: Language.RU
+    fun getLanguage(): Language = settingsManager.getLanguage()
 
-    fun getFirstDayOfWeek(): DayOfWeek = settingsManager.getFirstDayOfWeek() ?: DayOfWeek.Monday
+    fun getFirstDayOfWeek(): DayOfWeek = settingsManager.getFirstDayOfWeek()
 
-    fun getFirstDayOfMonth(): Int = settingsManager.getFirstDayOfMonth() ?: 1
+    fun getFirstDayOfMonth(): Int = settingsManager.getFirstDayOfMonth()
 
-    fun getViewedTimePeriod(): TimePeriod = settingsManager.getViewedTimePeriod() ?: TimePeriod.All
+    fun getViewedTimePeriod(): TimePeriod = settingsManager.getViewedTimePeriod()
 
     suspend fun getViewedAccount(): Account? {
-        val accountId = settingsManager.getViewedAccountId()
-        if (accountId == 0L)
-            return null
+        val accountId = settingsManager.getViewedAccountId() ?: return null
         return accountRepository.getAccountById(accountId)
     }
 }

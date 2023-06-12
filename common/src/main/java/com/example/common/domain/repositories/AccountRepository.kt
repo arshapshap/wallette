@@ -12,5 +12,5 @@ interface AccountRepository {
 
     suspend fun getAccounts(): List<Account>
 
-    suspend fun getAccountById(id: Long): Account
+    suspend fun getAccountById(id: Long): Account?
 }
