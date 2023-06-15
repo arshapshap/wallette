@@ -159,13 +159,4 @@ class Navigator : MainRouter, StatisticsRouter, AuthorizationRouter, SettingsRou
                 .build()
         )
     }
-
-    override fun refresh(){
-        val id = navController?.currentDestination?.id ?: return
-        val parentId = navController?.currentDestination?.parent?.id
-        navController?.popBackStack(id,true)
-        if (parentId != null)
-            navController?.navigate(parentId)
-        navController?.navigate(id)
-    }
 }

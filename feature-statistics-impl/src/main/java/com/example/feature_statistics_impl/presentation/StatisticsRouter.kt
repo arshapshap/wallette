@@ -13,6 +13,4 @@ interface StatisticsRouter {
     fun openStatistics()
 
     fun close()
-
-    fun refresh()
 }
