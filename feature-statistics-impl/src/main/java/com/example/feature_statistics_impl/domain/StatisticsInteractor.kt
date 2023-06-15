@@ -5,7 +5,7 @@ import com.example.common.domain.models.Account
 import com.example.common.domain.models.Category
 import com.example.common.domain.models.Tag
 import com.example.common.domain.models.Transaction
-import com.example.common.domain.models.enums.TransactionType
+import com.example.common.domain.models.enums.Currency
 import com.example.common.domain.repositories.AccountRepository
 import com.example.common.domain.repositories.CategoryRepository
 import com.example.common.domain.repositories.TagRepository
@@ -23,19 +23,18 @@ class StatisticsInteractor @Inject constructor(
     private val settingsManager: SettingsManager
 ) {
 
-    suspend fun getExpensesByPeriod(): List<TransactionGroupByPeriod> {
+    fun getMainCurrency(): Currency
+        = settingsManager.getMainCurrency()
+
+    suspend fun getTransactionsByPeriod(): List<TransactionGroupByPeriod> {
         return transactionRepository.getTransactions()
             .filterByViewedAccount(settingsManager.getViewedAccountId())
-            .filter {
-                it.type == TransactionType.Expense
-                    || (it.type == TransactionType.Transfer
-                    && it.account.id == settingsManager.getViewedAccountId())
-            }
             .sortedBy { it.date }
             .groupByTimePeriod(
                 timePeriod = settingsManager.getViewedTimePeriod(),
                 firstDayOfWeek = settingsManager.getFirstDayOfWeek(),
-                firstDayOfMonth = settingsManager.getFirstDayOfMonth()
+                firstDayOfMonth = settingsManager.getFirstDayOfMonth(),
+                viewedAccountId = settingsManager.getViewedAccountId()
             )
     }
 

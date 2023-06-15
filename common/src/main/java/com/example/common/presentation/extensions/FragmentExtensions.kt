@@ -1,19 +1,22 @@
 package com.example.common.presentation.extensions
 
 import android.util.TypedValue
+import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
 import androidx.fragment.app.Fragment
 
 @ColorInt
-fun Fragment.getColorPrimary(): Int {
+fun Fragment.getColor(@AttrRes attr: Int): Int {
     val typedValue = TypedValue()
-    activity?.theme?.resolveAttribute(androidx.appcompat.R.attr.colorPrimary, typedValue, true)
+    activity?.theme?.resolveAttribute(attr, typedValue, true)
     return typedValue.data
 }
 
 @ColorInt
-fun Fragment.getColorOnPrimary(): Int {
-    val typedValue = TypedValue()
-    activity?.theme?.resolveAttribute(com.google.android.material.R.attr.colorOnPrimary, typedValue, true)
-    return typedValue.data
-}
+fun Fragment.getColorPrimary(): Int = getColor(androidx.appcompat.R.attr.colorPrimary)
+
+@ColorInt
+fun Fragment.getColorOnPrimary(): Int = getColor(com.google.android.material.R.attr.colorOnPrimary)
+
+@ColorInt
+fun Fragment.getColorOnBackground(): Int = getColor(com.google.android.material.R.attr.colorOnBackground)
