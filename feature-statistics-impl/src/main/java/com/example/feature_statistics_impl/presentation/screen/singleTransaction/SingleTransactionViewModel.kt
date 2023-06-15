@@ -177,8 +177,15 @@ class   SingleTransactionViewModel @AssistedInject constructor(
     }
 
     fun selectAccount(account: Account) {
-        val transaction = _editingTransactionLiveData.value?.copy(account = account) ?: return
-        updateTransaction(transaction)
+        val currentTransaction = _editingTransactionLiveData.value ?: return
+        currentTransaction.let {
+            val transaction = it.copy(
+                account = account,
+                accountDestination = if (account == it.accountDestination) it.account else it.accountDestination
+            )
+            updateTransaction(transaction)
+
+        }
     }
 
     fun selectAccountDestination(account: Account) {

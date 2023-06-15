@@ -3,6 +3,14 @@ package com.example.common.presentation.extensions
 import java.text.SimpleDateFormat
 import java.util.*
 
+fun Date.between(start: Date?, end: Date?): Boolean {
+    return this.roundToDay() == start?.roundToDay() || this.roundToDay() == end?.roundToDay()
+            || (start == null && end == null)
+            || (this.after(start) && end == null)
+            || (start == null && this.before(end))
+            || (this.after(start) && this.before(end))
+}
+
 fun Date.formatDayToString(): String {
     val currentYear = Calendar.getInstance().get(Calendar.YEAR)
 

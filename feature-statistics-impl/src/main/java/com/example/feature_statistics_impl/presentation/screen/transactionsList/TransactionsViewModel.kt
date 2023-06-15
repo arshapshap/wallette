@@ -7,12 +7,17 @@ import com.example.common.domain.models.Transaction
 import com.example.common.presentation.base.BaseViewModel
 import com.example.feature_statistics_impl.domain.TransactionsInteractor
 import com.example.feature_statistics_impl.domain.models.TransactionGroup
+import com.example.feature_statistics_impl.domain.utils.sum
 import com.example.feature_statistics_impl.presentation.StatisticsRouter
+import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.launch
+import java.util.*
 
 class TransactionsViewModel @AssistedInject constructor(
+    @Assisted("periodStart") private val periodStart: Date?,
+    @Assisted("periodEnd") private val periodEnd: Date?,
     private val interactor: TransactionsInteractor,
     private val router: StatisticsRouter
 ) : BaseViewModel() {
@@ -20,10 +25,6 @@ class TransactionsViewModel @AssistedInject constructor(
     private val _stateLiveData = MutableLiveData<Data>()
     val stateLiveData : LiveData<Data>
         get() = _stateLiveData
-
-    init {
-        loadData(SortingType.ByDate)
-    }
 
     fun changeSortingType() {
         val nextType = when (_stateLiveData.value?.sortingType) {
@@ -38,18 +39,18 @@ class TransactionsViewModel @AssistedInject constructor(
         router.openSingleTransaction(transaction)
     }
 
-    fun refresh() {
-        router.refresh()
-    }
-
-    private fun loadData(sortingType: SortingType) {
+    fun loadData(sortingType: SortingType = _stateLiveData.value?.sortingType ?: SortingType.ByDate) {
         viewModelScope.launch {
-            val transactionGroups = interactor.getTransactionGroups(sortingType = sortingType)
+            val transactionGroups = interactor.getTransactionGroups(
+                sortingType = sortingType,
+                periodStart = periodStart,
+                periodEnd = periodEnd
+            )
             val state = Data(
                 balance = transactionGroups
                     .flatMap { it.list }
                     .distinctBy { it.id }
-                    .sumOf { it.amount },
+                    .sum(),
                 sortingType = sortingType,
                 groups = transactionGroups
             )
@@ -60,7 +61,10 @@ class TransactionsViewModel @AssistedInject constructor(
     @AssistedFactory
     interface Factory {
 
-        fun create(): TransactionsViewModel
+        fun create(
+            @Assisted("periodStart") periodStart: Date?,
+            @Assisted("periodEnd") periodEnd: Date?
+        ): TransactionsViewModel
     }
 
     data class Data(

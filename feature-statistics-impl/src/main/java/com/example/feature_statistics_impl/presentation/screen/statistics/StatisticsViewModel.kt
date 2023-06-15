@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.common.domain.models.enums.Currency
 import com.example.common.presentation.base.BaseViewModel
-import com.example.common.presentation.extensions.roundToDay
+import com.example.common.presentation.extensions.between
 import com.example.feature_statistics_impl.domain.StatisticsInteractor
 import com.example.feature_statistics_impl.domain.models.TransactionGroupByPeriod
 import com.example.feature_statistics_impl.presentation.StatisticsRouter
@@ -27,23 +27,20 @@ class StatisticsViewModel @AssistedInject constructor(
     val openedPeriodIndexLiveData: LiveData<Int>
         get() = _openedPeriodIndexLiveData
 
-    init {
-        loadData()
-    }
-
     fun openTransactions() {
-        router.openTransactions()
-    }
-
-    fun refresh() {
-        router.refresh()
+        val openedPeriodIndex = _openedPeriodIndexLiveData.value ?: return
+        val period = _dataLiveData.value?.items?.get(openedPeriodIndex) ?: return
+        router.openTransactionsByPeriod(
+            start = period.periodStart,
+            end = period.periodEnd
+        )
     }
 
     fun saveOpenedPeriod(index: Int) {
         _openedPeriodIndexLiveData.postValue(index)
     }
 
-    private fun loadData() {
+    fun loadData() {
         viewModelScope.launch {
             val groups = interactor.getTransactionsByPeriod()
             val balance = interactor.getBalance()
@@ -56,8 +53,7 @@ class StatisticsViewModel @AssistedInject constructor(
 
             val now = Calendar.getInstance()
             groups.forEachIndexed { index, it ->
-                if (now.time.roundToDay() == it.periodStart?.roundToDay() || now.time.roundToDay() == it.periodEnd?.roundToDay()
-                    || (now.after(it.periodStart) && now.before(it.periodEnd))
+                if (now.time.between(it.periodStart, it.periodEnd)
                     || index == groups.size - 1) {
                     _openedPeriodIndexLiveData.postValue(index)
                     return@forEachIndexed

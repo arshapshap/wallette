@@ -4,7 +4,10 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.NavOptions
-import com.example.common.domain.models.*
+import com.example.common.domain.models.Account
+import com.example.common.domain.models.Category
+import com.example.common.domain.models.Tag
+import com.example.common.domain.models.Transaction
 import com.example.common.domain.models.enums.TransactionType
 import com.example.feature_auth.presentation.screen.AuthorizationRouter
 import com.example.feature_settings.presentation.SettingsRouter
@@ -13,8 +16,10 @@ import com.example.feature_settings.presentation.screen.singleCategory.SingleCat
 import com.example.feature_settings.presentation.screen.singleTag.SingleTagFragment
 import com.example.feature_statistics_impl.presentation.StatisticsRouter
 import com.example.feature_statistics_impl.presentation.screen.singleTransaction.SingleTransactionFragment
+import com.example.feature_statistics_impl.presentation.screen.transactionsList.TransactionsFragment
 import com.example.wallette.R
 import com.example.wallette.presentation.MainRouter
+import java.util.*
 
 class Navigator : MainRouter, StatisticsRouter, AuthorizationRouter, SettingsRouter {
 
@@ -28,6 +33,16 @@ class Navigator : MainRouter, StatisticsRouter, AuthorizationRouter, SettingsRou
 
     override fun openTransactions() {
         navController?.navigate(R.id.transactionsFragment)
+    }
+
+    override fun openTransactionsByPeriod(start: Date?, end: Date?) {
+        navController?.navigate(
+            resId = R.id.transactionsFragment,
+            args = Bundle().apply {
+                putSerializable(TransactionsFragment.PERIOD_START_KEY, start)
+                putSerializable(TransactionsFragment.PERIOD_END_KEY, end)
+            }
+        )
     }
 
     override fun openLoginPage() {
@@ -44,7 +59,6 @@ class Navigator : MainRouter, StatisticsRouter, AuthorizationRouter, SettingsRou
 
     override fun close() {
         navController?.popBackStack()
-        refresh()
     }
 
     override fun openAccounts() {

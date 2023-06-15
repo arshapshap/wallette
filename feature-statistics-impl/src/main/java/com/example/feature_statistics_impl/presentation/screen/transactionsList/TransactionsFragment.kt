@@ -8,15 +8,21 @@ import com.example.common.di.FeatureUtils
 import com.example.common.domain.models.enums.Currency
 import com.example.common.presentation.base.BaseFragment
 import com.example.common.presentation.base.BaseViewModel
+import com.example.common.presentation.extensions.formatAsBalance
+import com.example.common.presentation.extensions.getColorBySign
 import com.example.feature_statistics_impl.R
 import com.example.feature_statistics_impl.databinding.FragmentTransactionsListBinding
 import com.example.feature_statistics_impl.di.StatisticsComponent
 import com.example.feature_statistics_impl.di.StatisticsFeatureApi
-import com.example.common.presentation.extensions.formatAsBalance
-import com.example.common.presentation.extensions.getColorBySign
 import com.example.feature_statistics_impl.presentation.screen.transactionsList.groupsRecyclerView.TransactionGroupsAdapter
+import java.util.*
 
 class TransactionsFragment : BaseFragment<TransactionsViewModel>(R.layout.fragment_transactions_list) {
+
+    companion object {
+        const val PERIOD_START_KEY = "PERIOD_START_KEY"
+        const val PERIOD_END_KEY = "PERIOD_END_KEY"
+    }
 
     private val binding by viewBinding(FragmentTransactionsListBinding::bind)
     private val statisticsComponent: StatisticsComponent by lazy {
@@ -27,8 +33,13 @@ class TransactionsFragment : BaseFragment<TransactionsViewModel>(R.layout.fragme
         statisticsComponent.inject(this)
     }
 
+    @Suppress("DEPRECATION")
     override fun createViewModel(): BaseViewModel
-        = statisticsComponent.transactionsViewModel().create()
+        = statisticsComponent.transactionsViewModel()
+            .create(
+                periodStart = arguments?.getSerializable(PERIOD_START_KEY) as? Date,
+                periodEnd = arguments?.getSerializable(PERIOD_END_KEY) as? Date
+            )
 
     @SuppressLint("NotifyDataSetChanged")
     override fun initViews() {
@@ -43,7 +54,7 @@ class TransactionsFragment : BaseFragment<TransactionsViewModel>(R.layout.fragme
             }
 
             refreshLayout.setOnRefreshListener {
-                viewModel.refresh()
+                viewModel.loadData()
 
                 refreshLayout.isRefreshing = false
             }
@@ -53,6 +64,7 @@ class TransactionsFragment : BaseFragment<TransactionsViewModel>(R.layout.fragme
     @SuppressLint("NotifyDataSetChanged")
     override fun subscribe() {
         with (viewModel) {
+            loadData()
             stateLiveData.observe(viewLifecycleOwner) {
                 (binding.listRecyclerView.adapter as TransactionGroupsAdapter).setList(it.groups, it.sortingType)
 

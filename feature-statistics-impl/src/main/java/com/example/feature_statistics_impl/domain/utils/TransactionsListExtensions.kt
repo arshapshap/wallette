@@ -5,6 +5,7 @@ import com.example.common.domain.models.Transaction
 import com.example.common.domain.models.enums.DayOfWeek
 import com.example.common.domain.models.enums.TimePeriod
 import com.example.common.domain.models.enums.TransactionType
+import com.example.common.presentation.extensions.between
 import com.example.common.presentation.extensions.copy
 import com.example.common.presentation.extensions.roundToDay
 import com.example.feature_statistics_impl.domain.models.*
@@ -15,8 +16,13 @@ internal fun List<Transaction>.filterByViewedAccount(viewedAccountId: Long?): Li
     if (viewedAccountId != null)
         return this.filter {
             it.account.id == viewedAccountId || it.accountDestination?.id == viewedAccountId
+        }.map {
+            if (it.type == TransactionType.Transfer && it.account.id == viewedAccountId)
+                it.copy(amount = it.amount * -1)
+            else
+                it
         }
-    return this
+    return this.filter { it.type != TransactionType.Transfer }
 }
 
 internal fun List<Transaction>.filterExpenses(viewedAccountId: Long?): List<Transaction> {
@@ -24,11 +30,6 @@ internal fun List<Transaction>.filterExpenses(viewedAccountId: Long?): List<Tran
         it.type == TransactionType.Expense
                 || (it.type == TransactionType.Transfer
                 && it.account.id == viewedAccountId)
-    }.map {
-        if (it.type == TransactionType.Transfer)
-            it.copy(amount = it.amount * -1)
-        else
-            it
     }
 }
 
@@ -127,10 +128,11 @@ internal fun List<Transaction>.groupByWeek(viewedAccountId: Long?, firstDayOfWee
 
     val weekEndCalendar = weekStartCalendar.copy().apply {
         add(Calendar.WEEK_OF_YEAR, 1)
+        add(Calendar.DAY_OF_WEEK, -1)
     }
 
     this.forEach {
-        while (!it.date.before(weekEndCalendar.time)) {
+        while (!it.date.between(weekStartCalendar.time, weekEndCalendar.time)) {
             result.add(
                 getTransactionGroupByPeriod(
                     periodStart = weekStartCalendar.time,
@@ -173,12 +175,11 @@ internal fun List<Transaction>.groupByMonth(viewedAccountId: Long?, firstDayOfMo
 
     val monthEndCalendar = monthStartCalendar.copy().apply {
         add(Calendar.MONTH, 1)
-        add(Calendar.DAY_OF_MONTH, 1) // почему без этого не работает???
         add(Calendar.DAY_OF_MONTH, -1)
     }
 
     this.forEach {
-        while (!it.date.before(monthEndCalendar.time)) {
+        while (!it.date.between(monthStartCalendar.time, monthEndCalendar.time)) {
             result.add(
                 getTransactionGroupByPeriod(
                     periodStart = monthStartCalendar.time,
@@ -221,10 +222,11 @@ internal fun List<Transaction>.groupByYear(viewedAccountId: Long?): List<Transac
 
     val yearEndCalendar = yearStartCalendar.copy().apply {
         add(Calendar.YEAR, 1)
+        add(Calendar.DAY_OF_YEAR, -1)
     }
 
     this.forEach {
-        while (!it.date.before(yearEndCalendar.time)) {
+        while (!it.date.between(yearStartCalendar.time, yearEndCalendar.time)) {
             result.add(
                 getTransactionGroupByPeriod(
                     periodStart = yearStartCalendar.time,

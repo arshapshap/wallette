@@ -49,13 +49,16 @@ class StatisticsFragment : BaseFragment<StatisticsViewModel>(R.layout.fragment_s
             }
 
             refreshLayout.setOnRefreshListener {
-                viewModel.refresh()
+                viewModel.loadData()
+
+                refreshLayout.isRefreshing = false
             }
         }
     }
 
     @Suppress("DEPRECATION")
     override fun subscribe() {
+        viewModel.loadData()
         viewModel.dataLiveData.observe(viewLifecycleOwner) {
             binding.pieChartsViewPager2.adapter = PieChartAdapter(
                 currency = it.currency,
@@ -89,9 +92,7 @@ class StatisticsFragment : BaseFragment<StatisticsViewModel>(R.layout.fragment_s
 
                 override fun onTabUnselected(tab: TabLayout.Tab?) { }
 
-                override fun onTabReselected(tab: TabLayout.Tab?) {
-                    viewModel.refresh()
-                }
+                override fun onTabReselected(tab: TabLayout.Tab?) { }
             })
         }
     }
@@ -142,7 +143,6 @@ class StatisticsFragment : BaseFragment<StatisticsViewModel>(R.layout.fragment_s
         }
         val endCalendar = Calendar.getInstance().apply {
             time = end
-            add(Calendar.DAY_OF_MONTH, -1)
         }
 
         if (checkIfCoversOneMonth(startCalendar, endCalendar)) return start.formatMonthToString()
