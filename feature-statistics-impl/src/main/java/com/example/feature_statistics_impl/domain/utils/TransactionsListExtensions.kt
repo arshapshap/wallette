@@ -44,25 +44,6 @@ internal fun List<Transaction>.filterIncomes(viewedAccountId: Long?): List<Trans
 internal fun List<Transaction>.sum(): Double
     = this.sumOf { it.amount }
 
-private fun getTransactionGroupByPeriod(
-    periodStart: Date? = null,
-    periodEnd: Date? = null,
-    list: List<Transaction>,
-    viewedAccountId: Long?
-)   = TransactionGroupByPeriod(
-        periodStart = periodStart,
-        periodEnd = periodEnd,
-        list = list.filterExpenses(viewedAccountId).map {
-            TransactionShortInfo(
-                amount = it.amount,
-                category = it.category,
-                type = it.type
-            )
-        },
-        income = list.filterIncomes(viewedAccountId).sum(),
-        expense = list.filterExpenses(viewedAccountId).sum()
-    )
-
 internal fun List<Transaction>.groupByTimePeriod(viewedAccountId: Long?, timePeriod: TimePeriod, firstDayOfWeek: DayOfWeek, firstDayOfMonth: Int): List<TransactionGroupByPeriod> {
     return when (timePeriod) {
         TimePeriod.Day -> this.groupByDay(viewedAccountId)
@@ -75,50 +56,26 @@ internal fun List<Transaction>.groupByTimePeriod(viewedAccountId: Long?, timePer
                 viewedAccountId = viewedAccountId
             )
         )
-    }.dropWhile { it.list.isEmpty() && it.income == 0.0 }
+    }
 }
 
 internal fun List<Transaction>.groupByDay(viewedAccountId: Long?): List<TransactionGroupByPeriod> {
-    val result = mutableListOf<TransactionGroupByPeriod>()
-    val currentList = mutableListOf<Transaction>()
-
-    val firstTransactionDate = this.firstOrNull()?.date ?: return listOf()
+    val firstTransactionDate = this.firstOrNull()?.date ?: Calendar.getInstance().time
     val calendar = Calendar.getInstance().apply {
         time = firstTransactionDate
     }
 
-    this.forEach {
-        while (!it.date.before(calendar.time)) {
-            result.add(
-                getTransactionGroupByPeriod(
-                    periodStart = calendar.time,
-                    list = currentList,
-                    viewedAccountId = viewedAccountId
-                )
-            )
-            currentList.clear()
-            calendar.add(Calendar.DAY_OF_YEAR, 1)
-        }
-        currentList.add(it)
-    }
-    if (currentList.isNotEmpty()) {
-        result.add(
-            getTransactionGroupByPeriod(
-                periodStart = calendar.time,
-                list = currentList,
-                viewedAccountId = viewedAccountId
-            )
-        )
-    }
-
-    return result
+    return getGroupsByPeriod(
+        list = this,
+        startCalendar = calendar,
+        endCalendar = calendar.copy(),
+        calendarAttribute = Calendar.DAY_OF_YEAR,
+        viewedAccountId = viewedAccountId
+    )
 }
 
 internal fun List<Transaction>.groupByWeek(viewedAccountId: Long?, firstDayOfWeek: DayOfWeek): List<TransactionGroupByPeriod> {
-    val result = mutableListOf<TransactionGroupByPeriod>()
-    val currentList = mutableListOf<Transaction>()
-
-    val firstTransactionDate = this.firstOrNull()?.date ?: return listOf()
+    val firstTransactionDate = this.firstOrNull()?.date ?: Calendar.getInstance().time
     val weekStartCalendar = Calendar.getInstance().apply {
         time = firstTransactionDate
     }
@@ -131,41 +88,17 @@ internal fun List<Transaction>.groupByWeek(viewedAccountId: Long?, firstDayOfWee
         add(Calendar.DAY_OF_WEEK, -1)
     }
 
-    this.forEach {
-        while (!it.date.between(weekStartCalendar.time, weekEndCalendar.time)) {
-            result.add(
-                getTransactionGroupByPeriod(
-                    periodStart = weekStartCalendar.time,
-                    periodEnd = weekEndCalendar.time,
-                    list = currentList,
-                    viewedAccountId = viewedAccountId
-                )
-            )
-            currentList.clear()
-            weekStartCalendar.add(Calendar.WEEK_OF_YEAR, 1)
-            weekEndCalendar.add(Calendar.WEEK_OF_YEAR, 1)
-        }
-        currentList.add(it)
-    }
-    if (currentList.isNotEmpty()) {
-        result.add(
-            getTransactionGroupByPeriod(
-                periodStart = weekStartCalendar.time,
-                periodEnd = weekEndCalendar.time,
-                list = currentList,
-                viewedAccountId = viewedAccountId
-            )
-        )
-    }
-
-    return result
+    return getGroupsByPeriod(
+        list = this,
+        startCalendar = weekStartCalendar,
+        endCalendar = weekEndCalendar,
+        calendarAttribute = Calendar.WEEK_OF_YEAR,
+        viewedAccountId = viewedAccountId
+    )
 }
 
 internal fun List<Transaction>.groupByMonth(viewedAccountId: Long?, firstDayOfMonth: Int): List<TransactionGroupByPeriod> {
-    val result = mutableListOf<TransactionGroupByPeriod>()
-    val currentList = mutableListOf<Transaction>()
-
-    val firstTransactionDate = this.firstOrNull()?.date ?: return listOf()
+    val firstTransactionDate = this.firstOrNull()?.date ?: Calendar.getInstance().time
     val monthStartCalendar = Calendar.getInstance().apply {
         time = firstTransactionDate
     }
@@ -178,41 +111,17 @@ internal fun List<Transaction>.groupByMonth(viewedAccountId: Long?, firstDayOfMo
         add(Calendar.DAY_OF_MONTH, -1)
     }
 
-    this.forEach {
-        while (!it.date.between(monthStartCalendar.time, monthEndCalendar.time)) {
-            result.add(
-                getTransactionGroupByPeriod(
-                    periodStart = monthStartCalendar.time,
-                    periodEnd = monthEndCalendar.time,
-                    list = currentList,
-                    viewedAccountId = viewedAccountId
-                )
-            )
-            currentList.clear()
-            monthStartCalendar.add(Calendar.MONTH, 1)
-            monthEndCalendar.add(Calendar.MONTH, 1)
-        }
-        currentList.add(it)
-    }
-    if (currentList.isNotEmpty()) {
-        result.add(
-            getTransactionGroupByPeriod(
-                periodStart = monthStartCalendar.time,
-                periodEnd = monthEndCalendar.time,
-                list = currentList,
-                viewedAccountId = viewedAccountId
-            )
-        )
-    }
-
-    return result
+    return getGroupsByPeriod(
+        list = this,
+        startCalendar = monthStartCalendar,
+        endCalendar = monthEndCalendar,
+        calendarAttribute = Calendar.MONTH,
+        viewedAccountId = viewedAccountId
+    )
 }
 
 internal fun List<Transaction>.groupByYear(viewedAccountId: Long?): List<TransactionGroupByPeriod> {
-    val result = mutableListOf<TransactionGroupByPeriod>()
-    val currentList = mutableListOf<Transaction>()
-
-    val firstTransactionDate = this.firstOrNull()?.date ?: return listOf()
+    val firstTransactionDate = this.firstOrNull()?.date ?: Calendar.getInstance().time
     val yearStartCalendar = Calendar.getInstance().apply {
         time = firstTransactionDate
     }
@@ -225,35 +134,71 @@ internal fun List<Transaction>.groupByYear(viewedAccountId: Long?): List<Transac
         add(Calendar.DAY_OF_YEAR, -1)
     }
 
-    this.forEach {
-        while (!it.date.between(yearStartCalendar.time, yearEndCalendar.time)) {
-            result.add(
-                getTransactionGroupByPeriod(
-                    periodStart = yearStartCalendar.time,
-                    periodEnd = yearEndCalendar.time,
-                    list = currentList,
-                    viewedAccountId = viewedAccountId
-                )
-            )
-            currentList.clear()
-            yearStartCalendar.add(Calendar.YEAR, 1)
-            yearEndCalendar.add(Calendar.YEAR, 1)
+    return getGroupsByPeriod(
+        list = this,
+        startCalendar = yearStartCalendar,
+        endCalendar = yearEndCalendar,
+        calendarAttribute = Calendar.YEAR,
+        viewedAccountId = viewedAccountId
+    )
+}
+
+private fun getGroupsByPeriod(
+    list: List<Transaction>,
+    startCalendar: Calendar,
+    endCalendar: Calendar,
+    calendarAttribute: Int,
+    viewedAccountId: Long?
+): List<TransactionGroupByPeriod> {
+    val result = mutableListOf<TransactionGroupByPeriod>()
+    val currentList = mutableListOf<Transaction>()
+    val now = Calendar.getInstance().time
+
+    var nowReached = false
+    var index = 0
+    while (index < list.size
+        || !nowReached) {
+        while (index < list.size && list[index].date.roundToDay().between(startCalendar.time, endCalendar.time)) {
+            currentList.add(list[index])
+            index++
         }
-        currentList.add(it)
-    }
-    if (currentList.isNotEmpty()) {
         result.add(
             getTransactionGroupByPeriod(
-                periodStart = yearStartCalendar.time,
-                periodEnd = yearEndCalendar.time,
+                periodStart = startCalendar.time,
+                periodEnd = endCalendar.time,
                 list = currentList,
                 viewedAccountId = viewedAccountId
             )
         )
+        currentList.clear()
+
+        if (now.roundToDay().between(startCalendar.time, endCalendar.time))
+            nowReached = true
+        startCalendar.add(calendarAttribute, 1)
+        endCalendar.add(calendarAttribute, 1)
     }
 
     return result
 }
+
+private fun getTransactionGroupByPeriod(
+    periodStart: Date? = null,
+    periodEnd: Date? = null,
+    list: List<Transaction>,
+    viewedAccountId: Long?
+)   = TransactionGroupByPeriod(
+    periodStart = periodStart,
+    periodEnd = periodEnd,
+    list = list.filterExpenses(viewedAccountId).map {
+        TransactionShortInfo(
+            amount = it.amount,
+            category = it.category,
+            type = it.type
+        )
+    },
+    income = list.filterIncomes(viewedAccountId).sum(),
+    expense = list.filterExpenses(viewedAccountId).sum()
+)
 
 internal fun List<Transaction>.groupByDate(): List<TransactionGroupByDate> {
     return this

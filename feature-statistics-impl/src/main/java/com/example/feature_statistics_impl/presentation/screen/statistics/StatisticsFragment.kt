@@ -134,9 +134,9 @@ class StatisticsFragment : BaseFragment<StatisticsViewModel>(R.layout.fragment_s
         = binding.pieChartsViewPager2.adapter as PieChartAdapter
 
     private fun getPeriodString(start: Date?, end: Date?): String {
-        if (start == null) return getString(com.example.common.R.string.all)
+        if (start == null || end == null) return getString(com.example.common.R.string.all)
 
-        if (end == null) return start.formatDayToString()
+        if (start == end) return start.formatDayToString()
 
         val startCalendar = Calendar.getInstance().apply {
             time = start
