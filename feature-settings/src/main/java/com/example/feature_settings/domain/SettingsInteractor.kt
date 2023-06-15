@@ -60,6 +60,11 @@ class SettingsInteractor @Inject constructor(
 
     suspend fun getViewedAccount(): Account? {
         val accountId = settingsManager.getViewedAccountId() ?: return null
-        return accountRepository.getAccountById(accountId)
+
+        val account = accountRepository.getAccountById(accountId)
+        if (account == null)
+            settingsManager.setViewedAccount(null)
+
+        return account
     }
 }

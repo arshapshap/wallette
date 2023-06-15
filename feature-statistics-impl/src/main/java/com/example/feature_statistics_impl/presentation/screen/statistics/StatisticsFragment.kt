@@ -6,10 +6,7 @@ import com.example.common.di.FeatureUtils
 import com.example.common.domain.models.enums.TransactionType
 import com.example.common.presentation.base.BaseFragment
 import com.example.common.presentation.base.BaseViewModel
-import com.example.common.presentation.extensions.formatDayToString
-import com.example.common.presentation.extensions.formatMonthToString
-import com.example.common.presentation.extensions.formatYearToString
-import com.example.common.presentation.extensions.getColorOnBackground
+import com.example.common.presentation.extensions.*
 import com.example.feature_statistics_impl.R
 import com.example.feature_statistics_impl.databinding.FragmentStatisticsBinding
 import com.example.feature_statistics_impl.di.StatisticsComponent
@@ -57,6 +54,7 @@ class StatisticsFragment : BaseFragment<StatisticsViewModel>(R.layout.fragment_s
         }
     }
 
+    @Suppress("DEPRECATION")
     override fun subscribe() {
         viewModel.dataLiveData.observe(viewLifecycleOwner) {
             binding.pieChartsViewPager2.adapter = PieChartAdapter(
@@ -70,6 +68,14 @@ class StatisticsFragment : BaseFragment<StatisticsViewModel>(R.layout.fragment_s
                 tab.text = getPeriodString(it.items[position].periodStart, it.items[position].periodEnd)
             }.attach()
             getPieChartAdapter().setDataSet(it.items.map { transactionsToPieChartPeriod(it) })
+
+            binding.balanceButtonLayout.balanceButton.text = getString(
+                R.string.balance_number,
+                it.balance.formatAsBalance(
+                    currency = it.currency,
+                    withPlus = false
+                )
+            )
         }
         viewModel.openedPeriodIndexLiveData.observe(viewLifecycleOwner) {
             val tab = binding.periodsTabLayout.getTabAt(it)

@@ -46,9 +46,11 @@ class StatisticsViewModel @AssistedInject constructor(
     private fun loadData() {
         viewModelScope.launch {
             val groups = interactor.getTransactionsByPeriod()
+            val balance = interactor.getBalance()
             val data = Data(
                 items = groups,
-                currency = interactor.getMainCurrency()
+                currency = interactor.getMainCurrency(),
+                balance = balance
             )
             _dataLiveData.postValue(data)
 
@@ -66,7 +68,8 @@ class StatisticsViewModel @AssistedInject constructor(
 
     data class Data(
         val items: List<TransactionGroupByPeriod>,
-        val currency: Currency
+        val currency: Currency,
+        val balance: Double
     )
 
     @AssistedFactory

@@ -1,6 +1,8 @@
 package com.example.feature_statistics_impl.domain
 
 import com.example.common.data.SettingsManager
+import com.example.common.domain.models.Account
+import com.example.common.domain.repositories.AccountRepository
 import com.example.common.domain.repositories.TransactionRepository
 import com.example.feature_statistics_impl.domain.models.TransactionGroup
 import com.example.feature_statistics_impl.domain.utils.filterByViewedAccount
@@ -12,12 +14,13 @@ import javax.inject.Inject
 
 class TransactionsInteractor @Inject constructor(
     private val transactionRepository: TransactionRepository,
+    private val accountRepository: AccountRepository,
     private val settingsManager: SettingsManager
 ) {
 
     suspend fun getTransactionGroups(sortingType: SortingType): List<TransactionGroup> {
         val transactions = transactionRepository.getTransactions()
-            .filterByViewedAccount(settingsManager.getViewedAccountId())
+            .filterByViewedAccount(getViewedAccount()?.id)
 
         val groups = when (sortingType) {
             SortingType.ByDate -> transactions.groupByDate()
@@ -25,5 +28,15 @@ class TransactionsInteractor @Inject constructor(
             SortingType.ByTag -> transactions.groupByTag()
         }
         return groups
+    }
+
+    private suspend fun getViewedAccount(): Account? {
+        val accountId = settingsManager.getViewedAccountId() ?: return null
+
+        val account = accountRepository.getAccountById(accountId)
+        if (account == null)
+            settingsManager.setViewedAccount(null)
+
+        return account
     }
 }

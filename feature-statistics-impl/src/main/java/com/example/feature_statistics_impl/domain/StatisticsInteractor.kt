@@ -23,18 +23,28 @@ class StatisticsInteractor @Inject constructor(
     private val settingsManager: SettingsManager
 ) {
 
+    suspend fun getBalance(): Double {
+        val viewedAccount = getViewedAccount()
+
+        if (viewedAccount != null)
+            return viewedAccount.currentBalance
+
+        return accountRepository.getAccounts().sumOf { it.currentBalance }
+    }
+
     fun getMainCurrency(): Currency
         = settingsManager.getMainCurrency()
 
     suspend fun getTransactionsByPeriod(): List<TransactionGroupByPeriod> {
+        val viewedAccount = getViewedAccount()
         return transactionRepository.getTransactions()
-            .filterByViewedAccount(settingsManager.getViewedAccountId())
+            .filterByViewedAccount(viewedAccount?.id)
             .sortedBy { it.date }
             .groupByTimePeriod(
                 timePeriod = settingsManager.getViewedTimePeriod(),
                 firstDayOfWeek = settingsManager.getFirstDayOfWeek(),
                 firstDayOfMonth = settingsManager.getFirstDayOfMonth(),
-                viewedAccountId = settingsManager.getViewedAccountId()
+                viewedAccountId = viewedAccount?.id
             )
     }
 
@@ -76,5 +86,15 @@ class StatisticsInteractor @Inject constructor(
 
     suspend fun getTags(): List<Tag> {
         return tagRepository.getTags()
+    }
+
+    private suspend fun getViewedAccount(): Account? {
+        val accountId = settingsManager.getViewedAccountId() ?: return null
+
+        val account = accountRepository.getAccountById(accountId)
+        if (account == null)
+            settingsManager.setViewedAccount(null)
+
+        return account
     }
 }
